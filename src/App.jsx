@@ -1,10 +1,10 @@
-import SignupForm from "./components/SignupForm"
+import Dashboard from "./components/dashboard"
 
 function App() {
 
   return (
 			<>
-        <SignupForm />
+        <Dashboard />
       </>
   )
 }
