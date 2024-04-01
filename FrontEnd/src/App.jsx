@@ -1,11 +1,10 @@
-import Forum from "./components/Forum/Forum"
-import Dashboard from "./components/dashboard"
+import CustomForm from "./components/CustomForm/CustomForm"
 
 function App() {
 
   return (
     <>
-      <Forum />
+      <CustomForm />
     </>
   )
 }
