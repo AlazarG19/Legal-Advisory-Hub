@@ -3,6 +3,7 @@ import CategoriesSection from './CategoriesSection'
 import CreatePost from './CreatePost'
 import IndividualPost from './IndividualPost'
 
+
 function Forum() {
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">

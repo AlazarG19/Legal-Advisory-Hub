@@ -1,4 +1,4 @@
-import CustomForm from "./components/CustomForm/CustomForm"
+import CustomForm from "./components/Forum/Forum"
 
 function App() {
 

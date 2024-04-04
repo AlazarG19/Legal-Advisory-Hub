@@ -40,98 +40,7 @@ function CategoriesSection() {
                     <div className="separator separator-dashed my-4"></div>
                     {/* <!--end::Separator--> */}
                     {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 2</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 3</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 4</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 5</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
+                     {/* <!--end::Item--> */}
                 </div>
                 {/* <!--end::Body--> */}
             </div>
@@ -158,7 +67,7 @@ function CategoriesSection() {
                         <div className="d-flex align-items-center flex-row-fluid flex-wrap">
                             {/* <!--begin:Author--> */}
                             <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 1</a>
+                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Topic 1</a>
                             </div>
                             {/* <!--end:Author--> */}
                             {/* <!--begin:Action--> */}
@@ -171,100 +80,7 @@ function CategoriesSection() {
                     {/* <!--begin::Separator--> */}
                     <div className="separator separator-dashed my-4"></div>
                     {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 2</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
                     </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 3</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 4</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                    {/* <!--begin::Separator--> */}
-                    <div className="separator separator-dashed my-4"></div>
-                    {/* <!--end::Separator--> */}
-                    {/* <!--begin::Item--> */}
-                    <div className="d-flex flex-stack">
-                        {/* <!--begin::Symbol--> */}
-                        <div className="symbol symbol-40px me-5">
-                            <img src="/assets/media/avatars/300-11.jpg" className="h-50 align-self-center" alt="" />
-                        </div>
-                        {/* <!--end::Symbol--> */}
-                        {/* <!--begin::Section--> */}
-                        <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                            {/* <!--begin:Author--> */}
-                            <div className="flex-grow-1 me-2">
-                                <a href="../../demo1/dist/pages/user-profile/overview.html" className="text-gray-800 text-hover-primary fs-6 fw-bold">Category 5</a>
-                            </div>
-                            {/* <!--end:Author--> */}
-                            {/* <!--begin:Action--> */}
-                            <a href="../../demo1/dist/pages/user-profile/overview.html" className="btn btn-sm btn-light fs-8 fw-bold">{"->"}</a>
-                            {/* <!--end:Action--> */}
-                        </div>
-                        {/* <!--end::Section--> */}
-                    </div>
-                    {/* <!--end::Item--> */}
-                </div>
                 {/* <!--end::Body--> */}
             </div>
             {/* <!--end::Social widget 1--> */}

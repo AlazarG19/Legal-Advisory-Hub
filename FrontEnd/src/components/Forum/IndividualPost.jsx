@@ -1,5 +1,6 @@
 import React from 'react'
-
+import Vote from "../Forum/Elements/voteButton"
+import Comment from './Elements/Comment'
 function IndividualPost() {
     return (
         <div className="card card-flush mb-10">
@@ -215,64 +216,8 @@ function IndividualPost() {
                     {/* <!--end::Separator--> */}
                     {/* <!--begin::Comments--> */}
                     <div className="collapse show" id="kt_social_feeds_comments_1">
-                        {/* <!--begin::Comment--> */}
-                        <div className="d-flex pt-6">
-                            {/* <!--begin::Avatar--> */}
-                            <div className="symbol symbol-45px me-5">
-                                <img src="/assets/media/avatars/300-13.jpg" alt="" />
-                            </div>
-                            {/* <!--end::Avatar--> */}
-                            {/* <!--begin::Wrapper--> */}
-                            <div className="d-flex flex-column flex-row-fluid">
-                                {/* <!--begin::Info--> */}
-                                <div className="d-flex align-items-center flex-wrap mb-0">
-                                    {/* <!--begin::Name--> */}
-                                    <a href="#" className="text-gray-800 text-hover-primary fw-bold me-6">Mr. Anderson</a>
-                                    {/* <!--end::Name--> */}
-                                    {/* <!--begin::Date--> */}
-                                    <span className="text-gray-400 fw-semibold fs-7 me-5">1 Day ago</span>
-                                    {/* <!--end::Date--> */}
-                                    {/* <!--begin::Reply--> */}
-                                    <a href="#" className="ms-auto text-gray-400 text-hover-primary fw-semibold fs-7">Reply</a>
-                                    {/* <!--end::Reply--> */}
-                                </div>
-                                {/* <!--end::Info--> */}
-                                {/* <!--begin::Text--> */}
-                                <span className="text-gray-800 fs-7 fw-normal pt-1">Long before you sit dow to put digital pen to paper you need to make sure you have to sit down and write.</span>
-                                {/* <!--end::Text--> */}
-                            </div>
-                            {/* <!--end::Wrapper--> */}
-                        </div>
-                        {/* <!--end::Comment--> */}
-                        {/* <!--begin::Comment--> */}
-                        <div className="d-flex pt-6">
-                            {/* <!--begin::Avatar--> */}
-                            <div className="symbol symbol-45px me-5">
-                                <img src="/assets/media/avatars/300-2.jpg" alt="" />
-                            </div>
-                            {/* <!--end::Avatar--> */}
-                            {/* <!--begin::Wrapper--> */}
-                            <div className="d-flex flex-column flex-row-fluid">
-                                {/* <!--begin::Info--> */}
-                                <div className="d-flex align-items-center flex-wrap mb-0">
-                                    {/* <!--begin::Name--> */}
-                                    <a href="#" className="text-gray-800 text-hover-primary fw-bold me-6">Mrs. Anderson</a>
-                                    {/* <!--end::Name--> */}
-                                    {/* <!--begin::Date--> */}
-                                    <span className="text-gray-400 fw-semibold fs-7 me-5">2 Days ago</span>
-                                    {/* <!--end::Date--> */}
-                                    {/* <!--begin::Reply--> */}
-                                    <a href="#" className="ms-auto text-gray-400 text-hover-primary fw-semibold fs-7">Reply</a>
-                                    {/* <!--end::Reply--> */}
-                                </div>
-                                {/* <!--end::Info--> */}
-                                {/* <!--begin::Text--> */}
-                                <span className="text-gray-800 fs-7 fw-normal pt-1">Long before you sit dow to put digital pen to paper</span>
-                                {/* <!--end::Text--> */}
-                            </div>
-                            {/* <!--end::Wrapper--> */}
-                        </div>
-                        {/* <!--end::Comment--> */}
+                       
+                       <Comment/>
                     </div>
                     {/* <!--end::Collapse--> */}
                 </div>
