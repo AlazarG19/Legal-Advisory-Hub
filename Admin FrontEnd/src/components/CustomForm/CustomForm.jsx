@@ -11,8 +11,24 @@ function CustomForm() {
     }])
     const [question, setquestion] = useState("")
     const [statement, setstatement] = useState("")
-    const handleSubmit = () => {
-        let body = { section: { question: input1, statement: input2 } }
+    const handleSubmit = async () => {
+        const updatedSections = sections;
+        console.log("prevsection", sections)
+        console.log("prevsection2", updatedSections)
+        updatedSections.pop()
+        let finalsection = [...updatedSections,
+        {
+            id: uuidv4(),
+            question: question,
+            statement: statement
+        }]
+        setsections([...updatedSections,
+        {
+            id: uuidv4(),
+            question: question,
+            statement: statement
+        }])
+        let body = { section: finalsection }
 
         fetch(`http://localhost:8080/api/forms`, {
             method: 'POST',
@@ -30,16 +46,30 @@ function CustomForm() {
                 console.error('Error:', error);
             });
     }
+
     const handleAddSection = () => {
-        const updatedSections = [...sections];
-        updatedSections.pop(); // Remove the last message
-        setsections(updatedSections);
+        const updatedSections = sections;
+        // updatedSections.pop(); // Remove the last message
+        // setsections(updatedSections);
+        updatedSections.pop()
         console.log(sections)
-        setsections([...sections, {
+        console.log("what i want", {
+            id: uuidv4(),
+            question: question,
+            statement: statement
+        })
+        setsections([...updatedSections,
+        {
+            id: uuidv4(),
+            question: question,
+            statement: statement
+        }, {
             id: uuidv4(),
             question: "",
             statement: ""
         }])
+        setquestion("")
+        setstatement("")
     }
     const handleRemoveSection = () => {
         console.log(sections)
@@ -50,6 +80,8 @@ function CustomForm() {
     const handleSubmitQuestions = () => {
 
     }
+    console.log("section length", sections.length)
+    console.log("final section", sections)
     return (
 
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
@@ -71,7 +103,7 @@ function CustomForm() {
                                 return <>
 
                                     {
-                                        index == sections.length - 1 && sections.length != 1 ?
+                                        index == sections.length - 1 || sections.length == 1 ?
                                             (
 
                                                 < div className="current pb-15" data-kt-stepper-element="content">
@@ -82,8 +114,6 @@ function CustomForm() {
                                                             {/* <!--begin::Title--> */}
                                                             <h1 className="fw-bold text-dark">Section end</h1>
                                                             {/* <!--end::Title--> */}
-                                                            {/* <!--begin::Description--> */}
-                                                            {/* <!--end::Description--> */}
                                                         </div>
                                                         {/* <!--end::Heading--> */}
                                                         {/* <!--begin::Input group--> */}
@@ -143,17 +173,17 @@ function CustomForm() {
                                                             </label>
                                                             {/* <!--end::Label--> */}
                                                             {/* <!--begin::Input--> */}
-                                                            <input disabled type="text" className="form-control form-control" placeholder="Enter Project Name" value={input1} onChange={(e) => { setInput1(e.target.value) }} name="settings_name" />
+                                                            <input disabled type="text" className="form-control form-control" placeholder="Enter Project Name" value={section.question} name="settings_name" />
                                                             {/* <!--end::Input--> */}
                                                         </div>
                                                         {/* <!--end::Input group--> */}
                                                         {/* <!--begin::Input group--> */}
                                                         <div className="fv-row mb-8">
                                                             {/* <!--begin::Label--> */}
-                                                            <label className="required fs-6 fw-semibold mb-2">Project Description</label>
+                                                            <label className="required fs-6 fw-semibold mb-2">Statement {index + 1}</label>
                                                             {/* <!--end::Label--> */}
                                                             {/* <!--begin::Input--> */}
-                                                            <textarea className="form-control form-control-solid" rows="3" placeholder="" value={input2} onChange={(e) => { setInput2(e.target.value) }} name="settings_description"></textarea>
+                                                            <textarea disabled className="form-control form-control" rows="3" placeholder="" value={section.statement} name="settings_description"></textarea>
                                                             {/* <!--end::Input--> */}
                                                         </div>
                                                         {/* <!--end::Input group--> */}

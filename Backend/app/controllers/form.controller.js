@@ -14,7 +14,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occured while creating the blog"
+                message: err.message || "Some error occured while creating the form data"
             })
         })
 }
@@ -27,7 +27,7 @@ exports.findAll = (req, res) => {
     )
         .catch(err => {
             res.status(500).send({
-                message: err.messsage || "Some error occured while retrieving blogs"
+                message: err.messsage || "Some error occured while retrieving form data"
             })
         })
 }

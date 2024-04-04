@@ -3,27 +3,13 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 import MessageIn from './MessageIn';
 import MessageOut from './MessageOut';
-
-function CustomForm() {
+import config from "../ChatbotKit/config.jsx";
+import MessageParser from "../ChatbotKit/MessageParser.jsx";
+import ActionProvider from "../ChatbotKit/ActionProvider.jsx";
+import Chatbot from "react-chatbot-kit";
+function CustomForm2() {
     const [section, setsection] = useState()
-    useEffect(() => {
-        fetch(`http://localhost:8080/api/forms`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Successfully sent")
-                console.log(data[0].section)
-                setsection(data[0].section)
-            })
-            .catch((error) => {
-                console.log("error while sending")
-                console.error('Error:', error);
-            });
-    }, [])
+
 
     return (
         // <!--begin::Content-->
@@ -36,48 +22,11 @@ function CustomForm() {
                     <div className="flex-lg-row-fluid ms-lg-5 ms-xl-5">
                         {/* <!--begin::Messenger--> */}
                         <div className="card" id="kt_chat_messenger">
-                            {/* <!--begin::Card header--> */}
-                            <div className="card-header" id="kt_chat_messenger_header">
-                                {/* <!--begin::Title--> */}
-                                <div className="card-title">
-                                    {/* <!--begin::User--> */}
-                                    <div className="d-flex justify-content-center flex-column me-3">
-                                        <a href="#" className="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">Form Filler</a>
-
-                                    </div>
-                                    {/* <!--end::User--> */}
-                                </div>
-                                {/* <!--end::Title--> */}
-                            </div>
-                            {/* <!--end::Card header--> */}
-                            {/* <!--begin::Card body--> */}
-                            <div className="card-body" id="kt_chat_messenger_body">
-                                {/* <!--begin::Messages--> */}
-                                <div className="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body" data-kt-scroll-offset="5px">
-                                    {/* <!--begin::Message(in)--> */}
-                                    <MessageIn />
-                                    {/* <!--end::Message(in)--> */}
-                                    {/* <!--begin::Message(out)--> */}
-                                    <MessageOut />
-                                    {/* <!--end::Message(out)--> */}
-                                </div>
-                                {/* <!--end::Messages--> */}
-                            </div>
-                            {/* <!--end::Card body--> */}
-                            {/* <!--begin::Card footer--> */}
-                            <div className="card-footer pt-4" id="kt_chat_messenger_footer">
-                                {/* <!--begin::Input--> */}
-                                <textarea className="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="Type a message"></textarea>
-                                {/* <!--end::Input--> */}
-                                {/* <!--begin:Toolbar--> */}
-                                <div className="d-flex flex-stack">
-                                    {/* <!--begin::Send--> */}
-                                    <button className="btn btn-primary" type="button" data-kt-element="send">Send</button>
-                                    {/* <!--end::Send--> */}
-                                </div>
-                                {/* <!--end::Toolbar--> */}
-                            </div>
-                            {/* <!--end::Card footer--> */}
+                            <Chatbot
+                                config={config}
+                                messageParser={MessageParser}
+                                actionProvider={ActionProvider}
+                            />
                         </div>
                         {/* <!--end::Messenger--> */}
                     </div>
@@ -410,4 +359,4 @@ function CustomForm() {
     )
 }
 
-export default CustomForm
+export default CustomForm2
