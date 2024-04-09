@@ -2,7 +2,11 @@ import React from 'react'
 import CategoriesSection from './CategoriesSection'
 import CreatePost from './CreatePost'
 import IndividualPost from './IndividualPost'
-
+const Post = {
+    Author: 'John Doe',
+    Date: 'March 2, 2024',
+    Content: 'Understanding Your Rights: A Guide to Personal Injury Claims Have you recently been injured due to someone elses negligence? Its crucial to know your rights and take appropriate steps to protect yourself. Our latest blog post provides a comprehensive guide to personal injury claims, covering everything from gathering evidence to filing a lawsuit. In this post, youll learn about the different types of personal injury cases, such as car accidents, slip and falls, and medical malpractice. Well delve into the key elements required to establish fault and liability, including negligence and causation. Youll discover valuable tips for documenting your injuries, preserving evidence, and seeking medical treatment. Navigating the legal process can be complex, but our post breaks it down into clear steps. We ll explain the importance of filing a timely claim, negotiating with insurance companies, and when it may be necessary to engage a personal injury attorney. Our goal is to empower you with the knowledge needed to make informed decisions throughout the legal journey.'}
+  
 
 function Forum() {
     return (
@@ -3352,7 +3356,7 @@ function Forum() {
                                             {/* <!--begin::Posts--> */}
                                             <div className="mb-10" id="kt_social_feeds_posts">
                                                 {/* <!--begin::Post 1--> */}
-                                                <IndividualPost />
+                                                <IndividualPost  Post={Post} Feed = {true}/>
 
                                             </div>
                                             {/* <!--end::Posts--> */}

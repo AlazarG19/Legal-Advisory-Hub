@@ -1,10 +1,14 @@
-import CustomForm from "./components/Forum/Forum"
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
+
 
 function App() {
 
   return (
     <>
-      <CustomForm />
+      <Router>
+         <Routes />
+      </Router>
     </>
   )
 }

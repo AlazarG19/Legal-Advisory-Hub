@@ -32,19 +32,23 @@ function Comment() {
           </span>
           {/* <!--end::Text--> */}
           {/* <!--begin::VoteButtons--> */}
-          <div className="d-flex align-items-center mt-3">
+          <div className="d-flex align-items-center">
             <VoteButtons />
+            <a href="#" className="ms-auto text-gray-400 text-hover-primary fw-semibold fs-7">
+              Reply
+            </a>
+            <hr className=" " /> {/* Add the separator */}
           </div>
+          
           {/* <!--end::VoteButtons--> */}
           {/* <!--begin::Reply--> */}
-          <a href="#" className="ms-auto text-gray-400 text-hover-primary fw-semibold fs-7">
-            Reply
-          </a>
+          
           {/* <!--end::Reply--> */}
         </div>
         {/* <!--end::Wrapper--> */}
       </div>
       {/* <!--end::Comment--> */}
+      
     </>
   );
 }

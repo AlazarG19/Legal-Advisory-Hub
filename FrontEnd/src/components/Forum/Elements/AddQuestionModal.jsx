@@ -54,11 +54,11 @@ function Component() {
 
   return (
     <>
-      <Button onClick={handleButtonClick}>Ask Question or Create post</Button>
+      <Button variant = 'secondary' onClick={handleButtonClick}>Ask a Question </Button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Add Question or Create Post</Modal.Title>
+          <Modal.Title>Ask Question or Create post </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ul className="nav nav-tabs">

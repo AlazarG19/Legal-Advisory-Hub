@@ -1,7 +1,39 @@
 import React from 'react'
 import Vote from "../Forum/Elements/voteButton"
 import Comment from './Elements/Comment'
-function IndividualPost() {
+import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
+function IndividualPost({Post, Feed}) {
+
+    const renderPostContent = () => {
+        if (Feed) {
+          const words = Post.Content.split(' ');
+          const limitedContent = words.slice(0, 25).join(' ');
+          return (
+            <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail`}>View detail</Link> </div>
+          );
+        } else {
+          return (
+            <>
+                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.Content}  </div>
+                <Card.Body>
+                <Card.Text className=" mb-4">
+                    Category: <Badge variant="primary">{Post.Category}</Badge>
+                </Card.Text>
+                <Card.Link href="#" className="text-center">
+                    <strong>Link to Experts </strong> {Post.expert}
+                </Card.Link>
+                <Card.Link href="#" className="text-center">
+                    <strong>Related Documents </strong>
+                </Card.Link>
+                </Card.Body>    
+            </>
+            
+          );
+        }
+    }
+
     return (
         <div className="card card-flush mb-10">
             {/* <!--begin::Card header--> */}
@@ -16,109 +48,25 @@ function IndividualPost() {
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
                         {/* <!--begin::Name--> */}
-                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">Grace Logan</a>
+                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.Author}</a>
                         {/* <!--end::Name--> */}
                         {/* <!--begin::Date--> */}
-                        <span className="text-gray-400 fw-semibold d-block">Yestarday at 5:06 PM</span>
+                        <span className="text-gray-400 fw-semibold d-block">{Post.Date}</span>
                         {/* <!--end::Date--> */}
                     </div>
                     {/* <!--end::Info--> */}
                 </div>
                 {/* <!--end::Author--> */}
                 {/* <!--begin::Card toolbar--> */}
-                <div className="card-toolbar">
-                    {/* <!--begin::Menu wrapper--> */}
-                    <div className="m-0">
-                        {/* <!--begin::Menu toggle--> */}
-                        <button className="btn btn-icon btn-color-gray-400 btn-active-color-primary me-n4" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
-                            {/* <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg--> */}
-                            <span className="svg-icon svg-icon-1">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4" fill="currentColor" />
-                                    <rect x="11" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor" />
-                                    <rect x="15" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor" />
-                                    <rect x="7" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor" />
-                                </svg>
-                            </span>
-                            {/* <!--end::Svg Icon--> */}
-                        </button>
-                        {/* <!--end::Menu toggle--> */}
-                        {/* <!--begin::Menu 2--> */}
-                        <div className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3">
-                                <div className="menu-content fs-6 text-dark fw-bold px-3 py-4">Quick Actions</div>
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                            {/* <!--begin::Menu separator--> */}
-                            <div className="separator mb-3 opacity-75"></div>
-                            {/* <!--end::Menu separator--> */}
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3">
-                                <a href="#" className="menu-link px-3">New Ticket</a>
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3">
-                                <a href="#" className="menu-link px-3">New Customer</a>
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                {/* <!--begin::Menu item--> */}
-                                <a href="#" className="menu-link px-3">
-                                    <span className="menu-title">New Group</span>
-                                    <span className="menu-arrow"></span>
-                                </a>
-                                {/* <!--end::Menu item--> */}
-                                {/* <!--begin::Menu sub--> */}
-                                <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                                    {/* <!--begin::Menu item--> */}
-                                    <div className="menu-item px-3">
-                                        <a href="#" className="menu-link px-3">Admin Group</a>
-                                    </div>
-                                    {/* <!--end::Menu item--> */}
-                                    {/* <!--begin::Menu item--> */}
-                                    <div className="menu-item px-3">
-                                        <a href="#" className="menu-link px-3">Staff Group</a>
-                                    </div>
-                                    {/* <!--end::Menu item--> */}
-                                    {/* <!--begin::Menu item--> */}
-                                    <div className="menu-item px-3">
-                                        <a href="#" className="menu-link px-3">Member Group</a>
-                                    </div>
-                                    {/* <!--end::Menu item--> */}
-                                </div>
-                                {/* <!--end::Menu sub--> */}
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3">
-                                <a href="#" className="menu-link px-3">New Contact</a>
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                            {/* <!--begin::Menu separator--> */}
-                            <div className="separator mt-3 opacity-75"></div>
-                            {/* <!--end::Menu separator--> */}
-                            {/* <!--begin::Menu item--> */}
-                            <div className="menu-item px-3">
-                                <div className="menu-content px-3 py-3">
-                                    <a className="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
-                                </div>
-                            </div>
-                            {/* <!--end::Menu item--> */}
-                        </div>
-                        {/* <!--end::Menu 2--> */}
-                    </div>
-                    {/* <!--end::Menu wrapper--> */}
-                </div>
+               
                 {/* <!--end::Card toolbar--> */}
             </div>
             {/* <!--end::Card header--> */}
             {/* <!--begin::Card body--> */}
             <div className="card-body">
                 {/* <!--begin::Post content--> */}
-                <div className="fs-6 fw-normal text-gray-700 mb-5">There are two main approaches you can take to writing amazing blog post headlines. You can either decide on your final headline before outstanding you write the most of the rest of your creative post</div>
+                {renderPostContent()}
+               
                 {/* <!--end::Post content--> */}
                 {/* <!--begin::Post media--> */}
                 <div className="row g-7 h-250px h-md-375px">
@@ -200,7 +148,7 @@ function IndividualPost() {
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                <i className="bi bi-heart fs-2 me-1"></i>47k Likes</a>
+                                <i className="bi bi-hand-thumbs-up fs-2 me-1"></i>47k Likes</a>
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
