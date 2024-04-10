@@ -1,22 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Vote from "../Forum/Elements/voteButton"
 import Comment from './Elements/Comment'
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 function IndividualPost({Post, Feed}) {
-
+    
     const renderPostContent = () => {
         if (Feed) {
-          const words = Post.Content.split(' ');
+          const words = Post.body.split(' ');
           const limitedContent = words.slice(0, 25).join(' ');
           return (
-            <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail`}>View detail</Link> </div>
+            <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail/${Post._id}`}>View detail</Link> </div>
           );
         } else {
           return (
             <>
-                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.Content}  </div>
+                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.body}  </div>
                 <Card.Body>
                 <Card.Text className=" mb-4">
                     Category: <Badge variant="primary">{Post.Category}</Badge>
@@ -48,7 +48,7 @@ function IndividualPost({Post, Feed}) {
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
                         {/* <!--begin::Name--> */}
-                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.Author}</a>
+                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.author}</a>
                         {/* <!--end::Name--> */}
                         {/* <!--begin::Date--> */}
                         <span className="text-gray-400 fw-semibold d-block">{Post.Date}</span>

@@ -1,7 +1,9 @@
-import React from 'react'
+
+import React, { useState, useEffect } from 'react';
 import Header from '../Header'
 import CategoriesSection from './CategoriesSection'
 import IndividualPost from './IndividualPost'
+import { useParams } from 'react-router-dom';
 
 const Post = {
     Author: 'John Doe',
@@ -12,6 +14,21 @@ const Post = {
 }
 
 function DetailPost() {
+    const { id } = useParams();
+
+    const [Post, setPost] = useState([]);
+
+    useEffect(() => {
+        console.log('http://localhost:8080/api/questions/')
+        fetch(`http://localhost:8080/api/questions/${id}`).then(res => res.json()).then(result => {
+          setPost(result)
+          console.log(JSON.stringify(result))
+        }).catch((error) => {
+          console.log(error)
+        });
+      }, [])
+    
+
     return (
         <>
             {/* <!--begin::Main--> */}
