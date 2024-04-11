@@ -16,7 +16,7 @@ exports.create = (req, res) => {
 			author:req.body.author,
 			upvotes:req.body.upvotes,
 			downvotes:req.body.downvotes,
-			answer:req.body.answer
+			category:req.body.category
         });
 
   // Save Question in the database

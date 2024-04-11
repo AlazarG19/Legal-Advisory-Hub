@@ -14,15 +14,16 @@ module.exports = mongoose => {
 				type:String,
 				required:true
 			},
+			category:{
+				type:String,
+				required:true
+			},
 			upvotes:{
 				type:Number
 			},
 			downvotes:{
 				type:String,
 			},
-			answer:{
-				type:String,
-			}	
 		},{ timestamps: true }
          )
     );
