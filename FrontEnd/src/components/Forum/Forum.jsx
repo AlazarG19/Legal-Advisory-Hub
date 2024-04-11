@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CategoriesSection from './CategoriesSection'
 import CreatePost from './CreatePost'
 import IndividualPost from './IndividualPost'
+import IndividualQuestion from './IndividualQuestion';
 // const Post = {
 //     Author: 'John Doe',
 //     Date: 'March 2, 2024',
@@ -3369,7 +3370,7 @@ function Forum() {
                                             <div className="mb-10" id="kt_social_feeds_posts">
                                                 {/* <!--begin::Post 1--> */}
                                                 {Post.map((item, index) => (
-                                                    <IndividualPost  Post={item} Feed = {true}/>
+                                                    <IndividualQuestion  Question={item} />
                                                 ))}
                                                 
 

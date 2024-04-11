@@ -4,7 +4,7 @@ import Comment from './Elements/Comment'
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
-function IndividualPost({Post, Feed}) {
+function IndividualAnswer({Post, Feed}) {
     
     const renderPostContent = () => {
         if (Feed) {
@@ -51,7 +51,7 @@ function IndividualPost({Post, Feed}) {
                         <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.author}</a>
                         {/* <!--end::Name--> */}
                         {/* <!--begin::Date--> */}
-                        <span className="text-gray-400 fw-semibold d-block">{new Date(Post.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        <span className="text-gray-400 fw-semibold d-block">{Post.Date}</span>
                         {/* <!--end::Date--> */}
                     </div>
                     {/* <!--end::Info--> */}
@@ -69,7 +69,64 @@ function IndividualPost({Post, Feed}) {
                
                 {/* <!--end::Post content--> */}
                 {/* <!--begin::Post media--> */}
-                
+                <div className="row g-7 h-250px h-md-375px">
+                    {/* <!--begin::Col--> */}
+                    <div className="col-6">
+                        {/* <!--begin::Item--> */}
+                        <a className="d-block card-rounded overlay h-100" data-fslightbox="lightbox-projects" href="">
+                            {/* <!--begin::Image--> */}
+                            <div className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" style={{ backgroundImage: `url(/assets/media/stock/600x600/img-23.jpg)` }}></div>
+                            {/* <!--end::Image--> */}
+                            {/* <!--begin::Action--> */}
+                            <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                <i className="bi bi-eye-fill fs-3x text-white"></i>
+                            </div>
+                            {/* <!--end::Action--> */}
+                        </a>
+                        {/* <!--end::Item--> */}
+                    </div>
+                    {/* <!--end::Col--> */}
+                    {/* <!--begin::Col--> */}
+                    <div className="col-6">
+                        {/* <!--begin::Row--> */}
+                        <div className="row g-7 h-250px h-md-375px">
+                            {/* <!--begin::Col--> */}
+                            <div className="col-lg-12">
+                                {/* <!--begin::Item--> */}
+                                <a className="d-block card-rounded overlay h-100" data-fslightbox="lightbox-projects" href="">
+                                    {/* <!--begin::Image--> */}
+                                    <div className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" style={{ backgroundImage: `url(/assets/media/stock/600x600/img-22.jpg)` }}></div>
+                                    {/* <!--end::Image--> */}
+                                    {/* <!--begin::Action--> */}
+                                    <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                        <i className="bi bi-eye-fill fs-3x text-white"></i>
+                                    </div>
+                                    {/* <!--end::Action--> */}
+                                </a>
+                                {/* <!--end::Item--> */}
+                            </div>
+                            {/* <!--end::Col--> */}
+                            {/* <!--begin::Col--> */}
+                            <div className="col-lg-12">
+                                {/* <!--begin::Item--> */}
+                                <a className="d-block card-rounded overlay h-100" data-fslightbox="lightbox-projects" href="">
+                                    {/* <!--begin::Image--> */}
+                                    <div className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" style={{ backgroundImage: `url(/assets/media/stock/600x600/img-21.jpg)` }}></div>
+                                    {/* <!--end::Image--> */}
+                                    {/* <!--begin::Action--> */}
+                                    <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                        <i className="bi bi-eye-fill fs-3x text-white"></i>
+                                    </div>
+                                    {/* <!--end::Action--> */}
+                                </a>
+                                {/* <!--end::Item--> */}
+                            </div>
+                            {/* <!--end::Col--> */}
+                        </div>
+                        {/* <!--end::Row--> */}
+                    </div>
+                    {/* <!--end::Col--> */}
+                </div>
                 {/* <!--end::Post media--> */}
             </div>
             {/* <!--end::Card body--> */}
@@ -85,17 +142,20 @@ function IndividualPost({Post, Feed}) {
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
-                            <i class="bi bi-pencil-fill"></i> Answer</a>
+                                <i className="bi bi-chat-square fs-2 me-1"></i>2 Comments</a>
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                <i className="bi bi-hand-thumbs-up"></i> Upvote</a>
+                                <i className="bi bi-hand-thumbs-up fs-2 me-1"></i>47k Likes</a>
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
-                        
+                        <li className="nav-item">
+                            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4">
+                                <i className="bi bi-bookmark fs-2 me-1"></i>900 Saves</a>
+                        </li>
                         {/* <!--end::Item--> */}
                     </ul>
                     {/* <!--end::Nav--> */}
@@ -156,4 +216,4 @@ function IndividualPost({Post, Feed}) {
     )
 }
 
-export default IndividualPost
+export default IndividualAnswer
