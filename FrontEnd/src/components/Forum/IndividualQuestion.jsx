@@ -4,25 +4,22 @@ import Comment from './Elements/Comment'
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
-function IndividualQuestion({Question}) {
+function IndividualQuestion({Question} ) {
 
 
     return (
-        <div className="card card-flush mb-10">
+        <div className="card card-flush">
             {/* <!--begin::Card header--> */}
             <div className="card-header pt-9">
                 {/* <!--begin::Author--> */}
                 <div className="d-flex align-items-center">
                     {/* <!--begin::Avatar--> */}
-                    <div className="symbol symbol-50px me-5">
-                        <img src="/assets/media/avatars/300-4.jpg" className="" alt="" />
-                    </div>
+                  
                     {/* <!--end::Avatar--> */}
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
                         {/* <!--begin::Name--> */}
-                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Question.author}</a>
-                        {/* <!--end::Name--> */}
+    
                         {/* <!--begin::Date--> */}
                         <span className="text-gray-400 fw-semibold d-block">{new Date(Question.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                         {/* <!--end::Date--> */}
@@ -38,8 +35,19 @@ function IndividualQuestion({Question}) {
             {/* <!--begin::Card body--> */}
             <div className="card-body">
                 {/* <!--begin::Post content--> */}
-                <div className="fs-4 font-weight-bold  text-gray-700"><strong>{Question.title}</strong>  </div>
-               
+                <div className="fs-4 font-weight-bold  text-gray-700"><strong> <Link to={`/answers/${Question._id}`}> {Question.title} </Link> </strong>  </div> 
+                <div className="fs-8 font-weight-bold text-gray-700 text-right m-3"></div>
+                <Container fluid>
+                        <Row>
+                            <Col className="q-text qu-dynamicFontSize--small qu-mt--small qu-color--gray_light qu-passColorToLinks text-right">
+                            <span className="q-text qu-bold">
+                            <Link to={`/answers/${Question._id}`}> 17 Answers </Link>
+                            </span>
+                            <span> · </span>
+                            <span>{Question.category}</span>
+                            </Col>
+                        </Row>
+                        </Container>
                 {/* <!--end::Post content--> */}
                 {/* <!--begin::Post media--> */}
                 
@@ -66,6 +74,7 @@ function IndividualQuestion({Question}) {
                             <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
                                 <i className="bi bi-hand-thumbs-up"></i> Upvote</a>
                         </li>
+                       
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
                         
@@ -76,53 +85,10 @@ function IndividualQuestion({Question}) {
                     <div className="separator separator-solid mb-1"></div>
                     {/* <!--end::Separator--> */}
                     {/* <!--begin::Comments--> */}
-                    <div className="collapse show" id="kt_social_feeds_comments_1">
-                       
-                       <Comment/>
-                    </div>
+                 
                     {/* <!--end::Collapse--> */}
                 </div>
                 {/* <!--end::Info--> */}
-                {/* <!--begin::Comment form--> */}
-                <div className="d-flex align-items-center">
-                    {/* <!--begin::Author--> */}
-                    <div className="symbol symbol-35px me-3">
-                        <img src="/assets/media/avatars/300-3.jpg" alt="" />
-                    </div>
-                    {/* <!--end::Author--> */}
-                    {/* <!--begin::Input group--> */}
-                    <div className="position-relative w-100">
-                        {/* <!--begin::Input--> */}
-                        <textarea type="text" className="form-control form-control-solid border ps-5" rows="1" name="search" defaultValue="" data-kt-autosize="true" placeholder="Write your comment.."></textarea>
-                        {/* <!--end::Input--> */}
-                        {/* <!--begin::Actions--> */}
-                        <div className="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
-                            {/* <!--begin::Btn--> */}
-                            <button className="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                <i className="fonticon-attach fs-2"></i>
-                            </button>
-                            {/* <!--end::Btn--> */}
-                            {/* <!--begin::Btn--> */}
-                            <button className="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                <i className="fonticon-smile fs-2"></i>
-                            </button>
-                            {/* <!--end::Btn--> */}
-                            {/* <!--begin::Btn--> */}
-                            <button className="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                <i className="fonticon-gallery fs-2"></i>
-                            </button>
-                            {/* <!--end::Btn--> */}
-                            {/* <!--begin::Btn--> */}
-                            <button className="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                <i className="fonticon-location fs-2"></i>
-                            </button>
-                            {/* <!--end::Btn--> */}
-                        </div>
-                        {/* <!--end::Actions--> */}
-                    </div>
-                    {/* <!--end::Input group--> */}
-                </div>
-                {/* <!--end::Comment form--> */}
             </div>
             {/* <!--end::Card footer--> */}
         </div>

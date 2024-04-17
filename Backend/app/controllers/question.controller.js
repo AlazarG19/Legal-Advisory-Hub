@@ -47,6 +47,31 @@ exports.findAll = (req, res) => {
       });
     });
 };
+// Retrieve all question of the same categories from the database.
+exports.findCategories = (req, res) => {
+  const id = req.params.id;
+
+  Question.findById({_id: id})
+    .then(result => {
+      Question.find({category: result.category})
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving questions."
+        });
+      });    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Category  with id=" + id });
+    });
+
+  // console.log(result)
+
+};
 
 // Find a single Question with an id
 exports.findOne = (req, res) => {

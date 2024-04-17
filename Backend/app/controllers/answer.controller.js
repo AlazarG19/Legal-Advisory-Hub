@@ -34,19 +34,17 @@ exports.create = (req, res) => {
 
 // Retrieve all answers from the database.
 exports.findAll = (req, res) => {
-  const questionId = req.body.questionId;
-  Answer.find(questionId)
-    .then(data => {
+  const questionId = req.params.id;
+  Answer.find({ questionId: questionId })
+    .then(data => { 
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving answers."
+        message: err.message || "Some error occurred while retrieving answers."
       });
     });
 };
-
 // Find a single answer with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

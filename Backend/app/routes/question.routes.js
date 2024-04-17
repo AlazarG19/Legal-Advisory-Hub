@@ -5,6 +5,7 @@ module.exports = app => {
     router.post("/", question.create);
     // Retrieve all Question
     router.get("/", question.findAll);
+    router.get("/category/:id", question.findCategories);
     // Retrieve a single question with id
     router.get("/:id", question.findOne);
     // Update a question with id

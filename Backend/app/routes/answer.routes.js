@@ -4,7 +4,7 @@ module.exports = app => {
     // Create a new answer
     router.post("/", answer.create);
     // Retrieve all Answer
-    router.get("/", answer.findAll);
+    router.get("/all/:id", answer.findAll);
     // Retrieve a single answer with id
     router.get("/:id", answer.findOne);
     // Update a answer with id
