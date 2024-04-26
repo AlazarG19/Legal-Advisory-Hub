@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 const MessageParser = ({ children, actions }) => {
     const parse = (message) => {
         actions.handleOverall(message)
-        if (message.includes('start')) {
-            console.log("hello is about to be executed")
-            actions.handleHello();
-        }
+
     };
 
     return (
