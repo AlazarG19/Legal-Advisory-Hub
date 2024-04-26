@@ -2,7 +2,7 @@ import React from "react";
 import Aside from "./Aside";
 import Content from "./Content";
 import Header from "./Header";
-import Documents from "./Documents";
+import Documents from "./Documents/Admin/Documents";
 const Dashboard = () => {
   return (
     <div>

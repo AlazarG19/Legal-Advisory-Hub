@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Documents from "./components/Documents";
+import Documents from "./components/Documents/User/Documents";
 import Dashboard from "./components/dashboard";
-import Files from "./components/Files";
+import Files from "./components/Documents/User/Files";
 
 function App() {
   return (

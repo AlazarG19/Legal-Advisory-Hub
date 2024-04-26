@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./Header";
-import Aside from "./Aside";
+import Header from "../../Header";
+import Aside from "../../Aside";
 const Documents = () => {
   return (
     <div>
