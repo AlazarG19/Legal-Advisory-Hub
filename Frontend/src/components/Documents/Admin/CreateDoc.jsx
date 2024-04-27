@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { Button, Modal, Alert } from "react-bootstrap";
+
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { Button, Modal, Alert } from "react-bootstrap";
 
 function CreateDoc() {
   const [show, setShow] = useState(false);
@@ -13,10 +14,6 @@ function CreateDoc() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [showFillFieldsAlert, setShowFillFieldsAlert] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -33,12 +30,10 @@ function CreateDoc() {
     try {
       setLoading(true);
 
-      if (!isFormValid) {
-        setShowFillFieldsAlert(true);
+      if (title.trim() === "" || description.trim() === "" || file === null) {
+        enqueueSnackbar("Please fill all fields", { variant: "error" });
         return;
       }
-
-      setShowSuccessAlert(false); // Reset the showSuccessAlert state to false
 
       const formData = new FormData();
       formData.append("title", title);
@@ -49,23 +44,20 @@ function CreateDoc() {
       await axios.post("http://localhost:5005/Docs", formData, {});
 
       setLoading(false);
-      enqueueSnackbar("Book Created successfully", { variant: "success" });
-      navigate("/create");
+      enqueueSnackbar("Document created successfully", { variant: "success" });
+      navigate("/documents");
       console.log("Document created successfully");
     } catch (error) {
       console.error(error);
       setLoading(false);
-      enqueueSnackbar("Error", { variant: "error" });
+      enqueueSnackbar("Error creating document", { variant: "error" });
       console.log("Error creating document");
     }
   };
-
-  const isFormValid =
-    title.trim() !== "" && description.trim() !== "" && file !== null;
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
+        Create New Document
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -296,9 +288,11 @@ function CreateDoc() {
             </div>
           </form>
         </Modal.Body>
-        <Button variant="primary" onClick={handleSaveDocument}>
-          Save
-        </Button>
+        <div className=" m-4 d-flex justify-content-cente">
+          <Button variant="primary" onClick={handleSaveDocument}>
+            Save
+          </Button>
+        </div>
       </Modal>
     </>
   );
