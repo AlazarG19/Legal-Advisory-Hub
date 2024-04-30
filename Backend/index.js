@@ -9,6 +9,22 @@ const offers = require('./app/models/offers');
 const room = require('./app/models/room');
 const message = require('./app/models/messages');
 
+require("dotenv").config();
+//enale sever accept json 
+app.use(express.json())
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.get("/", async (req, res) => {
+    return res.send("hello")
+})
+
+var corsOptions = {
+    origin: "*"
+};
+
+app.use(cors(corsOptions));
+
+
 
 
 const CHAPA_AUTH_KEY = 'CHASECK_TEST-AluGHWd8Xjp9Ya6voAW7CERLkf6JXjEK';
@@ -224,20 +240,6 @@ app.get('/client/:id', async (req, res) => {
 
 
 
-require("dotenv").config();
-//enale sever accept json 
-app.use(express.json())
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.get("/", async (req, res) => {
-    return res.send("hello")
-})
-
-var corsOptions = {
-    origin: "*"
-};
-
-app.use(cors(corsOptions));
 
 db.mongoose
     .connect(process.env.MONGO_URI, {
