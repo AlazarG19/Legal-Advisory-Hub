@@ -101,8 +101,120 @@ const Clients = () => {
       <Navigation />
 
       <div className="row">
+        
+      <div className="col-lg-6 col-xl-3">
+  {/*begin::Contacts*/}
+  <div className="card card-flush" id="kt_contacts_list">
+    {/*begin::Card header*/}
+    <div className="card-header pt-7" id="kt_contacts_list_header">
+      {/*begin::Form*/}
+      <form
+        className="d-flex align-items-center position-relative w-100 m-0"
+        autoComplete="off"
+      >
+        {/*begin::Icon*/}
+        {/*begin::Svg Icon | path: icons/duotune/general/gen021.svg*/}
+        <span className="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+          <svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              opacity="0.5"
+              x="17.0365"
+              y="15.1223"
+              width="8.15546"
+              height={2}
+              rx={1}
+              transform="rotate(45 17.0365 15.1223)"
+              fill="currentColor"
+            />
+            <path
+              d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+              fill="currentColor"
+            />
+          </svg>
+        </span>
+        {/*end::Svg Icon*/}
+        {/*end::Icon*/}
+        {/*begin::Input*/}
+        <input
+          type="text"
+          className="form-control form-control-solid ps-13"
+          name="search"
+          defaultValue=""
+          placeholder="Search contacts"
+        />
+        {/*end::Input*/}
+      </form>
+      {/*end::Form*/}
+    </div>
+    {/*end::Card header*/}
+    {/*begin::Card body*/}
+    <div className="card-body pt-5" id="kt_contacts_list_body">
+      {/*begin::List*/}
+      <div
+        className="scroll-y me-n5 pe-5 h-300px h-xl-auto"
+        data-kt-scroll="true"
+        data-kt-scroll-activate="{default: false, lg: true}"
+        data-kt-scroll-max-height="auto"
+        data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_contacts_list_header"
+        data-kt-scroll-wrappers="#kt_content, #kt_contacts_list_body"
+        data-kt-scroll-stretch="#kt_contacts_list, #kt_contacts_main"
+        data-kt-scroll-offset="5px"
+        style={{ maxHeight: 764 }}
+      >
+        {clients.map((client, index) => (
+  <button
+    key={index}
+    className={`d-flex flex-stack py-4 list-group-item list-group-item-action ${
+      selectedClient === client ? "active" : ""
+    }`}
+    onClick={() => handleClientSelect(client)}
+  >
+    {/*begin::Details*/}
+    <div className="d-flex align-items-center">
+      {/*begin::Avatar*/}
+      <div className="symbol symbol-40px symbol-circle">
+        <img alt="Pic" src="assets/media/avatars/300-6.jpg" />
+      </div>
+      {/*end::Avatar*/}
+      {/*begin::Details*/}
+      <div className="ms-4">
+        <a
+          href="../../demo1/dist/apps/contacts/view-contact.html"
+          className="fs-6 fw-bold text-gray-900 text-hover-primary mb-2"
+        >
+          {client.name}
+        </a>
+        <div className="fw-semibold fs-7 text-muted">smith@kpmg.com</div>
+      </div>
+      {/*end::Details*/}
+    </div>
+    {/*end::Details*/}
+  </button>
+))}
+<div className="separator separator-dashed d-none" />
+
+      </div>
+      {/*end::List*/}
+    </div>
+    {/*end::Card body*/}
+  </div>
+  {/*end::Contacts*/}
+</div>
+
+        
+        
+        
+        
+        
         <div className="col-3 bg-light">
           <h4 className="text-center mt-3">Clients</h4>
+
           <div className="list-group">
             {/* Dynamically generate client list */}
             {clients.map((client, index) => (
@@ -119,6 +231,7 @@ const Clients = () => {
             ))}
           </div>
         </div>
+
         <div className="col-9">
           <div className="App">
             {!showChat ? (
