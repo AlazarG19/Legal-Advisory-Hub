@@ -221,6 +221,13 @@ app.get('/client/:id', async (req, res) => {
     }
   });
 
+  app.get('/getMessage/:id', (req, res) => {
+    const id = req.params.id;
+    message.find({roomId:id})
+        .then(messages => res.json(messages))
+        .catch(err => res.json(err));
+  });
+
 
 
 require("dotenv").config();
