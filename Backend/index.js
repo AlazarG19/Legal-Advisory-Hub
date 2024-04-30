@@ -71,6 +71,15 @@ app.post("/accept-payment", async (req, res) => {
 });
 
 
+
+
+app.get('/getFreelancers', (req, res) => {
+    users.find({})
+        .then(user => res.json(user))
+        .catch(err => res.json(err));
+});
+
+
 require("dotenv").config();
 //enale sever accept json 
 app.use(express.json())
