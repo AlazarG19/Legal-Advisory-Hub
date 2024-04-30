@@ -144,6 +144,30 @@ app.get('/getRoom/:id', (req, res) => {
 });
 
 
+app.get('/client/:id', async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const conversation = await room.findOne({ userId });
+      console.log(conversation)
+  
+      if (!conversation) {
+        return res.status(404).json({ error: 'Conversation not found' });
+      }
+      const user = await users.findById(conversation.clientId);
+      console.log(user)
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+  
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+
 
 
 require("dotenv").config();
