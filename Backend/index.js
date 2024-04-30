@@ -197,6 +197,26 @@ app.get('/client/:id', async (req, res) => {
   });
 
 
+  app.post('/createMessage', async (req, res) => {
+    try {
+      const { text, roomId, author } = req.body;
+  
+      const newMessage = new message({
+        text,
+        roomId,
+        author
+      });
+  
+      await newMessage.save();
+  
+      res.status(201).json(newMessage);
+    } catch (error) {
+      console.error('Error creating message:', error);
+      res.status(500).json({ error: 'Error creating message' });
+    }
+  });
+
+
 
 require("dotenv").config();
 //enale sever accept json 
