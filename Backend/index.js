@@ -162,6 +162,24 @@ app.get('/client/:id', async (req, res) => {
     }
   });
 
+  app.post('/createRoom', async (req, res) => {
+    try {
+        const { participants, roomId, userId, clientId } = req.body;
+  
+        const newRoom = new room({ 
+            participants,
+            roomId,
+            userId,
+            clientId
+        });
+        await newRoom.save();
+  
+        res.status(201).send("Room created successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating room");
+    }
+  });
 
 
 
