@@ -75,6 +75,15 @@ app.get('/getFreelancers', (req, res) => {
 });
 
 
+app.get('/getFreelancer/:id', (req, res) => {
+    const id = req.params.id;
+    users.findById({_id:id})
+        .then(user => res.json(user))
+        .catch(err => res.json(err));
+});
+
+
+
 require("dotenv").config();
 //enale sever accept json 
 app.use(express.json())
