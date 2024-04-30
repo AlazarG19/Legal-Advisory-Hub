@@ -181,6 +181,21 @@ app.get('/client/:id', async (req, res) => {
     }
   });
 
+  app.post('/getRoomId', async (req, res) => {
+    const { clientId, userId } = req.body;
+    try {
+      const roomId = await room.findOne({ clientId, userId });
+      if (roomId) {
+        res.status(200).json({ roomId: roomId.roomId });
+      } else {
+        res.status(404).json({ message: 'No room found for the provided client and user IDs' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
 
 
 require("dotenv").config();
