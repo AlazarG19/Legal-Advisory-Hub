@@ -1,7 +1,7 @@
 import  { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import axios from 'axios'
-import '../../public/assets/css/chat.css'
+import '../../../public/assets/css/chat.css'
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
