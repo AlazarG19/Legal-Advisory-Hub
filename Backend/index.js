@@ -131,6 +131,12 @@ app.post('/clientlogin', async (req, res) => {
         .catch(err => res.json(err));
 });
 
+app.get('/getRoom/:id', (req, res) => {
+    const id = req.params.id;
+    room.find({userId:id})
+        .then(rooms => res.json(rooms))
+        .catch(err => res.json(err));
+});
 
 
 
