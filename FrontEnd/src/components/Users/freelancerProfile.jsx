@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navigation from '../Navigation'
 const FreelancerProfile = () => {
     const handleLogout = () => {
         sessionStorage.clear();
@@ -9,6 +10,7 @@ const FreelancerProfile = () => {
     const navigate = useNavigate();
     return (
         <div className="container mt-5">
+            <Navigation/>
             <button className='btn btn-success' onClick={handleLogout}>Logout</button>
             <div className="row justify-content-center">
                 <div className="col-md-8">
