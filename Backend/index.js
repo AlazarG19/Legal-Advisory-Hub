@@ -10,11 +10,6 @@ const offers = require('./app/models/offers');
 const room = require('./app/models/room');
 const message = require('./app/models/messages');
 
-const users = require('./models/users');
-const offers = require('./models/offers');
-const room = require('./models/room');
-const message = require('./models/messages');
-
 
 
 const CHAPA_AUTH_KEY = 'CHASECK_TEST-AluGHWd8Xjp9Ya6voAW7CERLkf6JXjEK';
