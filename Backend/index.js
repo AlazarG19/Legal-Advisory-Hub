@@ -10,6 +10,15 @@ const offers = require('./app/models/offers');
 const room = require('./app/models/room');
 const message = require('./app/models/messages');
 
+const users = require('./models/users');
+const offers = require('./models/offers');
+const room = require('./models/room');
+const message = require('./models/messages');
+
+
+
+
+
 require("dotenv").config();
 //enale sever accept json 
 app.use(express.json())
