@@ -129,6 +129,13 @@ app.post('/clientlogin', async (req, res) => {
     }
   });
 
+  app.get('/getOffers/:id', (req, res) => {
+    const id = req.params.id;
+    offers.find({userid:id})
+        .then(offers => res.json(offers))
+        .catch(err => res.json(err));
+});
+
 
 
 
