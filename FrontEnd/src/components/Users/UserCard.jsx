@@ -7,8 +7,10 @@ const UserCard = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/getFreelancers')
             .then(result => {
-                setUsers(result.data);
-            })
+                console.log(result.data);
+                const filteredUsers = result.data.filter(user => user.userType === "freelancer");
+                setUsers(filteredUsers);
+            });
     }, []);
 
     return (
