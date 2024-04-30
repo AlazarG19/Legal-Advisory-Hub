@@ -87,6 +87,15 @@ app.get('/getFreelancer/:id', (req, res) => {
         .catch(err => res.json(err));
 });
 
+app.get('/getUser/:username', (req, res) => {
+    const username = req.params.username;
+    users.find({username:username})
+        .then(user => res.json(user))
+        .catch(err => res.json(err));
+});
+
+
+
 
 
 require("dotenv").config();
