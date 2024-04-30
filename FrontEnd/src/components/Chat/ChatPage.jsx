@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../../public/assets/css/chat.css'; 
+import '../../../public/assets/css/chat.css'; 
 import axios from 'axios';
 import Chat from './Chat';
 import { useParams, Link, useNavigate } from 'react-router-dom';
