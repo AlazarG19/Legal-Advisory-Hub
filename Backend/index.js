@@ -5,6 +5,15 @@ const cors = require("cors")
 const { Server } = require('socket.io');
 
 
+const users = require('./models/users');
+const offers = require('./models/offers');
+const room = require('./models/room');
+const message = require('./models/messages');
+
+
+
+
+
 require("dotenv").config();
 //enale sever accept json 
 app.use(express.json())
