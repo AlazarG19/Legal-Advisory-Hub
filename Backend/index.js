@@ -105,6 +105,26 @@ app.post('/clientlogin', async (req, res) => {
   });
 
 
+  app.post("/createOffer", async (req, res) => {
+    try {
+        const { title, userid, description, price } = req.body;
+        console.log(req.body);
+  
+        const offer = new offers({
+            title,
+            userid,
+            description,
+            price,
+        });
+        await offer.save();
+        res.status(201).json({ message: "offer created successfully", offer });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to create offer" });
+    }
+  });
+
+
 
 
 
