@@ -1,5 +1,67 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignInForm = () => {
+    const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/clientlogin', {
+        username,
+        password,
+      });
+      axios.get(`http://localhost:3000/getUser/${username}`).then(result => {
+            sessionStorage.setItem('user', JSON.stringify(result.data));
+            setUser(result.data);
+            console.log("from session", sessionStorage.getItem('user'));
+            if(result.data[0].userType == 'client'){
+              console.log("this user is a client")
+              navigate('/users')
+            }else{
+              console.log("this is a freelancer")
+              navigate('/freelancerProfile')
+            }
+
+            
+          
+        });
+        
+      if (response.status === 200) {
+        console.log('Login successful');
+        
+        
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setErrorMessage('Invalid username or password');
+      } else {
+        setErrorMessage('Internal server error');
+      }
+    }
+  };
+  useEffect(() => {
+
+    const storedJson = sessionStorage.getItem('user');
+    const userData = JSON.parse(storedJson);
+
+    if (userData) {
+      const userType = userData[0].userType;
+      if (userType == 'client') {
+        navigate('/users');
+      } else {
+        navigate('/freelancerProfile');
+      }
+    }else{
+      navigate('/login')
+    }
+  }, [navigate]);
     return (
         <div className="d-flex flex-column flex-lg-row flex-column-fluid">
             <div className="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style={{ backgroundImage: "url(/assets/media/misc/auth-bg.png)" }}>
@@ -19,7 +81,7 @@ const SignInForm = () => {
             <div className="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10">
                 <div className="d-flex flex-center flex-column flex-lg-row-fluid">
                     <div className="w-lg-500px p-10">
-                        <form className="form w-100" id="kt_sign_in_form" data-kt-redirect-url="../../demo1/dist/index.html" action="#">
+                        <form className="form w-100" id="kt_sign_in_form" onSubmit={handleSubmit}>
                             <div className="text-center mb-11">
                                 <h1 className="text-dark fw-bolder mb-3">Sign In</h1>
                                 <div className="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
@@ -39,10 +101,10 @@ const SignInForm = () => {
                                 <span className="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                             </div>
                             <div className="fv-row mb-8">
-                                <input type="text" placeholder="Email" name="email" className="form-control bg-transparent" />
+                                <input type="text" placeholder="Email" name="email" className="form-control bg-transparent" onChange={(e) => setUsername(e.target.value)}/>
                             </div>
                             <div className="fv-row mb-3">
-                                <input type="password" placeholder="Password" name="password" className="form-control bg-transparent" />
+                                <input type="password" placeholder="Password" name="password" className="form-control bg-transparent"  onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                             <div className="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
