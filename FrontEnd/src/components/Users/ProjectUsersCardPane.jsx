@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../public/assets/css/style.bundle.css'
+import '../../../public/assets/css/style.bundle.css'
 import Pagination from './Pagination';
 import UserCard from './UserCard';
 import { Link, useNavigate } from 'react-router-dom';
