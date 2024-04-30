@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import "../../public/assets/css/multistepform.css";
+import "../../../public/assets/css/multistepform.css";
 
 const CreateOffer = () => {
   const { id } = useParams();
