@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-import Chat from './Chat';
+import Chat from '../Chat/Chat';
 import {Link} from 'react-router-dom'
 import io from "socket.io-client";
 const Clients = () => {
