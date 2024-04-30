@@ -11,7 +11,6 @@ const FreelancerProfile = () => {
     return (
         <div className="container mt-5">
             <Navigation/>
-            <button className='btn btn-success' onClick={handleLogout}>Logout</button>
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">

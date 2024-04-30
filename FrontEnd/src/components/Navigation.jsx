@@ -1,8 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate('/login')
+  }
+  const handleViewProfile = () => {
+    navigate('/freelancerProfile')
+  }
 
   const navigateToClientsPage = () => {
     navigate("/clients");
@@ -6533,7 +6545,7 @@ const Navigation = () => {
                   id="kt_drawer_chat_toggle"
                 >
                   {/*begin::Svg Icon | path: icons/duotune/communication/com012.svg*/}
-                  <button
+                  <span
                     className="svg-icon svg-icon-1"
                     onClick={navigateToClientsPage}
                   >
@@ -6566,7 +6578,7 @@ const Navigation = () => {
                         fill="currentColor"
                       />
                     </svg>
-                  </button>
+                  </span>
                   {/*end::Svg Icon*/}
                   <span className="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink" />
                 </div>
@@ -6926,14 +6938,26 @@ const Navigation = () => {
                 id="kt_header_user_menu_toggle"
               >
                 {/*begin::Menu wrapper*/}
-                <div
-                  className="cursor-pointer symbol symbol-35px symbol-md-40px"
-                  data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                  data-kt-menu-attach="parent"
-                  data-kt-menu-placement="bottom-end"
-                >
-                  <img src="assets/media/avatars/300-3.jpg" alt="user" />
-                </div>
+                <div className="dropdown">
+      <div
+        className="cursor-pointer symbol symbol-35px symbol-md-40px"
+        onClick={toggleDropdown}
+      >
+        <img src="assets/media/avatars/300-3.jpg" alt="user" />
+      </div>
+      {isOpen && (
+        <div className="dropdown-menu show">
+          <button className="dropdown-item" onClick={handleViewProfile}>
+            ViewProfile
+          </button>
+          <button className="dropdown-item" onClick={handleLogout}>
+            Logout
+          </button>
+          {/* Add more dropdown items as needed */}
+        </div>
+      )}
+    </div>
+
                 {/*begin::User account menu*/}
                 <div
                   className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"

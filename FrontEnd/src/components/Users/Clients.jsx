@@ -3,6 +3,7 @@ import axios from 'axios';
 import Chat from '../Chat/Chat';
 import {Link} from 'react-router-dom'
 import io from "socket.io-client";
+import Navigation from '../Navigation';
 const Clients = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -100,6 +101,7 @@ const Clients = () => {
 
   return (
     <div className="container-fluid">
+      <Navigation />
       <div className="row">
         <div className="col-3 bg-light">
           <h4 className="text-center mt-3">Clients</h4>
