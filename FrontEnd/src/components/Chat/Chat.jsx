@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "../../../public/assets/css/chat.css";
 import ProfileHeader from "./ProfileHeader";
 
-function Chat({ socket, username, room }) {
+function Chat({ socket, username, room, clients }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [author, setAuthor] = useState("");
+  const [user, setUser] = useState([]);
+  const [userName, setUserName] = useState("");
   const [text, setText] = useState("");
+  const [id, setId] = useState("");
+  const [userType, setUserType] = useState("");
+  const [client, setClient] = useState([]);
   const [createdAt, setCreatedAt] = useState([]);
   const [dateInstance] = useState(new Date());
-  console.log(room);
+
+  
+ 
+  
   const sendMessage = async () => {
     if (currentMessage.trim() !== "") {
       const messageData = {
@@ -42,32 +50,41 @@ function Chat({ socket, username, room }) {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/getMessage/${room}`
-        );
-        const { author, text, createdAt } = response.data;
-        console.log(response.data);
-        setAuthor(author);
-        setText(text);
-        setCreatedAt(createdAt);
+        const response = await axios.get(`http://localhost:3000/getMessage/${room}`);
         setMessageList(response.data);
-        console.log("this is the message list", messageList);
+        console.log("this is the message list", response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
+  
+      const userString = sessionStorage.getItem('user');
+      if (userString) {
+        const user = JSON.parse(userString);
+        setUser(user);
+        if (user.length > 0) {
+          setId(user[0]._id);
+          setUserType(user[0].userType);
+          setUserName(clients[0].username)
+        }
+      }
+      // Set the clients received as props
+      setClient(clients);
     };
+  
     const handleReceiveMessage = (data) => {
       setMessageList((prevMessages) => [...prevMessages, data]);
     };
+  
     fetchMessages();
-
+  
     socket.on("receive_message", handleReceiveMessage);
-
+  
     return () => {
       socket.off("receive_message", handleReceiveMessage);
     };
-  }, [room, socket]);
-
+  }, [room, socket, clients]); // Add clients to the dependency array
+  
+  
   return (
     <div
       id="kt_drawer_chat"
@@ -80,7 +97,7 @@ function Chat({ socket, username, room }) {
       data-kt-drawer-direction="end"
       data-kt-drawer-toggle="#kt_drawer_chat_toggle"
       data-kt-drawer-close="#kt_drawer_chat_close"
-      style={{ width: "75vw", marginTop: "85px" }}
+      style={{ width: "37vw", marginTop: "85px", marginRight: '12.5vw' }}
     >
       {/*begin::Messenger*/}
       <div
@@ -88,7 +105,7 @@ function Chat({ socket, username, room }) {
         id="kt_drawer_chat_messenger"
       >
         {/*begin::Card header*/}
-        <ProfileHeader />
+        <ProfileHeader name = {userName}/>
         {/*begin::Card body*/}
         <div className="card-body" id="kt_drawer_chat_messenger_body">
           {/*begin::Messages*/}
@@ -101,7 +118,7 @@ function Chat({ socket, username, room }) {
             data-kt-scroll-dependencies="#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer"
             data-kt-scroll-wrappers="#kt_drawer_chat_messenger_body"
             data-kt-scroll-offset="0px"
-            style={{ height: 610 }}
+            style={{ height: 520 }}
           >
             {messageList.map((messageContent, index) =>
               username !== messageContent.author ? (
@@ -121,7 +138,7 @@ function Chat({ socket, username, room }) {
                           href="#"
                           className="fs-5 fw-bold text-gray-900 text-hover-primary me-1"
                         >
-                          Brian Cox
+                          {userName}
                         </a>
                         <span className="text-muted fs-7 mb-1">2 mins</span>
                       </div>
@@ -232,6 +249,12 @@ function Chat({ socket, username, room }) {
             >
               Send
             </button>
+            {/*end::Send*/}
+          </div>
+          <div className="d-flex flex-stack">
+            {/*begin::Send*/}
+            {userType == 'freelancer' ?  <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> : <></>}
+            {/* <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> */}
             {/*end::Send*/}
           </div>
           {/*end::Toolbar*/}
