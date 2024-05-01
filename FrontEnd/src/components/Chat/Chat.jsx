@@ -64,36 +64,44 @@ function Chat({ socket, username, room, clients }) {
         const response = await axios.get(`http://localhost:3000/getMessage/${room}`);
         setMessageList(response.data);
         console.log("this is the message list", response.data);
+  
+        const userString = sessionStorage.getItem('user');
+        if (userString) {
+          const user = JSON.parse(userString);
+          setUser(user);
+          if (user.length > 0) {
+            setId(user[0]._id);
+            setUserType(user[0].userType);
+            setUserName(clients[0].username);
+          }
+        }
+        // Set the clients received as props
+        setClient(clients);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
-  
-      const userString = sessionStorage.getItem('user');
-      if (userString) {
-        const user = JSON.parse(userString);
-        setUser(user);
-        if (user.length > 0) {
-          setId(user[0]._id);
-          setUserType(user[0].userType);
-          setUserName(clients[0].username)
-        }
-      }
-      // Set the clients received as props
-      setClient(clients);
     };
   
     const handleReceiveMessage = (data) => {
       setMessageList((prevMessages) => [...prevMessages, data]);
     };
   
+    // Initial fetch
     fetchMessages();
   
+    // Fetch messages every second
+    const intervalId = setInterval(fetchMessages, 1000);
+  
+    // Socket event handling
     socket.on("receive_message", handleReceiveMessage);
   
+    // Clean up
     return () => {
+      clearInterval(intervalId);
       socket.off("receive_message", handleReceiveMessage);
     };
-  }, [room, socket, clients]); // Add clients to the dependency array
+  }, [room, socket, clients]);
+  
   
   
   return (
@@ -109,11 +117,11 @@ function Chat({ socket, username, room, clients }) {
       data-kt-drawer-toggle="#kt_drawer_chat_toggle"
       data-kt-drawer-close="#kt_drawer_chat_close"
       style={{
-        width: userType === "freelancer" ? "37vw" : "72vw",
-        marginTop: "85px",
-        marginRight: userType === "freelancer" ? '12.5vw' : undefined
-      }}
-      
+  width: userType === "freelancer" ? "37vw" : "50vw",
+  marginTop: "85px",
+  marginRight: userType === "freelancer" ? '12.5vw' : undefined
+}}
+
     >
       {/*begin::Messenger*/}
       <div

@@ -87,7 +87,7 @@ const Payment = () => {
               onSubmit={handleSubmit}
             >
               <div className="mb-3">
-                  <label htmlFor="personName" className="form-label">
+                  <label htmlFor="personName" name="first_name" className="form-label">
                     Person's Name
                   </label>
                   <input
