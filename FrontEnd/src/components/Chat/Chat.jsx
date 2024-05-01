@@ -10,6 +10,7 @@ function Chat({ socket, username, room, clients }) {
   const [messageList, setMessageList] = useState([]);
   const [user, setUser] = useState([]);
   const [userName, setUserName] = useState("");
+  const [offerText, setOfferText] = useState("Create Offer");
   const [text, setText] = useState("");
   const [id, setId] = useState("");
   const [userType, setUserType] = useState("");
@@ -17,7 +18,17 @@ function Chat({ socket, username, room, clients }) {
   const [createdAt, setCreatedAt] = useState([]);
   const [dateInstance] = useState(new Date());
 
-  
+  useEffect(()=>{
+    axios
+      .get(`http://localhost:3000/getOffers/${id}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+          setOfferText("Complete Offer")
+          
+        }
+      })
+      .catch((error) => console.error(error));
+  })
  
   
   const sendMessage = async () => {
@@ -97,7 +108,12 @@ function Chat({ socket, username, room, clients }) {
       data-kt-drawer-direction="end"
       data-kt-drawer-toggle="#kt_drawer_chat_toggle"
       data-kt-drawer-close="#kt_drawer_chat_close"
-      style={{ width: "37vw", marginTop: "85px", marginRight: '12.5vw' }}
+      style={{
+        width: userType === "freelancer" ? "37vw" : "72vw",
+        marginTop: "85px",
+        marginRight: userType === "freelancer" ? '12.5vw' : undefined
+      }}
+      
     >
       {/*begin::Messenger*/}
       <div
@@ -253,7 +269,7 @@ function Chat({ socket, username, room, clients }) {
           </div>
           <div className="d-flex flex-stack">
             {/*begin::Send*/}
-            {userType == 'freelancer' ?  <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> : <></>}
+            {userType == 'freelancer' ?  <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >{offerText}</Link> : <></>}
             {/* <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> */}
             {/*end::Send*/}
           </div>
