@@ -238,6 +238,7 @@ const ChatPage = () => {
                       <Link
                         to={`/acceptOffer/${id}`}
                         className="btn container btn-primary mt-5"
+                        target="_blank"
                       >
                         Accept Offer
                       </Link>
