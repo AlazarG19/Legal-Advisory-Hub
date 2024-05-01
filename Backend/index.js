@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const db = require("./app/models");
 const cors = require("cors")
+const axios = require('axios');
 const { Server } = require('socket.io');
 
 const users = require('./app/models/users');
@@ -55,7 +56,7 @@ app.post("/accept-payment", async (req, res) => {
      last_name: last_name,
      phone_number: phone_number,
      tx_ref: tx_ref,
-     return_url: "#",
+    
    }
    let resp = "";
    await axios
@@ -255,7 +256,6 @@ db.mongoose
     });
 
 //enale sever accept json 
-app.use(express.json())
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 require("./app/routes/form.routes")(app)
