@@ -3,9 +3,40 @@ import Dropdown from "react-bootstrap/Dropdown";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-const Files = () => {
+const CategoryDocuments = () => {
   const { categoryName } = useParams(); // Get the URL parameter
   const [documents, setDocuments] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleConfirmDelete = async () => {
+    try {
+      setLoading(true);
+
+      // Perform any necessary validation checks on the documentId parameter
+      if (!documentId) {
+        enqueueSnackbar("Invalid document ID", { variant: "error" });
+        return;
+      }
+
+      await axios.delete(`http://localhost:5005/Docs/${documentId}`);
+
+      setLoading(false);
+      enqueueSnackbar("Document deleted successfully", { variant: "success" });
+      navigate("/documents");
+      console.log("Document deleted successfully");
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      enqueueSnackbar("Error deleting document", { variant: "error" });
+      console.log("Error deleting document");
+    } finally {
+      setShowConfirmation(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+  };
 
   useEffect(() => {
     console.log("Category changed to:", categoryName); // Debugging log
@@ -82,115 +113,116 @@ const Files = () => {
             className="table align-middle table-row-dashed fs-6 gy-5"
           >
             <thead>
-              <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                <th class="min-w-250px">Title</th>
-                <th class="min-w-250px">Description</th>
-                <th class="min-w-125px">Last Modified</th>
-                <th class="w-125px"></th>
+              <tr className="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                <th className="min-w-250px">Document </th>
+                <th className="min-w-250px">Title</th>
+                <th className="min-w-125px">Last Modified</th>
+                <th className="w-125px"></th>
               </tr>
             </thead>
-            <tbody>
-              {documents.map((doc) => (
-                <tr key={doc._id}>
-                  <td>{doc.title}</td>
-                  <td>{doc.description}</td>
-                  <td>{doc.path}</td>
-                </tr>
-              ))}
-            </tbody>
-            <tbody class="fw-semibold text-gray-600 m-9">
-              {documents.map((doc) => (
-                <tr class="mb-6" key={doc._id}>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="svg-icon svg-icon-2x svg-icon-primary me-4">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            opacity="0.3"
-                            d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22Z"
-                            fill="currentColor"
-                          />
-                          <path
-                            d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </span>
-
-                      <a href="#" class="text-gray-800 text-hover-primary">
-                        {doc.title}
-                      </a>
-                    </div>
-                  </td>
-                  <td>{doc.description}</td>
-                  <td>24 Jun 2023, 2:40 pm</td>
-                  <td class="text-end">
-                    <div class="d-flex justify-content-end">
-                      <div class="ms-2">
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            variant="success"
-                            id="dropdown-basic-button"
+            <tbody className="fw-semibold text-gray-600 m-9">
+              {documents.map((doc) => {
+                const filePath = doc.path;
+                const fileName = filePath.substring(
+                  filePath.lastIndexOf("\\") + 1
+                );
+                return (
+                  <tr className="mb-6" key={doc._id}>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <span className="svg-icon svg-icon-2x svg-icon-primary me-4">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <span class="svg-icon svg-icon-5 m-0">
-                              <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                  x="10"
-                                  y="10"
-                                  width="4"
-                                  height="4"
-                                  rx="2"
-                                  fill="currentColor"
-                                />
-                                <rect
-                                  x="17"
-                                  y="10"
-                                  width="4"
-                                  height="4"
-                                  rx="2"
-                                  fill="currentColor"
-                                />
-                                <rect
-                                  x="3"
-                                  y="10"
-                                  width="4"
-                                  height="4"
-                                  rx="2"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </Dropdown.Toggle>
+                            <path
+                              opacity="0.3"
+                              d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22Z"
+                              fill="currentColor"
+                            />
+                            <path
+                              d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
 
-                          <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">
-                              Action
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">
-                              Another action
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Something else
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
+                        <a
+                          href="#"
+                          className="text-gray-800 text-hover-primary"
+                        >
+                          {fileName}
+                        </a>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td>{doc.title}</td>
+                    <td>{doc.updatedAt}</td>
+
+                    <td class="text-end">
+                      <div class="d-flex justify-content-end">
+                        <div class="ms-2">
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              variant="success"
+                              id="dropdown-basic-button"
+                            >
+                              <span class="svg-icon svg-icon-5 m-0">
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <rect
+                                    x="10"
+                                    y="10"
+                                    width="4"
+                                    height="4"
+                                    rx="2"
+                                    fill="currentColor"
+                                  />
+                                  <rect
+                                    x="17"
+                                    y="10"
+                                    width="4"
+                                    height="4"
+                                    rx="2"
+                                    fill="currentColor"
+                                  />
+                                  <rect
+                                    x="3"
+                                    y="10"
+                                    width="4"
+                                    height="4"
+                                    rx="2"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                              <Dropdown.Item href="#/action-1">
+                                Update
+                              </Dropdown.Item>
+                              <Dropdown.Item href="#/action-2">
+                                Delete
+                              </Dropdown.Item>
+                              <Dropdown.Item href="#/action-3">
+                                View
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -199,4 +231,4 @@ const Files = () => {
   );
 };
 
-export default Files;
+export default CategoryDocuments;
