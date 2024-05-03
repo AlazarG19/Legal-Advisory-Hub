@@ -8,8 +8,8 @@ function CreateDoc() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigateTo = useNavigate();
@@ -58,13 +58,29 @@ function CreateDoc() {
       console.log("Error creating document");
     }
   };
+
+  const handleCloseModal = () => {
+    setShow(false);
+    // Reset form fields
+    setTitle("");
+    setDescription("");
+    setCategory("");
+    setFile(null);
+    setSuccessMessage("");
+    setErrorMessage("");
+  };
+
+  const handleOpenModal = () => {
+    setShow(true);
+  };
+
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={handleOpenModal}>
         Create New Document
       </Button>
 
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal show={show} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Document</Modal.Title>
         </Modal.Header>
@@ -250,11 +266,14 @@ function CreateDoc() {
             </div>
           </div>
         </Modal.Body>
-        <div className="m-4 d-flex justify-content-center">
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
           <Button variant="primary" onClick={handleSaveDocument}>
             Save
           </Button>
-        </div>
+        </Modal.Footer>
       </Modal>
     </>
   );

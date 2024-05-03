@@ -2,69 +2,31 @@ import Header from "../../Header";
 import Dropdown from "react-bootstrap/Dropdown";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import UpdateDocument from "../Admin/UpdateDocument";
+import UpdateDocument from "./UpdateDocument";
+import DeleteDoc from "./DeleteDoc";
 const CategoryDocuments = () => {
   const { categoryName } = useParams();
+  const [selectedDocumentId, setSelectedDocumentId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [selectedDocumentId, setSelectedDocumentId] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleDropdownUpdate = (documentId) => {
-    setSelectedDocumentId(documentId);
-    setShowUpdateForm(true);
+    navigate(`/docs/edit/${documentId}`);
   };
-
-  const handleUpdateSuccess = () => {
-    setShowUpdateForm(false);
-    // Perform any necessary actions after the update is successful
-  };
-
-  // Call the handleDropdownUpdate function with the desired documentId
-
   const handleDropdownDelete = (documentId) => {
     setSelectedDocumentId(documentId);
     setShowConfirmation(true);
   };
-  const handleConfirmDelete = async () => {
-    try {
-      setLoading(true);
-
-      // Perform any necessary validation checks on the selectedDocumentId
-      if (!selectedDocumentId) {
-        enqueueSnackbar("Invalid document ID", { variant: "error" });
-        console.log(selectedDocumentId);
-        return;
-      }
-
-      await axios.delete(`http://localhost:5005/Docs/${selectedDocumentId}`);
-
-      setLoading(false);
-
-      setShowConfirmation(false);
-      console.log("Document deleted successfully");
-
-      // Retrieve updated documents after deletion
-      if (categoryName) {
-        fetchDocuments(categoryName);
-      }
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-
-      console.log(error.message);
-    } finally {
-      setShowConfirmation(false);
-    }
-  };
 
   useEffect(() => {
-    console.log("Category changed to:", categoryName); // Debugging log
+    console.log("Category changed to:", categoryName);
     if (categoryName) {
       fetchDocuments(categoryName);
     }
@@ -93,9 +55,6 @@ const CategoryDocuments = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-  };
-  const handleCancelDelete = () => {
-    setShowConfirmation(false);
   };
 
   const filteredDocuments = documents.filter((doc) =>
@@ -242,7 +201,6 @@ const CategoryDocuments = () => {
                                 </svg>
                               </span>
                             </Dropdown.Toggle>
-
                             <Dropdown.Menu>
                               <Dropdown.Item
                                 onClick={() => handleDropdownUpdate(doc._id)}
@@ -257,33 +215,6 @@ const CategoryDocuments = () => {
                               <Dropdown.Item>View</Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
-
-                          <Modal
-                            show={showConfirmation}
-                            onHide={handleCancelDelete}
-                            centered
-                          >
-                            <Modal.Header closeButton>
-                              <Modal.Title>Confirmation</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              Are you sure you want to delete this document?
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button
-                                variant="secondary"
-                                onClick={handleCancelDelete}
-                              >
-                                Cancel
-                              </Button>
-                              <Button
-                                variant="danger"
-                                onClick={handleConfirmDelete}
-                              >
-                                Delete
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
                         </div>
                       </div>
                     </td>
@@ -292,12 +223,7 @@ const CategoryDocuments = () => {
               })}
             </tbody>
           </table>
-          {showUpdateForm && (
-            <UpdateDocument
-              documentId={selectedDocumentId}
-              onUpdate={handleUpdateSuccess}
-            />
-          )}
+          {showConfirmation && <DeleteDoc documentId={selectedDocumentId} />}
         </div>
       </div>
     </div>
