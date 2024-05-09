@@ -5,13 +5,15 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 
 function PdfToImage({ documentPath }) {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     convertToImage();
   }, [documentPath]);
 
   const convertToImage = async () => {
-    const response = await fetch(`http://localhost:5005/${path}`);
+    const response = await fetch(`http://localhost:5005/${documentPath}`);
     const pdfData = await response.arrayBuffer();
     const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
     const page = await pdf.getPage(1);
@@ -23,9 +25,14 @@ function PdfToImage({ documentPath }) {
     await page.render({ canvasContext, viewport }).promise;
     const imageData = canvas.toDataURL("image/png");
     setImage(imageData);
+    setLoading(false);
   };
 
-  return <img src={image} alt="Document Thumbnail" />;
+  return (
+    <div>
+      {loading ? <div>Loading image...</div> : <img src={image} alt="img" />}
+    </div>
+  );
 }
 
 export default PdfToImage;

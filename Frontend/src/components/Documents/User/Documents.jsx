@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../../Header";
-import Search from "../Search";
 import CreateDoc from "../Admin/CreateDoc";
 
 const Documents = () => {

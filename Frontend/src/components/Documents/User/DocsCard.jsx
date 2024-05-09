@@ -1,50 +1,48 @@
 import React, { useState } from "react";
 import DocSingleCard from "./DocSingleCard";
+import Search from "../Search";
 
-const DocsCard = ({ Docs }) => {
+const DocsCard = ({ docs }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredDocs, setFilteredDocs] = useState([]);
+  const [filteredDocs, setfilteredDocs] = useState([]);
 
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
-    const filteredDocs = Docs.filter((item) =>
+    const filteredDocs = docs.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredDocs(filteredDocs);
+    setfilteredDocs(filteredDocs);
   };
 
-  if (!Docs || Docs.length === 0) {
-    return <div>No documents available.</div>; // Handle case when Docs is undefined or empty
-  }
-
   return (
-    <div className="container">
+    <div className="">
+      <Search onSearch={handleSearch} />
       {searchTerm !== "" ? (
-        <div className="row row-cols-2 row-cols-lg-3 row-cols-xl-4">
+        <div className="grid grid-cols-sm-2 grid-cols-lg-3 grid-cols-xl-4">
           {filteredDocs.length > 0 ? (
             filteredDocs.map((item) => (
-              <DocSingleCard key={item._id} Doc={item} />
+              <DocSingleCard key={item._id} doc={item} />
             ))
           ) : (
             <div>No search results found.</div>
           )}
         </div>
       ) : (
-        // Render Docs by title
+        // Render books by title
         Object.entries(
-          Docs.reduce((acc, curr) => {
-            if (!acc[curr.title]) {
-              acc[curr.title] = [];
+          docs.reduce((acc, curr) => {
+            if (!acc[curr.category]) {
+              acc[curr.category] = [];
             }
-            acc[curr.title].push(curr);
+            acc[curr.category].push(curr);
             return acc;
           }, {})
-        ).map(([title, DocsArray]) => (
-          <div className="mb-4" key={title}>
-            <h1>{title}</h1>
-            <div className="row row-cols-2 row-cols-lg-3 row-cols-xl-4">
-              {DocsArray.map((Doc) => (
-                <DocSingleCard key={Doc._id} Doc={Doc} />
+        ).map(([category, docsArray]) => (
+          <div className="" key={category}>
+            <h1>{category}</h1>
+            <div className="d-flex flex-wrap  align-items-center">
+              {docsArray.map((doc) => (
+                <DocSingleCard key={doc._id} doc={doc} />
               ))}
             </div>
           </div>

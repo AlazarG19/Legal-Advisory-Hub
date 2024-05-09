@@ -39,7 +39,9 @@ function CreateDoc() {
       formData.append("category", category);
       formData.append("pdf", file);
 
-      await axios.post("http://localhost:5005/Docs", formData);
+      await axios.post("http://localhost:5005/Docs", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       setLoading(false);
       setSuccessMessage("Document created successfully");
@@ -61,7 +63,6 @@ function CreateDoc() {
 
   const handleCloseModal = () => {
     setShow(false);
-    // Reset form fields
     setTitle("");
     setDescription("");
     setCategory("");
