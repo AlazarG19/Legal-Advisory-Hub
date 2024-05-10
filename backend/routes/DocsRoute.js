@@ -12,10 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Serve files from the "backend/uploads" directory
-app.use(
-  "http://localhost:5005/uploads",
-  express.static(path.join(__dirname, "uploads"))
-);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
