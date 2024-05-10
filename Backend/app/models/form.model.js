@@ -4,8 +4,20 @@ module.exports = mongoose => {
     const Form = mongoose.model(
         "form",
         mongoose.Schema({
-            section: {
+            sections: {
                 type: Object
+            },
+            formtext: {
+                type: String
+            },
+            formid: {
+                type: String
+            },
+            formname: {
+                type: String
+            },
+            formdescription: {
+                type: String
             },
             isDeleted: {
                 type: Number,

@@ -2,14 +2,19 @@ const db = require("../models")
 const Form = db.forms
 
 exports.create = (req, res) => {
-    console.log(req.body)
+    console.log("req.body", req.body)
     const form = new Form({
-        section: req.body.section
+        sections: req.body.sections,
+        formtext: req.body.formtext,
+        formname: req.body.formname,
+        formdescription: req.body.formdescription,
+        formid: req.body.formid,
     })
     form.save(form)
         .then(data => {
+            console.log("---------------data")
             console.log(data)
-            console.log(data)
+            console.log("---------------dataend")
             res.send(data);
         })
         .catch(err => {
@@ -22,6 +27,8 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Form.find().then(
         data => {
+            console.log("data")
+            console.log(data)
             res.send(data);
         }
     )
