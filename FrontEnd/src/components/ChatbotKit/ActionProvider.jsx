@@ -8,68 +8,127 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
     console.log("actionprovider------------------------")
     console.log(state)
 
-    const sections = useSelector((state) => state.sections.value)
     const dispatch = useDispatch()
     const handleOverall = (message) => {
         console.log("-----------------handle overall start")
         console.log(message)
-
-        if (message == "start") {
-            const reduxstate = store.getState()
-            console.log("reduxstate", reduxstate)
-            store.dispatch(editformtext({ section: "satrt" }))
-            console.log("state.questions[state.position].question", state.sections[state.position].question)
-            const botMessage = createChatBotMessage(state.sections[state.position].questions);
-            console.log(botMessage)
-            console.log("item to be saved", {
-                messages: botMessage,
-                answers: message
-            })
-            setState((prev) => ({
-                ...prev,
-                messages: [...prev.messages, botMessage],
-                position: prev.position + 1,
-                formtext: "none"
-            }));
-        } else {
-            if (state.position > 0) {
-
-                let p = state.position - 1
-                console.log("position", p)
-                console.log("sections", state.sections)
-                console.log("withing section section", state.sections[p])
-                let newsection = state.sections.map((item, index) => {
-                    console.log("within new section", index, p)
-                    if (index === p) {
-                        return { ...item, statement: message };
-                    } else {
-                        return item;
-                    }
-                });
-                console.log({ section: newsection, position: state.position })
-                // dispatch(editstatement({ section: newsection, position: state.position }))
-            }
-            if (state.sections.length > state.position) {
-                console.log("state.questions[state.position].question", state.sections[state.position].question)
+        if (state.position == 0) {
+            if (message == "start") {
                 const botMessage = createChatBotMessage(state.sections[state.position].questions);
-                console.log(botMessage)
-                console.log("item to be saved", {
-                    messages: botMessage,
-                    answers: message
-                })
                 setState((prev) => ({
                     ...prev,
                     messages: [...prev.messages, botMessage],
-                    answers: [...prev.answers, message],
                     position: prev.position + 1
                 }));
             } else {
-                const botMessage = createChatBotMessage("your form has been prepared");
+                const botMessage = createChatBotMessage("Type start to start filling your form");
                 setState((prev) => ({
                     ...prev,
-                    answers: [...prev.answers, message],
                     messages: [...prev.messages, botMessage],
+
                 }));
+
+            }
+        } else {
+            if (message == "back") {
+                console.log("===================back is clicked")
+                const reduxstate = store.getState()
+                console.log("before change form text", reduxstate.formtext.value)
+
+                const inputString = reduxstate.formtext.value;
+                const regex = /<span>.*?<\/span>/g;
+                const matches = inputString.match(regex);
+                console.log("matches", matches);
+
+                if (matches && matches.length > 0) {
+                    const lastMatchIndex = inputString.lastIndexOf(matches[matches.length - 1]);
+                    const newString = inputString.slice(0, lastMatchIndex) + "_____" + inputString.slice(lastMatchIndex + matches[matches.length - 1].length);
+                    console.log("changed form text", newString);
+                    store.dispatch(editformtext({ section: newString }))
+                }
+
+                console.log("answers ", state.answers)
+                console.log("messages ", state.messages)
+                let newposition = state.position - 1
+                let newanswers = state.answers.splice(0, state.answers.length - 1)
+                let newmessages = state.messages.splice(0, state.messages.length - 2)
+                console.log("new answers ", newanswers)
+                console.log("new answers ", newmessages)
+
+                setState((prev) => ({
+                    ...prev,
+                    messages: newmessages,
+                    answers: newanswers,
+                    position: newposition
+                }));
+                console.log("state changed ", state)
+                console.log("===================back is clicked end")
+            } else {
+
+                console.log("------------------state.position >0")
+
+
+                console.log("------------------state.sections.length > state.position")
+                console.log("state.sections[state.position]", state.sections, state.sections.length)
+                console.log("state.position", state.position)
+                if (state.position == state.sections.length) {
+
+                    const botMessage = createChatBotMessage("All Questions have ended. To Finish Type End");
+                    console.log("item to be saved", {
+                        messages: botMessage,
+                    })
+                    const reduxstate = store.getState()
+                    var inputString = reduxstate.formtext.value;
+                    var count = 0;
+                    console.log("position of question", state.position)
+                    var replacedString = inputString.replace(/_____/g, function (match) {
+                        count++
+                        return (count == 1) ? "<span>" + message + "</span>" : match
+                    });
+
+                    console.log("changed formtext", replacedString)
+                    store.dispatch(editformtext({ section: replacedString }))
+                    setState((prev) => ({
+                        ...prev,
+                        messages: [...prev.messages, botMessage],
+                        answers: [...prev.answers, message],
+                        position: prev.position + 1
+                    }));
+                } else if (state.position > state.sections.length) {
+                    console.log("===================finsihe")
+                    const botMessage = createChatBotMessage("Form Has Been Prepared");
+                    console.log("item to be saved", {
+                        messages: botMessage,
+                    })
+                    console.log("state", state)
+                    setState((prev) => ({
+                        ...prev,
+                        messages: [...prev.messages, botMessage]
+                    }));
+                    console.log("===================finsihe end")
+
+                } else {
+                    const botMessage = createChatBotMessage(state.sections[state.position].questions);
+                    const reduxstate = store.getState()
+                    var inputString = reduxstate.formtext.value;
+                    var count = 0;
+                    console.log("position of question", state.position)
+                    var replacedString = inputString.replace(/_____/g, function (match) {
+                        count++
+                        return (count == 1) ? "<span>" + message + "</span> " : match
+                    });
+
+                    console.log("changed formtext", replacedString)
+                    store.dispatch(editformtext({ section: replacedString }))
+                    setState((prev) => ({
+                        ...prev,
+                        messages: [...prev.messages, botMessage],
+                        answers: [...prev.answers, message],
+                        position: prev.position + 1
+                    }));
+                }
+                console.log("------------------state.sections.length > state.position end")
+                console.log("------------------state.position >0 end")
             }
         }
         console.log("-----------------handle overall end")
@@ -88,13 +147,14 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                 console.log(data)
                 setState((prev) => ({
                     ...prev,
-                    sections: data[0].sections,
-                    formtext: data[0].formtext
+                    sections: data[data.length - 1].sections,
+                    formtext: data[data.length - 1].formtext
                 }))
-                dispatch(setformtext(data[0].formtext))
+                console.log(data[data.length - 1])
+                dispatch(setformtext(data[data.length - 1].formtext))
             })
             .catch((error) => {
-                console.log("error while sending")
+                // console.log("error while sending")
                 console.error('Error:', error);
             });
 
