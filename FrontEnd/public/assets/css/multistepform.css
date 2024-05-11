@@ -1,0 +1,70 @@
+/* styles.css */
+
+/* Container for the multi-step form */
+.multi-step-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-top: 100px;
+  }
+  
+  /* Style for step indicator */
+  .step-indicator {
+    margin-bottom: 20px;
+    width: 164px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .step-indicator ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .step-indicator li {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  
+  .step-indicator li.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Style for form steps */
+  .multi-step-form > div {
+    display: block;
+  }
+  
+  .multi-step-form > div:first-child {
+    display: block;
+  }
+  
+  .multi-step-form h2 {
+    margin-bottom: 20px;
+  }
+  
+  .multi-step-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .multi-step-form button {
+    padding: 10px 20px;
+    margin-right: 10px;
+  }
+  
+  
