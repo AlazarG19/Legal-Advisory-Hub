@@ -371,7 +371,7 @@ const FinalCustomForm = () => {
                                                                         <div className="fw-semibold ms-5 text-green-600">
                                                                             {/* <!--begin::Time--> */}
                                                                             <div className="fs-5">
-                                                                                <span className="required">Question {index + 1} {section.id}</span>
+                                                                                <span className="required">Question {index + 1}</span>
 
                                                                             </div>
                                                                             {/* <!--end::Time--> */}
