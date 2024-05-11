@@ -5,9 +5,9 @@ import {
     createCustomMessage,
 } from 'react-chatbot-kit';
 import CustomMessage from './CustomMessage';
-import MessageIn from '../CustomForm/MessageIn';
-import MessageOut from '../CustomForm/MessageOut';
-import Header from '../CustomForm/Header';
+import MessageIn from '../CustomForm/Componenets/MessageIn';
+import MessageOut from '../CustomForm/Componenets/MessageOut';
+import Header from '../CustomForm/Componenets/Header';
 // let config = {
 //     initialMessages: [
 //         createChatBotMessage(
@@ -37,7 +37,14 @@ import Header from '../CustomForm/Header';
 // };
 const config = {
     initialMessages: [createChatBotMessage(`Hello world`)],
-
+    customStyles: {
+        botMessageBox: {
+            backgroundColor: "#04668a"
+        },
+        chatButton: {
+            backgroundColor: "#0f5faf"
+        }
+    },
     customComponents: {
         // Replaces the default header
         header: () => <Header />,

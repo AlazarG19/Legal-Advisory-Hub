@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import store from '../../redux/Store/index.js';
 // tool bar that is located above the quill editor to make it blank 
 // the reason it is black is to avoid editing the editor
-
+import "./customform.css"
 function CustomForm2() {
     // create a refernce to the quill reference to call different functions
     const quillRef = useRef();
