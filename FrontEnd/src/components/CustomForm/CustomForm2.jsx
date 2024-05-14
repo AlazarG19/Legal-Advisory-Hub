@@ -12,6 +12,8 @@ import store from '../../redux/Store/index.js';
 // tool bar that is located above the quill editor to make it blank 
 // the reason it is black is to avoid editing the editor
 import "./customform.css"
+import { useParams } from 'react-router-dom';
+import Navigation from '../Navigation.jsx';
 function CustomForm2() {
     // create a refernce to the quill reference to call different functions
     const quillRef = useRef();
@@ -28,7 +30,9 @@ function CustomForm2() {
         'list', 'bullet', 'indent',
         'link', 'image'
     ]
-
+    // let newconfig = config
+    const { id } = useParams();
+    config["state"]["id"] = id
     const formtext = useSelector((state) => state.formtext.value)
     // useEffect(() => {
     //     // console.log("+++++++++++++++++++++use effect in form data")
@@ -51,47 +55,56 @@ function CustomForm2() {
         window.print();
         document.body.innerHTML = originalContents;
     }
+    const reduxstate = store.getState()
+    console.log("store state", reduxstate.formtext)
+    useEffect(() => {
+        console.log("+++++++++++++++++++++use effect in form data")
+        // alert("dfadafa")
+        if (reduxstate.formtext.completed) {
+        }
+
+    }, [store])
     return (
+        <>
+            <Navigation />
+            <div id="kt_app_content" className="app-content flex-column-fluid">
 
-        // <!--begin::Content-->
-        <div id="kt_app_content" className="app-content flex-column-fluid">
+                <div id="kt_app_content_container" className="app-container container-xxl">
+                    {/* <!--begin::Layout--> */}
+                    <div className="d-flex flex-column flex-lg-row">
+                        {/* <!--begin::Content--> */}
+                        <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6 chatbotdiv">
+                            {/* <!--begin::Messenger--> */}
 
-            <div id="kt_app_content_container" className="app-container container-xxl">
-                {/* <!--begin::Layout--> */}
-                <div className="d-flex flex-column flex-lg-row">
-                    {/* <!--begin::Content--> */}
-                    <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6">
-                        {/* <!--begin::Messenger--> */}
-
-                        <div className="card" id="kt_chat_messenger">
-                            <Chatbot
-                                config={config}
-                                messageParser={MessageParser}
-                                actionProvider={ActionProvider}
-                            />
+                            <div className="card" id="kt_chat_messenger">
+                                <Chatbot
+                                    config={config}
+                                    messageParser={MessageParser}
+                                    actionProvider={ActionProvider}
+                                />
+                            </div>
+                            {/* <!--end::Messenger--> */}
                         </div>
-                        {/* <!--end::Messenger--> */}
-                    </div>
-                    <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6">
+                        <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6">
 
-                        <div style={{ width: "210mm", height: "297mm", boxShadow: `0px 0px 70px -8px rgba(0,0,0,0.37)`, padding: "40px" }} id='printablediv' className="content" dangerouslySetInnerHTML={{ __html: formtext }}></div>
-                    </div>
-                    {/* <!--end::Content--> */}
-                    {/* <!--begin::Sidebar--> */}
-                    {/* <ReactQuill theme="snow"
+                            <div id='printablediv' className="content" dangerouslySetInnerHTML={{ __html: formtext }}></div>
+                        </div>
+                        {/* <!--end::Content--> */}
+                        {/* <!--begin::Sidebar--> */}
+                        {/* <ReactQuill theme="snow"
                         ref={quillRef}
                         modules={modules}
                         formats={formats} defaultValue={value} onChange={setValue} /> ; */}
-                    {/* <!--end::Sidebar--> */}
-                    { }
-                </div>
-                {/* <!--end::Layout--> */}
+                        {/* <!--end::Sidebar--> */}
+                        { }
+                    </div>
+                    {/* <!--end::Layout--> */}
 
+                </div>
+                {/* <!--begin::Content container--> */}
+                {/* <!--end::Content container--> */}
             </div>
-            {/* <!--begin::Content container--> */}
-            {/* <!--end::Content container--> */}
-        </div>
-        // <!--end::Content-->
+        </>
     )
 }
 

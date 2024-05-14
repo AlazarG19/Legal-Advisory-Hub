@@ -14,7 +14,7 @@ function insertStar() {
     const cursorPosition = this.quill.getSelection().index;
 
     let mainString = this.quill.getText().substring(0, this.quill.getSelection().index)
-    let regex = new RegExp("_____", "g");
+    let regex = new RegExp("________", "g");
     // Use the match method to find all matches of the substring in the main string
     let occurrences = (mainString.match(regex) || []).length;
     console.log("occurences", occurrences)
@@ -27,8 +27,8 @@ function insertStar() {
     })
     console.log("test after", test)
 
-    this.quill.insertText(cursorPosition, '_____');
-    this.quill.setSelection(cursorPosition + 6);
+    this.quill.insertText(cursorPosition, '________');
+    this.quill.setSelection(cursorPosition + 8);
 
 
     const updatedSections = [...oldSections,
@@ -44,8 +44,8 @@ function removeStar() {
     const state = store.getState()
     const oldSections = Array.from(state.sections.value)
     // const cursorPosition = this.quill.getSelection().index;
-    // this.quill.insertText(cursorPosition, '_____');
-    // this.quill.setSelection(cursorPosition + 6);
+    // this.quill.insertText(cursorPosition, '________');
+    // this.quill.setSelection(cursorPosition + 8);
     console.log("this.quill.getSelection()", this.quill.getSelection())
 
     console.log("values", this.quill.getText())
@@ -54,14 +54,14 @@ function removeStar() {
     console.log("values till remaining", this.quill.getText().substring(this.quill.getSelection().index, this.quill.getText().length))
     let mainString = this.quill.getText().substring(0, this.quill.getSelection().index)
     let remaining = this.quill.getText().substring(this.quill.getSelection().index, this.quill.getText().length)
-    let lastIndex = mainString.lastIndexOf("_____")
+    let lastIndex = mainString.lastIndexOf("________")
     console.log("lastIndex", lastIndex)
-    let regex = new RegExp("_____", "g");
+    let regex = new RegExp("________", "g");
 
     // Use the match method to find all matches of the substring in the main string
     let occurrences = (mainString.match(regex) || []).length;
     console.log("occurences", occurrences)
-    let changedValue = mainString.substring(0, lastIndex) + mainString.substring(lastIndex + 5);
+    let changedValue = mainString.substring(0, lastIndex) + mainString.substring(lastIndex + 8);
     changedValue = changedValue + remaining
     console.log("changed", changedValue)
     console.log("oldSections", oldSections)
@@ -138,9 +138,9 @@ const FinalCustomForm = () => {
         // console.log("final value", value)
         // setValue2(value)
         console.log("new question", questions)
-        let body = { formid: uuidv4(), sections: state.sections.value, formtext: "<pre>" + value + "</pre>", formname: formName, formdescription: formDescription }
+        let body = { formid: uuidv4(), sections: state.sections.value, formtext: "<pre class='pretext'>" + value + "</pre>", formname: formName, formdescription: formDescription }
         console.log(body)
-        fetch(`http://localhost:8080/api/forms`, {
+        fetch(`http://localhost:3000/api/forms`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -438,7 +438,7 @@ const FinalCustomForm = () => {
                                                 {/* <!--end::Card toolbar--> */}
                                                 {/* <!--begin::Card body--> */}
                                                 <div className="card-body d-flex flex-column p-9 pt-3 mb-9">
-                                                    <div style={{ width: "210mm" }} >
+                                                    <div style={{ width: "223mm" }} >
                                                         <CustomToolbar />
 
                                                         <ReactQuill theme="snow"

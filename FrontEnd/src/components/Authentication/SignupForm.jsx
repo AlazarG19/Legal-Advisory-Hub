@@ -1,24 +1,112 @@
 import { useEffect } from 'react';
+import { Formik, useFormik } from 'formik';
+import * as Yup from 'yup';
+import './authentication.css'
 const SignupForm = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    const script1 = document.createElement('script');
-    const script2 = document.createElement('script');
-    script.src = "assets/js/custom/authentication/sign-up/general.js"
-    script.async = true;
-    script1.src = "assets/js/scripts.bundle.js"
-    script1.async = true;
-    script2.src = "assets/plugins/global/plugins.bundle.js"
-    script2.async = true;
-    document.body.appendChild(script);
-    document.body.appendChild(script1);
-    document.body.appendChild(script2);
-    return () => {
-      document.body.removeChild(script);
-      document.body.removeChild(script1);
-      document.body.removeChild(script2);
+  const validate = async (values) => {
+    const errors = {};
+
+    if (!values.password) {
+      errors.password = 'Required';
+    } else if (values.password.length > 15) {
+      errors.password = 'Too Long';
+    } else if (values.password.length < 2) {
+      errors.password = 'Too Short';
     }
-  }, [])
+
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'Required';
+    } else if (values.confirmPassword != values.password) {
+      errors.confirmPassword = 'Passwords must match';
+    }
+
+    if (!values.lastName) {
+      errors.lastName = 'Required';
+    } else if (values.lastName.length > 20) {
+      errors.lastName = 'Too Long!';
+    } else if (values.lastName.length < 2) {
+      errors.lastName = 'Too Short!';
+    }
+
+    if (!values.firstName) {
+      errors.firstName = 'Required';
+    } else if (values.firstName.length > 20) {
+      errors.firstName = 'Too Long!';
+    } else if (values.firstName.length < 2) {
+      errors.firstName = 'Too Short!';
+    }
+
+
+
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
+    }
+    if (!errors.email) {
+
+      await fetch(`http://localhost:3000/checkEmail/${values.email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          if (data.length != 0) {
+            errors.email = 'Email Exist!';
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+    } else {
+      console.log("error")
+    }
+    console.log("error", errors)
+    return errors;
+  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    },
+    validate,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      console.log("submitted successfully")
+      // let body = {
+      //   email: values.email,
+      //   password: values.password,
+      //   firstName: values.firstName,
+      //   lastName: values.lastName,
+      // }
+      // body = JSON.stringify(body)
+      // setSubmitting(false);
+      // await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: body
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     if (data.success) {
+      //       sessionStorage.setItem("user", JSON.stringify(data.info));
+      //       window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/emailverification/0`
+      //     } else {
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //   });
+    }
+  })
   return (
 
     <div className="d-flex flex-column flex-lg-row flex-column-fluid">
@@ -55,7 +143,7 @@ const SignupForm = () => {
           {/* begin::Wrapper */}
           <div className="w-lg-500px p-10">
             {/* begin::Form */}
-            <form className="form w-100" noValidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/corporate/sign-in.html" action="#">
+            <form onSubmit={formik.handleSubmit} className="form w-100" noValidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/corporate/sign-in.html" action="#">
               {/* begin::Heading */}
               <div className="text-center mb-11">
                 {/* begin::Title */}
@@ -66,85 +154,51 @@ const SignupForm = () => {
                 {/* end::Subtitle= */}
               </div>
               {/* begin::Heading */}
-              {/* begin::Login options */}
-              <div className="row g-3 mb-9">
-                {/* begin::Col */}
-                <div className="col-md-6">
-                  {/* begin::Google link= */}
-                  <a href="#" className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                    <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" className="h-15px me-3" />Sign in with Google</a>
-                  {/* end::Google link= */}
-                </div>
-                {/* end::Col */}
-                {/* begin::Col */}
-                <div className="col-md-6">
-                  {/* begin::Google link= */}
-                  <a href="#" className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                    <img alt="Logo" src="assets/media/svg/brand-logos/apple-black.svg" className="theme-light-show h-15px me-3" />
-                    <img alt="Logo" src="assets/media/svg/brand-logos/apple-black-dark.svg" className="theme-dark-show h-15px me-3" />Sign in with Apple</a>
-                  {/* end::Google link= */}
-                </div>
-                {/* end::Col */}
-              </div>
-              {/* end::Login options */}
-              {/* begin::Separator */}
-              <div className="separator separator-content my-14">
-                <span className="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-              </div>
-              {/* end::Separator */}
               {/* begin::Input group= */}
               <div className="fv-row mb-8">
-                {/* begin::Email */}
-                <input type="text" placeholder="Email" name="email" autoComplete="off" className="form-control bg-transparent" />
-                {/* end::Email */}
+                <input type="text" onChange={formik.handleChange}
+
+                  value={formik.values.firstName} name='firstName' placeholder='First Name' className="form-control bg-transparent" />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.firstName}</div>
+
               </div>
               {/* begin::Input group */}
-              <div className="fv-row mb-8" data-kt-password-meter="true">
-                {/* begin::Wrapper */}
-                <div className="mb-1">
-                  {/* begin::Input wrapper */}
-                  <div className="position-relative mb-3">
-                    <input className="form-control bg-transparent" type="password" placeholder="Password" name="password" autoComplete="off" />
-                    <span className="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-                      <i className="bi bi-eye-slash fs-2"></i>
-                      <i className="bi bi-eye fs-2 d-none"></i>
-                    </span>
-                  </div>
-                  {/* end::Input wrapper */}
-                  {/* begin::Meter */}
-                  <div className="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-                    <div className="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                    <div className="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                    <div className="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                    <div className="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
-                  </div>
-                  {/* end::Meter */}
-                </div>
-                {/* end::Wrapper */}
-                {/* begin::Hint */}
-                <div className="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
-                {/* end::Hint */}
-              </div>
-              {/* end::Input group= */}
-              {/* end::Input group= */}
+              {/* begin::Input group= */}
               <div className="fv-row mb-8">
-                {/* begin::Repeat Password */}
-                <input placeholder="Repeat Password" name="confirm-password" type="password" autoComplete="off" className="form-control bg-transparent" />
-                {/* end::Repeat Password */}
+                <input ype="text" onChange={formik.handleChange}
+
+                  value={formik.values.lastName} name='lastName' placeholder='Last Name' className="form-control bg-transparent" />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.lastName}</div>
               </div>
-              {/* end::Input group= */}
-              {/* begin::Accept */}
+              {/* begin::Input group */}
+
+              {/* begin::Input group= */}
               <div className="fv-row mb-8">
-                <label className="form-check form-check-inline">
-                  <input className="form-check-input" type="checkbox" name="toc" value="1" />
-                  <span className="form-check-label fw-semibold text-gray-700 fs-base ms-1">I Accept the
-                    <a href="#" className="ms-1 link-primary">Terms</a></span>
-                </label>
+                <input type="email" onChange={formik.handleChange}
+
+                  value={formik.values.email} name='email' placeholder='Email' className="form-control bg-transparent" />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.email}</div>
               </div>
-              {/* end::Accept */}
+              {/* begin::Input group */}
+              {/* begin::Input group= */}
+              <div className="fv-row mb-8">
+                <input onChange={formik.handleChange}
+
+                  value={formik.values.password} type="password" name='password' placeholder='Password' className="form-control bg-transparent" />
+                <div style={{ marginLeft: "40px" }} className='input-error-display' >{formik.errors.password}</div>
+              </div>
+              {/* begin::Input group */}
+              {/* begin::Input group= */}
+              <div className="fv-row mb-8">
+                <input type="password" onChange={formik.handleChange}
+
+                  value={formik.values.confirmPassword} name='confirmPassword' placeholder='Confirm Password' className="form-control bg-transparent" />
+                <div style={{ marginLeft: "40px" }} className='input-error-display' >{formik.errors.confirmPassword}</div>
+              </div>
+              {/* begin::Input group */}
               {/* begin::Submit button */}
               <div className="d-grid mb-10">
-                <button type="submit" id="kt_sign_up_submit" className="btn btn-primary">
+                <button type="submit" id="kt_sign_up_submit" onClick={formik.handleSubmit} className="btn btn-primary">
                   {/* begin::Indicator label */}
                   <span className="indicator-label">Sign up</span>
                   {/* end::Indicator label */}

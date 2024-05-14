@@ -38,3 +38,20 @@ exports.findAll = (req, res) => {
             })
         })
 }
+exports.findOne = (req, res) => {
+    const id = req.params.id;
+    console.log("id")
+    console.log(id)
+    Form.find({ "formid": id })
+        .then(data => {
+            console.log(data)
+            if (!data)
+                res.status(404).send({ message: "Not found Post with id " + id });
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({ message: "Error retrieving Blog with id=" + id });
+        });
+};

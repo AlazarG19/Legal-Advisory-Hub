@@ -12,14 +12,22 @@ import MultiStepForm from './components/Offer/MultiStepForm'
 import FreelancerProfile from './components/Users/freelancerProfile'
 import Clients from './components/Users/Clients'
 import SignInForm from './components/Authentication/SignInForm'
+import SignUpForm from './components/Authentication/SignupForm'
+import CustomForm2 from './components/CustomForm/CustomForm2'
+import Details from './components/CustomForm/Details'
+import Index from './components/CustomForm/Index'
+import "./App.css"
+import Navbar from './components/Navbar'
 function App() {
 
   return (
     <>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignInForm />}></Route>
           <Route path="/login" element={<SignInForm />}></Route>
+          <Route path="/signup" element={<SignUpForm />}></Route>
           <Route path="/userdetail/:id" element={<UserDetails />}></Route>
           <Route path="/users" element={<ProjectUserCardPane />}></Route>
           <Route path="/chat/:id" element={<ChatPage />}></Route>
@@ -29,9 +37,9 @@ function App() {
           <Route path="/multistep" element={<MultiStepForm />}></Route>
           <Route path="/freelancerProfile" element={<FreelancerProfile/>}></Route>
           <Route path="/clients" element={<Clients />}></Route>
-
-          
-
+          <Route path="/customform" element={<Index />}></Route>
+          <Route path="/customform/:id" element={<Details />}></Route>
+          <Route path="/customform/edit/:id" element={<CustomForm2 />}></Route>
         </Routes>
       </BrowserRouter>
     </>
@@ -39,5 +47,3 @@ function App() {
 }
 
 export default App
-
-          // <Route path="/mycomponent" element={<MyComponent />}></Route>
