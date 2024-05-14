@@ -15,3 +15,29 @@
 .react-chatbot-kit-chat-btn-send {
     width: 30px;
 }
+
+#printablediv {
+    width: 235mm;
+    height: 297mm;
+    box-shadow: 0px 0px 70px -8px rgba(0, 0, 0, 0.37);
+    padding: 30px
+}
+
+@media print {
+    .chatbotdiv {
+        display: none;
+    }
+
+    /* All your print styles go here */
+    #kt_app_header {
+        display: none;
+
+    }
+
+    #printablediv {
+        width: 235mm;
+        height: 297mm;
+        box-shadow: none;
+        padding: 30px
+    }
+}

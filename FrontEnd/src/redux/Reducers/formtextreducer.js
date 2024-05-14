@@ -4,6 +4,7 @@ export const formtextSlice = createSlice({
     name: 'formtext',
     initialState: {
         value: [],
+        completed: false
     },
     reducers: {
         setformtext: (state, action) => {
@@ -16,6 +17,10 @@ export const formtextSlice = createSlice({
             console.log(action.payload)
             state.value = action.payload
         },
+        setcompleted: (state, action) => {
+            console.log("---------------------------------------------------set complete")
+            state.completed = true
+        },
         editformtext: (state, action) => {
             state.value = action.payload.section
             console.log("within reducer")
@@ -27,6 +32,6 @@ export const formtextSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setformtext, editformtext } = formtextSlice.actions
+export const { setformtext, editformtext, setcompleted } = formtextSlice.actions
 
 export default formtextSlice.reducer

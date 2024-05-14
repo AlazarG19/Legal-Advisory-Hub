@@ -14,7 +14,7 @@ function insertStar() {
     const cursorPosition = this.quill.getSelection().index;
 
     let mainString = this.quill.getText().substring(0, this.quill.getSelection().index)
-    let regex = new RegExp("_____", "g");
+    let regex = new RegExp("________", "g");
     // Use the match method to find all matches of the substring in the main string
     let occurrences = (mainString.match(regex) || []).length;
     console.log("occurences", occurrences)
@@ -27,7 +27,7 @@ function insertStar() {
     })
     console.log("test after", test)
 
-    this.quill.insertText(cursorPosition, '_____');
+    this.quill.insertText(cursorPosition, '________');
     this.quill.setSelection(cursorPosition + 6);
 
 
@@ -44,7 +44,7 @@ function removeStar() {
     const state = store.getState()
     const oldSections = Array.from(state.sections.value)
     // const cursorPosition = this.quill.getSelection().index;
-    // this.quill.insertText(cursorPosition, '_____');
+    // this.quill.insertText(cursorPosition, '________');
     // this.quill.setSelection(cursorPosition + 6);
     console.log("this.quill.getSelection()", this.quill.getSelection())
 
@@ -54,9 +54,9 @@ function removeStar() {
     console.log("values till remaining", this.quill.getText().substring(this.quill.getSelection().index, this.quill.getText().length))
     let mainString = this.quill.getText().substring(0, this.quill.getSelection().index)
     let remaining = this.quill.getText().substring(this.quill.getSelection().index, this.quill.getText().length)
-    let lastIndex = mainString.lastIndexOf("_____")
+    let lastIndex = mainString.lastIndexOf("________")
     console.log("lastIndex", lastIndex)
-    let regex = new RegExp("_____", "g");
+    let regex = new RegExp("________", "g");
 
     // Use the match method to find all matches of the substring in the main string
     let occurrences = (mainString.match(regex) || []).length;
@@ -134,7 +134,7 @@ function CustomForm() {
         console.log("new question", questions)
         let body = { sections: state.sections.value, formtext: "<pre>" + value + "</pre>" }
         console.log(body)
-        fetch(`http://localhost:8080/api/forms`, {
+        fetch(`http://localhost:3000/api/forms`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

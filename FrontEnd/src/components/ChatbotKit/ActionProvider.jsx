@@ -2,8 +2,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { setsections, editstatement } from '../../redux/Reducers/sectionreducer.js';
-import { editformtext, setformtext } from '../../redux/Reducers/formtextreducer.js';
+import { editformtext, setformtext, setcompleted } from '../../redux/Reducers/formtextreducer.js';
 import store from '../../redux/Store/index.js';
+import { useParams } from 'react-router-dom';
 const ActionProvider = ({ createChatBotMessage, setState, children, state }) => {
     console.log("actionprovider------------------------")
     console.log(state)
@@ -42,7 +43,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
 
                 if (matches && matches.length > 0) {
                     const lastMatchIndex = inputString.lastIndexOf(matches[matches.length - 1]);
-                    const newString = inputString.slice(0, lastMatchIndex) + "_____" + inputString.slice(lastMatchIndex + matches[matches.length - 1].length);
+                    const newString = inputString.slice(0, lastMatchIndex) + "________" + inputString.slice(lastMatchIndex + matches[matches.length - 1].length);
                     console.log("changed form text", newString);
                     store.dispatch(editformtext({ section: newString }))
                 }
@@ -81,7 +82,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                     var inputString = reduxstate.formtext.value;
                     var count = 0;
                     console.log("position of question", state.position)
-                    var replacedString = inputString.replace(/_____/g, function (match) {
+                    var replacedString = inputString.replace(/________/g, function (match) {
                         count++
                         return (count == 1) ? "<span>" + message + "</span>" : match
                     });
@@ -95,6 +96,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                         position: prev.position + 1
                     }));
                 } else if (state.position > state.sections.length) {
+                    const reduxstate = store.getState()
                     console.log("===================finsihe")
                     const botMessage = createChatBotMessage("Form Has Been Prepared");
                     console.log("item to be saved", {
@@ -105,7 +107,9 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                         ...prev,
                         messages: [...prev.messages, botMessage]
                     }));
+                    store.dispatch(setcompleted())
                     console.log("===================finsihe end")
+                    console.log(reduxstate)
 
                 } else {
                     const botMessage = createChatBotMessage(state.sections[state.position].questions);
@@ -113,7 +117,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                     var inputString = reduxstate.formtext.value;
                     var count = 0;
                     console.log("position of question", state.position)
-                    var replacedString = inputString.replace(/_____/g, function (match) {
+                    var replacedString = inputString.replace(/________/g, function (match) {
                         count++
                         return (count == 1) ? "<span>" + message + "</span> " : match
                     });
@@ -127,15 +131,15 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                         position: prev.position + 1
                     }));
                 }
-                console.log("------------------state.sections.length > state.position end")
-                console.log("------------------state.position >0 end")
+                // console.log("------------------state.sections.length > state.position end")
+                // console.log("------------------state.position >0 end")
             }
         }
         console.log("-----------------handle overall end")
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/forms`, {
+        fetch(`http://localhost:3000/api/forms/${state.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -147,11 +151,11 @@ const ActionProvider = ({ createChatBotMessage, setState, children, state }) => 
                 console.log(data)
                 setState((prev) => ({
                     ...prev,
-                    sections: data[data.length - 1].sections,
-                    formtext: data[data.length - 1].formtext
+                    sections: data[0].sections,
+                    formtext: data[0].formtext
                 }))
-                console.log(data[data.length - 1])
-                dispatch(setformtext(data[data.length - 1].formtext))
+                console.log(data[0])
+                dispatch(setformtext(data[0].formtext))
             })
             .catch((error) => {
                 // console.log("error while sending")

@@ -61,7 +61,8 @@ const config = {
         sections: [],
         formtext: [],
         answers: [],
-        position: 0
+        position: 0,
+        id: ""
     },
 };
 
