@@ -7,12 +7,11 @@ const UpdateDocument = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigateTo = useNavigate();
   const [show, setShow] = useState(true);
   const { id } = useParams();
-
-  const handleClose = () => setShow(false);
 
   const handleOptionChange = (event) => {
     setCategory(event.target.value);
@@ -33,7 +32,7 @@ const UpdateDocument = () => {
         console.log(error);
       });
   }, []);
-  const handleUpdateBook = () => {
+  const handleUpdateDoc = () => {
     const data = {
       title,
       description,
@@ -43,9 +42,10 @@ const UpdateDocument = () => {
     axios
       .put(`http://localhost:5005/Docs/${id}`, data)
       .then(() => {
+        setShowModal(true);
         setLoading(false);
+        setShow(false);
         console.log("document updated successfully");
-        navigateTo(`/category/${category}`);
       })
       .catch((error) => {
         setLoading(false);
@@ -53,6 +53,14 @@ const UpdateDocument = () => {
       });
   };
   const handleCloseModal = () => {
+    navigateTo(`/category/${category}`);
+  };
+  const CloseModal = () => {
+    setShowModal(false);
+    navigateTo(`/category/${category}`);
+  };
+  const handleClose = () => {
+    setShow(false);
     navigateTo(`/category/${category}`);
   };
   return (
@@ -223,12 +231,23 @@ const UpdateDocument = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleUpdateBook}>
+              <Button variant="primary" onClick={handleUpdateDoc}>
                 Save Changes
               </Button>
             </Modal.Footer>
           </div>
         </Modal.Body>
+      </Modal>
+      <Modal show={showModal} onHide={CloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Document update</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Your document has been updated successfully.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={CloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

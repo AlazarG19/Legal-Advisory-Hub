@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import UpdateDocument from "./UpdateDocument";
 import DeleteDoc from "./DeleteDoc";
+import BackButton from "./BackButton";
 const CategoryDocuments = () => {
   const { categoryName } = useParams();
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
@@ -13,7 +13,6 @@ const CategoryDocuments = () => {
   const [documents, setDocuments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,7 +25,6 @@ const CategoryDocuments = () => {
   };
 
   useEffect(() => {
-    console.log("Category changed to:", categoryName);
     if (categoryName) {
       fetchDocuments(categoryName);
     }
@@ -52,7 +50,22 @@ const CategoryDocuments = () => {
       console.error("Error fetching documents:", error);
     }
   };
+  const handleDropDownView = async (doc) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:5005/${doc.path}`, {
+        responseType: "blob",
+      });
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
 
+      setLoading(false);
+    } catch (error) {
+      console.error("Error reading document:", error);
+      setLoading(false);
+    }
+  };
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -67,43 +80,47 @@ const CategoryDocuments = () => {
       <div className="app-wrapper m-9 flex-row-fluid" id="kt_app_wrapper">
         <div class="card-body">
           <div class="card-title">
-            <div className="d-flex align-items-center position-relative my-1">
-              <span className="svg-icon svg-icon-1 position-absolute ms-6">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="17.0365"
-                    y="15.1223"
-                    width="8.15546"
-                    height="2"
-                    rx="1"
-                    transform="rotate(45 17.0365 15.1223)"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <input
-                type="text"
-                data-kt-filemanager-table-filter="search"
-                className="form-control form-control-solid w-250px ps-15"
-                placeholder="Search Files & Folders"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+            <div className="d-flex align-items-center justify-content-between ">
+              <BackButton />
+              <div className="d-flex align-items-center justify-content-between position-relative my-1">
+                <span className="svg-icon svg-icon-1 position-absolute ms-6">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      opacity="0.5"
+                      x="17.0365"
+                      y="15.1223"
+                      width="8.15546"
+                      height="2"
+                      rx="1"
+                      transform="rotate(45 17.0365 15.1223)"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  data-kt-filemanager-table-filter="search"
+                  className="form-control form-control-solid w-250px ps-15"
+                  placeholder="Search Files & Folders"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
             </div>
           </div>
           {loading}
           <h2 class="text-muted  text-center">{categoryName} Documents</h2>
+
           <table
             id="kt_file_manager_list"
             data-kt-filemanager-table="files"
@@ -162,10 +179,7 @@ const CategoryDocuments = () => {
                       <div class="d-flex justify-content-end">
                         <div class="ms-2">
                           <Dropdown>
-                            <Dropdown.Toggle
-                              variant="primary"
-                              id="delete-dropdown"
-                            >
+                            <Dropdown.Toggle variant="light">
                               <span class="svg-icon svg-icon-5 m-0">
                                 <svg
                                   width="24"
@@ -212,7 +226,11 @@ const CategoryDocuments = () => {
                               >
                                 Delete
                               </Dropdown.Item>
-                              <Dropdown.Item>View</Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => handleDropDownView(doc)}
+                              >
+                                View
+                              </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>

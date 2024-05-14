@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const DeleteDoc = ({ documentId }) => {
   const [showConfirmation, setShowConfirmation] = useState(true);
   const [loading, setLoading] = useState(false);
-  const navigateTo = useNavigate();
-  const currentUrl = window.location.href;
   const handleConfirmDelete = async () => {
     try {
       setLoading(true);
 
-      // Perform any necessary validation checks on the selectedDocumentId
       if (!documentId) {
         console.error("Invalid document ID");
         return;
