@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import PdfToImage from "./PdfToImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import CardText from "react-bootstrap/esm/CardText";
 
 const DocSingleCard = ({ doc }) => {
   const [loading, setLoading] = useState(false);
@@ -56,22 +57,26 @@ const DocSingleCard = ({ doc }) => {
   };
 
   return (
-    <div className="rounded-lg px-4 py-2 m-4 position-relative shadow-hover-xl">
-      <Card style={{ width: "22rem" }}>
+    <div className="rounded-lg px-4 py-4  position-relative ">
+      <Card
+        className="m-4"
+        style={{ width: "22rem", height: "30rem" }}
+        sm={{ width: "44" }}
+        md={{ width: "20rem" }}
+        lg={{ width: "22rem" }}
+      >
         {doc.path && <PdfToImage documentPath={doc.path} />}
-        <Card.Body>
-          <Card.Title>{doc.title}</Card.Title>
-          <Card.Title>{doc.path}</Card.Title>
-          <Card.Text>{doc.description}</Card.Text>
-        </Card.Body>
-        <Card.Body>
+        <div className="text-start p-2">
+          <p className="fw-bolder fs-4">{doc.title}</p>
+          <p className="text-primary">{doc.path}</p>
+
           <button onClick={handleReadDocument} disabled={loading}>
             {loading ? "Loading..." : "Read"}
           </button>
           <button onClick={handleDownloadDoc} disabled={loading}>
-            {loading ? "Loading..." : "download"}
+            {loading ? "Loading..." : "Download"}
           </button>
-        </Card.Body>
+        </div>
       </Card>
     </div>
   );

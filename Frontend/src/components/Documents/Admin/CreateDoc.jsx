@@ -5,10 +5,12 @@ import { Button, Modal } from "react-bootstrap";
 
 function CreateDoc() {
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [category, setCategory] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,11 +46,12 @@ function CreateDoc() {
       });
 
       setLoading(false);
-      setSuccessMessage("Document created successfully");
       navigateTo("/documents");
+
+      setShow(false);
+      setShowModal(true);
       console.log("Document created successfully");
 
-      // Reset form fields
       setTitle("");
       setDescription("");
       setCategory("");
@@ -70,7 +73,10 @@ function CreateDoc() {
     setSuccessMessage("");
     setErrorMessage("");
   };
-
+  const handleClose = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
   const handleOpenModal = () => {
     setShow(true);
   };
@@ -273,6 +279,17 @@ function CreateDoc() {
           </Button>
           <Button variant="primary" onClick={handleSaveDocument}>
             Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Document Created</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Your document has been created successfully.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

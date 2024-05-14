@@ -21,7 +21,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-light ">
+    <div className="">
       <Header />
       <div className="d-flex flex-wrap flex-stack mb-6 m-10 ps-15 pe-15 ">
         <h3 className="fw-bold my-2">
