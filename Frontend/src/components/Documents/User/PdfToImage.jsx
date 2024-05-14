@@ -30,17 +30,17 @@ function PdfToImage({ documentPath }) {
 
   return (
     <div className="bg-image hover-zoom">
-      {loading ? (
-        <div>Loading image...</div>
-      ) : (
-        <img
-          src={image}
-          alt="img"
-          className=" zoom-image card-img-top shadow img-responsive p-3 img-fluid img-thumbnail "
-          style={{ height: "16rem" }}
-        />
-      )}
-    </div>
+    {loading ? (
+      <div>Loading image...</div>
+    ) : (
+      <img
+        src={image}
+        alt="img"
+        className=" zoom-image card-img-top shadow img-responsive p-3 img-fluid img-thumbnail "
+        style={{ height: "16rem" }}
+      />
+    )}
+  </div>
   );
 }
 

@@ -30,22 +30,21 @@ const DocSingleCard = ({ doc }) => {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:5005/${doc.path}`, {
-        responseType: "blob", // Important for downloading files
+        responseType: "blob", 
       });
       const blob = new Blob([response.data], { type: "application/pdf" });
 
-      // Create a temporary anchor element
+    
       const downloadLink = document.createElement("a");
       downloadLink.href = window.URL.createObjectURL(blob);
 
-      // Set the file name for the download
+      
       downloadLink.setAttribute("download", "document.pdf");
 
-      // Append the anchor to the body and click it programmatically
       document.body.appendChild(downloadLink);
       downloadLink.click();
 
-      // Clean up
+      
       document.body.removeChild(downloadLink);
       window.URL.revokeObjectURL(downloadLink.href);
 
@@ -58,12 +57,9 @@ const DocSingleCard = ({ doc }) => {
 
   return (
     <div className="rounded-lg px-4 py-4  position-relative ">
-      <Card
+            <Card
         className="m-4"
         style={{ width: "22rem", height: "30rem" }}
-        sm={{ width: "44" }}
-        md={{ width: "20rem" }}
-        lg={{ width: "22rem" }}
       >
         {doc.path && <PdfToImage documentPath={doc.path} />}
         <div className="text-start p-2">
