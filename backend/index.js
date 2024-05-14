@@ -1,9 +1,11 @@
 import express from "express";
+import fs from "fs";
+import path from "path";
+
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Doc } from "./models/DocModel.js";
 import multer from "multer";
-import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cors from "cors";
@@ -116,9 +118,21 @@ app.delete("/Docs/:id", async (request, response) => {
       return response.status(404).json({ message: "Document not found" });
     }
 
+    const filePath = path.join(__dirname, result.path);
+    if (!filePath) {
+      return response.status(404).json({ message: "Document path not found" });
+    }
+    fs.unlink(filePath, (error) => {
+      if (error) {
+        console.error("Error deleting file:", error);
+        return response.status(500).json({ message: "Error deleting file" });
+      }
+      console.log("File deleted successfully");
+    });
+
     return response
       .status(200)
-      .send({ message: "Document deleted successfully" });
+      .json({ message: "Document deleted successfully" });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
@@ -132,10 +146,6 @@ app.get("/get-files", async (req, res) => {
     });
   } catch (error) {}
 });
-//----------------------------------------------------------------
-
-//----------------------------------------------------------------
-
 //----------------------------------------------------------------
 app.get("/", (request, response) => {
   console.log(request);
