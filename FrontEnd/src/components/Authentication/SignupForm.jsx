@@ -78,33 +78,35 @@ const SignupForm = () => {
     validate,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log("submitted successfully")
-      // let body = {
-      //   email: values.email,
-      //   password: values.password,
-      //   firstName: values.firstName,
-      //   lastName: values.lastName,
-      // }
-      // body = JSON.stringify(body)
+      // console.log("submitted successfully")
+      let body = {
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+      }
+      body = JSON.stringify(body)
+      console.log(body)
       // setSubmitting(false);
-      // await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: body
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (data.success) {
-      //       sessionStorage.setItem("user", JSON.stringify(data.info));
-      //       window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/emailverification/0`
-      //     } else {
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error:', error);
-      //   });
+      await fetch(`http://localhost:3000/createUser`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          if (data.success) {
+            // sessionStorage.setItem("user", JSON.stringify(data.info));
+            window.location.href = `http://localhost:5173/checkemail/0`
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
   })
   return (
