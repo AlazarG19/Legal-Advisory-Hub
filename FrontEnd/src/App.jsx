@@ -16,8 +16,9 @@ import SignUpForm from './components/Authentication/SignupForm'
 import CustomForm2 from './components/CustomForm/CustomForm2'
 import Details from './components/CustomForm/Details'
 import Index from './components/CustomForm/Index'
+import CheckEmail from './components/Authentication/CheckEmail/CheckEmail'
+import EmailVerified from './components/Authentication/VerifyEmail/EmailVerified'
 import "./App.css"
-import Navbar from './components/Navbar'
 function App() {
 
   return (
@@ -40,6 +41,8 @@ function App() {
           <Route path="/customform" element={<Index />}></Route>
           <Route path="/customform/:id" element={<Details />}></Route>
           <Route path="/customform/edit/:id" element={<CustomForm2 />}></Route>
+          <Route path="/checkemail/:type" element={<CheckEmail />}></Route>
+          <Route path="/emailverified/:id/:token" element={<EmailVerified />}></Route>
         </Routes>
       </BrowserRouter>
     </>

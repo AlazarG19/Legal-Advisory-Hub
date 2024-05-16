@@ -4,11 +4,15 @@ const db = require("./app/models");
 const cors = require("cors")
 const axios = require('axios');
 const { Server } = require('socket.io');
-
+const EmailSender = require("./app/helpers/emailVerification");
+const crypto = require("crypto")
 const users = require('./app/models/users');
 const offers = require('./app/models/offers');
 const room = require('./app/models/room');
 const message = require('./app/models/messages');
+const Token = db.tokens;
+var jwt = require("jsonwebtoken");
+const { isAsyncFunction } = require('util/types');
 
 require("dotenv").config();
 //enale sever accept json 
@@ -86,46 +90,108 @@ app.get('/getFreelancers', (req, res) => {
 
 app.get('/getFreelancer/:id', (req, res) => {
   const id = req.params.id;
-  users.findById({ _id: id })
-    .then(user => res.json(user))
-    .catch(err => res.json(err));
+  console.log(req.params)
+  // users.findById({ _id: id })
+  //   .then(user => res.json(user))
+  //   .catch(err => res.json(err));
 });
 
-app.get('/getUser/:username', (req, res) => {
-  const username = req.params.username;
-  users.find({ username: username })
+app.get('/getUser/:email', async (req, res) => {
+  const email = req.params.email;
+  let user = await users.find({ email: email })
     .then(user => res.json(user))
     .catch(err => res.json(err));
+  console.log("user", user)
 });
+
+
 app.post('/createUser', async (req, res) => {
-  const newUser = {
+  console.log(req.body)
+  const newUser = new users({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     password: req.body.password,
     email: req.body.email,
+    verified: false
+  })
+  try {
+    const createduser = await newUser.save();
+
+    console.log(createduser, "createduser");
+    try {
+      let token = await new Token({
+        userId: createduser._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      })
+      const createdtoken = await token.save()
+      console.log(createdtoken, "createdtoken");
+      const message = `http://localhost:5173/emailverified/${createduser.id}/${token.token}`;
+
+      EmailSender("Legal Advisory Hub", "alazargetachew70@gmail.com", "Verify Email", message);
+    } catch (err) {
+      console.log(err, "first error for token")
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log({ id: createduser._id })
+    var tokens = jwt.sign({ id: createduser._id }, "themajesticsecretkey", {
+      expiresIn: 86400 // 24 hours
+    });
+    console.log(tokens)
+    res.status(200).send(
+      {
+        success: true, info:
+        {
+          id: createduser._id,
+          username: createduser.username,
+          email: createduser.email,
+          accessToken: tokens,
+        }
+
+      });
+  } catch (err) {
+    console.log(err, "first error for users")
+    res.status(500).send({ message: err });
+    return;
   }
-  console.log(newUser)
-  // const existUser = await users.findOne({ userName: req.body.userName });
 
-  // if (existUser) {
-  //   res.status(400).send({
-  //     success: false,
-  //     error: "Failed! User Name already in use!"
-  //   });
-  //   return;
-  // }
 
-  // try {
-  //   const newInstance = await newUser.save()
-  //   res.status(201).send({
-  //     success: true,
-  //     error: ""
-  //   });
-  // } catch (err) {
-  //   res.status(400).json({ message: err.message })
-  // }
+
 });
 
+app.get("/verify/:id/:token", async (req, res) => {
+  // res.send('here I am')
+  console.log("req.params", req.params)
+  console.log("req.params", { _id: req.params.id })
+  const user = await users.findById({ _id: req.params.id });
+  console.log(user)
+  if (!user) {
+    return res.status(200).send({
+      success: false,
+      message: "Invalid link"
+    });
+  }
+
+  const token = await Token.findOne({
+    userId: user._id,
+    token: req.params.token,
+  });
+  console.log("token", token)
+  if (!token) return res.status(200).send({
+    success: false,
+    message: "Invalid link"
+  });
+
+  await users.updateOne({ _id: user._id }, { verified: true });
+  await Token.findByIdAndDelete(token._id);
+
+  res.status(200).send({
+    success: true,
+    message: "email verified sucessfully"
+  });
+  return;
+
+});
 
 app.get('/checkEmail/:email', (req, res) => {
   console.log(req.params)
@@ -138,8 +204,10 @@ app.get('/checkEmail/:email', (req, res) => {
 app.post('/clientlogin', async (req, res) => {
   console.log(req.body)
   try {
-    const { username, password } = req.body;
-    const user = await users.findOne({ username, password });
+    const { email, password } = req.body;
+    const testuser = await users.findOne({ email, password });
+    const user = await users.findOne({ email, password });
+    console.log(testuser)
     console.log(user)
     if (user) {
       res.status(200).json({ message: 'Login successful', user: user });

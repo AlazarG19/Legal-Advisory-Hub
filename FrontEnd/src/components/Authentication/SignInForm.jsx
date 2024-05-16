@@ -15,7 +15,7 @@ const SignInForm = () => {
         function (value) {
           console.log("this ")
           let body = {
-            username: value,
+            email: value,
             password: password
           }
           body = JSON.stringify(body)
@@ -56,6 +56,7 @@ const SignInForm = () => {
   useEffect(() => {
 
     const storedJson = sessionStorage.getItem('user');
+    console.log(storedJson)
     const userData = JSON.parse(storedJson);
 
     if (userData) {
@@ -96,7 +97,7 @@ const SignInForm = () => {
               validationSchema={SigninSchema}
               onSubmit={async (values, { setSubmitting }, formik) => {
                 let body = {
-                  username: values.email,
+                  email: values.email,
                   password: values.password
                 }
                 console.log(body)
@@ -115,13 +116,7 @@ const SignInForm = () => {
                   })
                   .then((data) => {
                     setSubmitting(false);
-                    console.log("final")
-                    console.log(data)
-                    console.log(data.user)
                     sessionStorage.setItem('user', JSON.stringify(data.user));
-                    console.log("session", sessionStorage.getItem("user"))
-                    setUser(data.user);
-
                     console.log("from session", sessionStorage.getItem('user'));
                     if (data.user.userType == 'client') {
                       console.log("this user is a client")
