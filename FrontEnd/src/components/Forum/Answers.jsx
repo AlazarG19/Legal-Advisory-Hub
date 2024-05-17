@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 import IndividualAnswer from './IndividualAnswer';
 // import RelatedQuestions from './Elements/RelatedQuestions';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
+import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
 
-import { Link } from 'react-router-dom';
 
-function Answer() {
+function Answers() {
 
     const { id } = useParams();
     const [Question, setQuestion] = useState([]);
@@ -66,6 +66,7 @@ function Answer() {
         if (Answer.length > 0) {
             return Answer.map((answer, index) => {
                 return (
+
                     <IndividualAnswer Answer={answer} Feed={true} />
                 )
             })
@@ -3407,26 +3408,20 @@ function Answer() {
                     <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
                         {/* <!--begin::Content wrapper--> */}
                         
-                        <div className="d-flex flex-column flex-column-fluid">
+                        <div className="d-flex flex flex-column-fluid">
                             {/* <!--begin::Content--> */}
                            
                             
-                            <div id="kt_app_content" className="app-content flex-column-fluid">
+                            <div id="kt_app_content" className="">
                                 {/* <!--begin::Content container--> */}
                                 {/* {Question.category} */}
-                                <div className="d-lg-flex flex-column flex-lg-row-auto w-lg-325px" data-kt-drawer="true" data-kt-drawer-name="end-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '250px': '300px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_social_end_sidebar_toggle">
-            {/* <!--begin::Social widget 1--> */}
-           
-            {/* <!--end::Social widget 1--> */}
-            {/* <!--begin::Social widget 1--> */}
-           
-        </div>
+                
 
 
 
             <div className="container">
             <div className="row">
-                <div className="col-md-4 ml-auto">
+                <div className="col-md-3 ml-auto">
 
 
 
@@ -3442,17 +3437,10 @@ function Answer() {
                 </div>
                 {/* <!--end::Header--> */}
                 {/* <!--begin::Body--> */}
-                
-
-                <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                {/* <!--begin:Author--> */}
-                <div className="flex-grow-1 me-2">
-                    <a className="text-gray-800 text-hover-primary fs-6 fw-bold"></a>
-                </div>
-                </div>
+        
                 {Questions.filter(item => item._id !== id).map((item, index) => {
                 return (
-                    <div className="card-body pt-2" key={item._id}>
+                    <div className="card-body" key={item._id}>
                     {/* <!--begin::Item--> */}
                     <div className="d-flex flex-stack">
                         {/* <!--begin::Symbol--> */}
@@ -3515,102 +3503,26 @@ function Answer() {
                                       
                                             {/* <!--end::Main form--> */}
                                             {/* <!--begin::Posts--> */}
-                                            <div className="mb-10" id="kt_social_feeds_posts">
-                                                {/* <!--begin::Post 1--> */}
-                                                <div className="card card-flush">
-  {/* <!--begin::Card header--> */}
-  <div className="card-header pt-9">
-    {/* <!--begin::Author--> */}
-    <div className="d-flex align-items-center">
-      {/* <!--begin::Avatar--> */}
-      
-      {/* <!--end::Avatar--> */}
-      {/* <!--begin::Info--> */}
-      <div className="flex-grow-1">
-        {/* <!--begin::Name--> */}
-        
-        {/* <!--begin::Date--> */}
-        <span className="text-dark-400 fw-semibold d-block">
-          Question
-           </span>
-        {/* <!--end::Date--> */}
-      </div>
-      {/* <!--end::Info--> */}
-    </div>
-    {/* <!--end::Author--> */}
-    {/* <!--begin::Card toolbar--> */}
-    
-    {/* <!--end::Card toolbar--> */}
-  </div>
-  {/* <!--end::Card header--> */}
-  {/* <!--begin::Card body--> */}
-  <div className="card-body">
-    {/* <!--begin::Post content--> */}
-    <div className="fs-4 font-weight-bold text-gray-700">
-      <strong>
-        <Link to={`/answers/${Question._id}`}>{Question.title}</Link>
-      </strong>
-    </div>
-    <div className="fs-8 font-weight-bold text-gray-700 text-right m-3"></div>
-    <Container fluid>
-      <Row>
-        <Col className="q-text qu-dynamicFontSize--small qu-mt--small qu-color--gray_light qu-passColorToLinks text-right">
-          <span className="q-text qu-bold">
-            <Link to={`/answers/${Question._id}`}>{Answer.length} Answers</Link>
-          </span>
-          <span> · </span>
-          <span>{Question.category}</span>
-        </Col>
-      </Row>
-    </Container>
-    {/* <!--end::Post content--> */}
-    {/* <!--begin::Post media--> */}
-    
-    {/* <!--end::Post media--> */}
-  </div>
-  {/* <!--end::Card body--> */}
-  {/* <!--begin::Card footer--> */}
-  <div className="card-footer pt-0">
-    {/* <!--begin::Info--> */}
-    <div className="mb-6">
-      {/* <!--begin::Separator--> */}
-      <div className="separator separator-solid"></div>
-      {/* <!--end::Separator--> */}
-      {/* <!--begin::Nav--> */}
-      <ul className="container col flex nav py-3">
-        {/* <!--begin::Item--> */}
-        <li className="nav-item">
-          <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
-            <i className="bi bi-pencil-fill"></i> Answer
-          </a>
-        </li>
-        {/* <!--end::Item--> */}
-        {/* <!--begin::Item--> */}
-        <li className="nav-item">
-          <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-            <i className="bi bi-hand-thumbs-up"></i> Upvote
-          </a>
-        </li>
-        
-        {/* <!--end::Item--> */}
-        {/* <!--begin::Item--> */}
-        
-        {/* <!--end::Item--> */}
-      </ul>
-      {/* <!--end::Nav--> */}
-      {/* <!--begin::Separator--> */}
-      <div className="separator separator-solid mb-1"></div>
-      {/* <!--end::Separator--> */}
-      {/* <!--begin::Comments--> */}
-      
-      {/* <!--end::Collapse--> */}
-    </div>
-    {/* <!--end::Info--> */}
-  </div>
-  {/* <!--end::Card footer--> */}
-</div>
-
-                                            </div>
+                                            <div className="card mb-3">
+                                        <div className="card-body">
+                                            <h5 className="card-title d-flex align-items-center">
+                                            <BsQuestionCircle className="me-2" />
+                                            Question
+                                            </h5>
+                                            <h6 className="card-title f-bold p-10 text">{Question.title}</h6>
+                                            <p className="card-text">
+                                            {Answer.length}  Answers · {Question.category}
+                                            </p>
+                                        </div>
+                                        <div className="card-footer col flex-align-items nav py-3">
+                                        <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
+              <i className="bi bi-pencil-fill"></i> Answer
+            </a>
+            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
+              <i className="bi bi-hand-thumbs-up"></i> Upvote
+            </a>
+                                        </div>
+                                        </div>
                                             
                                             {populateAnswers()}
                                             {/* <!--end::Posts--> */}
@@ -3681,4 +3593,4 @@ function Answer() {
     )
 }
 
-export default Answer
+export default Answers

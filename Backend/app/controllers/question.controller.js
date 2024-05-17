@@ -8,11 +8,11 @@ exports.create = (req, res) => {
 //     res.status(400).send({ message: "Content can not be empty!" });
 //     return;
 //   }
-
+  
   // Create a Question
   const question = new Question({
 			title:req.body.title,
-			body:req.body.body,
+			body:req.body.body, 
 			author:req.body.author,
 			upvotes:req.body.upvotes,
 			downvotes:req.body.downvotes,

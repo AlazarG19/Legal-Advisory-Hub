@@ -1,5 +1,5 @@
 import React from 'react'
-import Modal from "./Elements/AddQuestionModal"
+import AddQuestionModal from "./Elements/AddQuestionModal"
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 function CreatePost() {
 
@@ -17,10 +17,11 @@ function CreatePost() {
         <Row className="mt-5">
         <Col  className="mx-auto">
           <InputGroup className="mb-3">
-            <FormControl placeholder="Search for posts" />
+            <FormControl placeholder="Search for questions" />
             <Button variant="primary" onClick={handleSearch}>Search</Button>
           </InputGroup>
-            <Modal/>
+            <AddQuestionModal/>
+            
         </Col>
       </Row>
         </>

@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import RichText from "../RichText"
 
 function Component() {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("add-question");
   const [question, setQuestion] = useState("");
   const [questionCategory, setQuestionCategory] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const [postCategory, setPostCategory] = useState("");
 
   const handleButtonClick = () => {
     setShowModal(true);
@@ -18,39 +15,90 @@ function Component() {
     setShowModal(false);
   };
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
-
-  const handleQuestionChange = (e) => {
-    setQuestion(e.target.value);
-  };
 
   const handleQuestionCategoryChange = (e) => {
     setQuestionCategory(e.target.value);
   };
 
   const handlePostContentChange = (e) => {
-    setPostContent(e.target.value);
+    setQuestion(e.target.value);
   };
 
-  const handlePostCategoryChange = (e) => {
-    setPostCategory(e.target.value);
-  };
+  const handleAddQuestion = async () => {
+    console.log(question, questionCategory);
+    const url = 'http://localhost:8080/api/questions/'; // Replace with your API endpoint
+  
+    const requestData = {
+      title: question,
+      category: questionCategory,
+      body: "It has no body",
+      author: "anonymous user"
+    };
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+  
+      const responseData = await response.json();
+      // Process the response data here
+      console.log(responseData);
+    } catch (error) {
+      // Handle the error here
+      console.error(error);
+    }
 
-  const handleAddQuestion = () => {
-    // Perform add question logic here
-    console.log("Question:", question);
-    console.log("Category:", questionCategory);
     handleCloseModal();
   };
 
-  const handlePost = () => {
-    // Perform post logic here
-    console.log("Post Content:", postContent);
-    console.log("Category:", postCategory);
-    handleCloseModal();
-  };
+
+
+  const handleAddQuestions = (event) => {
+        // Perform add question logic here
+        console.log("Question:", question);
+        console.log("Category:", questionCategory);
+        
+        const formData = new FormData();
+
+        // Update the formData object
+        formData.append(
+            'title',
+            question
+        );
+        formData.append(
+            'category',
+            questionCategory
+        );
+        formData.append(
+          'body',
+          "It has no body"
+      );
+        formData.append(
+          'author',
+          "anonymous user"
+      );
+        
+        fetch('http://localhost:8080/api/questions/', {
+            method: 'POST',
+            body: formData
+        })
+            .then((response) => response.json())
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    
+            handleCloseModal();
+          }
+
+
 
   return (
     <>
@@ -58,31 +106,14 @@ function Component() {
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Ask Question or Create post </Modal.Title>
+          <Modal.Title>Ask Question </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <button
-                className={`nav-link ${activeTab === "add-question" ? "active" : ""}`}
-                onClick={() => handleTabClick("add-question")}
-              >
-                Add Question
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${activeTab === "create-post" ? "active" : ""}`}
-                onClick={() => handleTabClick("create-post")}
-              >
-                Create Post
-              </button>
-            </li>
-          </ul>
 
           <div className="tab-content mt-3">
             {activeTab === "add-question" && (
-              <div className="tab-pane fade show active">
+                <div className="tab-pane fade show active">
+
                 <select
                   className="form-control mb-2 form-control-sm"
                   style={{ width: "100%", height: "40px" }}
@@ -90,12 +121,27 @@ function Component() {
                   onChange={handleQuestionCategoryChange}
                 >
                   <option value="">Select a category</option>
-                  <option value="Category 1">Category 1</option>
-                  <option value="Category 2">Category 2</option>
-                  <option value="Category 3">Category 3</option>
+                  <option value="Criminal">Criminal</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Family">Family</option>
+                  <option value="Employment">Employment</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Intellectual Property">Intellectual Property</option>
+                  <option value="Constitutional">Constitutional</option>
+                  <option value="Administrative">Administrative</option>
+                  <option value="Real Estate">Real Estate</option>
+                  <option value="Tort">Tort</option>
+
                 </select>
+                <input
+                  type="text"
+                  className="form-control mb-2"
+                  placeholder="What is your question?"
+                  style={{ width: "100%", height: "80px" }}
+                  value={question}
+                  onChange={handlePostContentChange}
+                />
                 
-                {/* <RichText/> */}
 
                 <div className="d-flex justify-content-end">
                   <Button variant="secondary" className="mr-2" onClick={handleCloseModal}>
@@ -108,39 +154,6 @@ function Component() {
               </div>
             )}
 
-            {activeTab === "create-post" && (
-              <div className="tab-pane fade show active">
-                <select
-                  className="form-control mb-2 form-control-sm"
-                  style={{ width: "100%", height: "40px" }}
-                  value={postCategory}
-                  onChange={handlePostCategoryChange}
-                >
-                  <option value="">Select a category</option>
-                  <option value="Category 1">Category 1</option>
-                  <option value="Category 2">Category 2</option>
-                  <option value="Category 3">Category 3</option>
-                </select>
-                
-                <input
-                  type="text"
-                  className="form-control mb-2"
-                  placeholder="Enter your post content"
-                  style={{ width: "100%", height: "80px" }}
-                  value={postContent}
-                  onChange={handlePostContentChange}
-                />
-
-                <div className="d-flex justify-content-end">
-                  <Button variant="secondary"className="mr-2" onClick={handleCloseModal}>
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={handlePost}>
-                    Create Post
-                  </Button>
-                </div>
-              </div>
-            )}
           </div>
         </Modal.Body>
       </Modal>

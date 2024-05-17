@@ -5,6 +5,24 @@ import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 function IndividualAnswer({Answer, Feed}) {
+    const [Comment, setComment] = useState("");
+    const [Vote, setVote] = useState();
+    
+    const handleVote = () => {
+
+
+    }
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/comments/all/${Answer._id}`).then(res => res.json()).then(result => {
+            setComment(result)
+        }).catch((error) => {
+          console.log(error)
+        });
+      }, [])
+
+      
+
+
     const comment = () => {
         if (Feed) {
             return (
@@ -74,14 +92,24 @@ function IndividualAnswer({Answer, Feed}) {
     const renderPostContent = () => {
         if (Feed) {
           const words = Answer.body.split(' ');
+
           const limitedContent = words.slice(0, 25).join(' ');
           return (
-            <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail/${Answer._id}`}>View detail</Link> </div>
+            <>
+            <div className="fs-6 fw-normal text-gray-700 mb-5" dangerouslySetInnerHTML={{ __html: limitedContent }} />
+            <Link to={`/detail/${Answer._id}`}>View detail</Link>
+            <IndividualAnswer Answer = {Answer} Feed = {true} />
+
+
+            </>            
+                
+                        
           );
         } else {
           return (
             <>
-                <div className="fs-6 fw-normal text-gray-700 mb-5">{Answer.body}  </div>
+                <div className="fs-6 fw-normal text-gray-700 mb-5" dangerouslySetInnerHTML={{ __html: Answer.body }} />
+               
                 <Card.Body>
                 <Card.Text className=" mb-4">
                     Category: <Badge variant="primary">{Answer.Category}</Badge>
@@ -112,11 +140,12 @@ function IndividualAnswer({Answer, Feed}) {
                     {/* <!--end::Avatar--> */}
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
+                        <div>Helloo it is me</div>
                         {/* <!--begin::Name--> */}
                         <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Answer.author}</a>
                         {/* <!--end::Name--> */}
                         {/* <!--begin::Date--> */}
-                        <span className="text-gray-400 fw-semibold d-block">{Answer.Date}</span>
+                        <span className="text-gray-400 fw-semibold d-block">{Answer.author}</span>
                         {/* <!--end::Date--> */}
                     </div>
                     {/* <!--end::Info--> */}
@@ -150,21 +179,18 @@ function IndividualAnswer({Answer, Feed}) {
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
-                                <i className="bi bi-chat-square fs-2 me-1"></i>2 Comments</a>
+                                <i className="bi bi-chat-square fs-2 me-1"></i> {Comment.length}  Comments</a>
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                <i className="bi bi-hand-thumbs-up fs-2 me-1"></i>47k Likes</a>
+                                <i className="bi bi-hand-thumbs-up fs-2 me-1"></i>{Answer.upvotes} Upvotes</a>
                         </li>
-                        {/* <!--end::Item--> */}
-                        {/* <!--begin::Item--> */}
                         <li className="nav-item">
-                            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4">
-                                <i className="bi bi-bookmark fs-2 me-1"></i>900 Saves</a>
+                            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
+                                <i className="bi bi-hand-thumbs-down fs-2 me-1" onClick={handleVote}></i>{Answer.downvotes}  Downvotes</a>
                         </li>
-                        {/* <!--end::Item--> */}
                     </ul>
                     {/* <!--end::Nav--> */}
                     {/* <!--begin::Separator--> */}

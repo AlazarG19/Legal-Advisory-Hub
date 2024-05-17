@@ -31,8 +31,8 @@ exports.create = (req, res) => {
 
 // Retrieve all comment from the database.
 exports.findAll = (req, res) => {
-  const postId  = req.body.postId;
-  Comment.find(postId)
+  const postId  =  req.params.id;
+  Comment.find({postId})
     .then(data => {
       res.send(data);
     })
