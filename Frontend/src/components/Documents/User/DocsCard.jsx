@@ -15,10 +15,19 @@ const DocsCard = ({ docs }) => {
   };
 
   return (
-    <div className="m-4">
-      <Search onSearch={handleSearch} />
+    <div className="">
+      <div className="d-flex flex-wrap flex-stack mb-6 m-10 ps-15 pe-15 ">
+        <h3 className="fw-bold my-2">
+          Legal Documents
+          <span className="fs-6 text-gray-400 fw-semibold ms-1">
+            100+ resources
+          </span>
+        </h3>
+        <Search onSearch={handleSearch} />
+      </div>
+
       {searchTerm !== "" ? (
-        <div className="row row-cols-1 w-sm-100 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+        <div className="row row-cols-1  row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
           {filteredDocs.length > 0 ? (
             filteredDocs.map((item) => (
               <div className="col" key={item._id}>
@@ -39,8 +48,8 @@ const DocsCard = ({ docs }) => {
             return acc;
           }, {})
         ).map(([category, docsArray]) => (
-          <div className="mt-4" key={category}>
-            <h1 className="fw-bold">{category}</h1>
+          <div className="" key={category}>
+            <h1 className="fw-bold ms-7">{category}</h1>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
               {docsArray.map((doc) => (
                 <div className="col" key={doc._id}>
