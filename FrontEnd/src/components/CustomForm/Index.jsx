@@ -25,6 +25,14 @@ const Index = () => {
             }
         },
         {
+            name: "category",
+            label: "Category",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
             name: "formdescription",
             label: "Description",
             options: {
@@ -33,7 +41,9 @@ const Index = () => {
             }
         },
     ];
+    const [selectedcategory, setSelectedCategory] = useState("")
     const [data, setData] = useState([])
+    const [olddata, setOldData] = useState([])
     // const data = [
     //     { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
     //     { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
@@ -44,9 +54,14 @@ const Index = () => {
         console.log(e)
         let link = "http://localhost:5173/customform/" + e[0]
         window.location.href = link
-
     }
-
+    console.log(selectedcategory)
+    const onCategoryClicked = (category) => {
+        setSelectedCategory(category)
+        let filtereddata = olddata.filter(form => form.category === category);
+        setData(filtereddata)
+        console.log(filtereddata)
+    }
     const options = {
         search: true,
         filterType: 'textField',
@@ -69,6 +84,7 @@ const Index = () => {
                 console.log("dataloaded")
                 console.log(data)
                 setData(data)
+                setOldData(data)
             })
             .catch((error) => {
                 // console.log("error while sending")
@@ -162,7 +178,7 @@ const Index = () => {
                                                         {/* <!--begin::Title--> */}
                                                         <h3 className="card-title align-items-start flex-column">
                                                             <span className="card-label fw-bold text-dark">Categories</span>
-                                                            <span className="text-gray-400 mt-1 fw-semibold fs-6">5 Categories So far</span>
+                                                            <span className="text-gray-400 mt-1 fw-semibold fs-6">10 Categories So far</span>
                                                         </h3>
                                                         {/* <!--end::Title--> */}
                                                     </div>
@@ -172,7 +188,7 @@ const Index = () => {
                                                         {/* <!--begin::Scroll--> */}
                                                         <div className="hover-scroll-overlay-y pe-6 me-n6" style={{ height: "415px" }}>
                                                             {/* <!--begin::Item--> */}
-                                                            <div className="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                                                            <div onClick={() => { onCategoryClicked("Criminal") }} className={selectedcategory == "Criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -181,7 +197,7 @@ const Index = () => {
                                                                         <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="text-gray-800 text-hover-primary fw-bold">Elephant 1802</a>
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Criminal</a>
                                                                         {/* <!--end::Title--> */}
                                                                     </div>
                                                                     {/* <!--end::Wrapper--> */}
@@ -190,7 +206,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div className="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                                                            <div onClick={() => { onCategoryClicked("Family") }} className={selectedcategory == "Family" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -199,7 +215,7 @@ const Index = () => {
                                                                         <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="text-gray-800 text-hover-primary fw-bold">Elephant 1802</a>
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Family</a>
                                                                         {/* <!--end::Title--> */}
                                                                     </div>
                                                                     {/* <!--end::Wrapper--> */}
@@ -208,7 +224,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div className="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                                                            <div onClick={() => { onCategoryClicked("Employement") }} className={selectedcategory == "Employement" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -217,7 +233,7 @@ const Index = () => {
                                                                         <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="text-gray-800 text-hover-primary fw-bold">Elephant 1802</a>
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Employement</a>
                                                                         {/* <!--end::Title--> */}
                                                                     </div>
                                                                     {/* <!--end::Wrapper--> */}
@@ -226,7 +242,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div className="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                                                            <div onClick={() => { onCategoryClicked("Contract") }} className={selectedcategory == "Contract" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -235,7 +251,7 @@ const Index = () => {
                                                                         <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="text-gray-800 text-hover-primary fw-bold">Elephant 1802</a>
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Contract</a>
                                                                         {/* <!--end::Title--> */}
                                                                     </div>
                                                                     {/* <!--end::Wrapper--> */}
@@ -244,7 +260,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div className="border border-dashed border-gray-300 rounded px-7 py-3 mb-6">
+                                                            <div onClick={() => { onCategoryClicked("Intellectual") }} className={selectedcategory == "Intellectual" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -253,7 +269,79 @@ const Index = () => {
                                                                         <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" className="text-gray-800 text-hover-primary fw-bold">Elephant 1802</a>
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Intellectual Property</a>
+                                                                        {/* <!--end::Title--> */}
+                                                                    </div>
+                                                                    {/* <!--end::Wrapper--> */}
+                                                                </div>
+                                                                {/* <!--end::Info--> */}
+                                                            </div>
+                                                            {/* <!--end::Item--> */}
+                                                            {/* <!--begin::Item--> */}
+                                                            <div onClick={() => { onCategoryClicked("Constitutional") }} className={selectedcategory == "Constitutional" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                                {/* <!--begin::Info--> */}
+                                                                <div className="d-flex flex-stack mb-3">
+                                                                    {/* <!--begin::Wrapper--> */}
+                                                                    <div className="me-3">
+                                                                        {/* <!--begin::Icon--> */}
+                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+                                                                        {/* <!--end::Icon--> */}
+                                                                        {/* <!--begin::Title--> */}
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Constitutional</a>
+                                                                        {/* <!--end::Title--> */}
+                                                                    </div>
+                                                                    {/* <!--end::Wrapper--> */}
+                                                                </div>
+                                                                {/* <!--end::Info--> */}
+                                                            </div>
+                                                            {/* <!--end::Item--> */}
+                                                            {/* <!--begin::Item--> */}
+                                                            <div onClick={() => { onCategoryClicked("Administrative") }} className={selectedcategory == "Administrative" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                                {/* <!--begin::Info--> */}
+                                                                <div className="d-flex flex-stack mb-3">
+                                                                    {/* <!--begin::Wrapper--> */}
+                                                                    <div className="me-3">
+                                                                        {/* <!--begin::Icon--> */}
+                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+                                                                        {/* <!--end::Icon--> */}
+                                                                        {/* <!--begin::Title--> */}
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Administrative</a>
+                                                                        {/* <!--end::Title--> */}
+                                                                    </div>
+                                                                    {/* <!--end::Wrapper--> */}
+                                                                </div>
+                                                                {/* <!--end::Info--> */}
+                                                            </div>
+                                                            {/* <!--end::Item--> */}
+                                                            {/* <!--begin::Item--> */}
+                                                            <div onClick={() => { onCategoryClicked("Real Estate") }} className={selectedcategory == "Real Estate" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                                {/* <!--begin::Info--> */}
+                                                                <div className="d-flex flex-stack mb-3">
+                                                                    {/* <!--begin::Wrapper--> */}
+                                                                    <div className="me-3">
+                                                                        {/* <!--begin::Icon--> */}
+                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+                                                                        {/* <!--end::Icon--> */}
+                                                                        {/* <!--begin::Title--> */}
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Real Estate</a>
+                                                                        {/* <!--end::Title--> */}
+                                                                    </div>
+                                                                    {/* <!--end::Wrapper--> */}
+                                                                </div>
+                                                                {/* <!--end::Info--> */}
+                                                            </div>
+                                                            {/* <!--end::Item--> */}
+                                                            {/* <!--begin::Item--> */}
+                                                            <div onClick={() => { onCategoryClicked("Tort") }} className={selectedcategory == "Tort" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                                {/* <!--begin::Info--> */}
+                                                                <div className="d-flex flex-stack mb-3">
+                                                                    {/* <!--begin::Wrapper--> */}
+                                                                    <div className="me-3">
+                                                                        {/* <!--begin::Icon--> */}
+                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+                                                                        {/* <!--end::Icon--> */}
+                                                                        {/* <!--begin::Title--> */}
+                                                                        <a href="#" className="text-gray-800 text-hover-primary fw-bold">Tort</a>
                                                                         {/* <!--end::Title--> */}
                                                                     </div>
                                                                     {/* <!--end::Wrapper--> */}

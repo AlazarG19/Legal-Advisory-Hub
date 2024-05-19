@@ -9,6 +9,7 @@ exports.create = (req, res) => {
         formname: req.body.formname,
         formdescription: req.body.formdescription,
         formid: req.body.formid,
+        category: req.body.category,
     })
     form.save(form)
         .then(data => {
@@ -52,6 +53,59 @@ exports.findOne = (req, res) => {
         .catch(err => {
             res
                 .status(500)
-                .send({ message: "Error retrieving Blog with id=" + id });
+                .send({ message: "Error retrieving Form with id=" + id });
+        });
+};
+
+exports.update = (req, res) => {
+    console.log("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[req.body]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]")
+    // console.log(req.body)
+    if (!req.body) {
+        return res.status(400).send({
+            message: "Data to update can not be empty!"
+        });
+    }
+
+    const id = req.params.id;
+    console.log(req.body.formid)
+    Form.findOneAndUpdate({ formid: req.body.formid }, req.body, { useFindAndModify: false })
+        .then(data => {
+            console.log("dataa", data)
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot update Form with id=${id}. Maybe Form was not found!`
+                });
+            } else res.send({ message: "Form was updated successfully." });
+        })
+        .catch(err => {
+            console.log("error dataa", err)
+            res.status(500).send({
+                message: "Error updating Form with id=" + id
+            });
+        });
+};
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    Form.findOneAndDelete({ formid: id })
+        .then(data => {
+            if (!data) {
+                console.log("succeed")
+                res.status(404).send({
+                    message: `Cannot delete Form, with id=${id}. Maybe Form was not found!`
+                });
+            } else {
+                console.log("failed")
+                res.send({
+                    message: "Form was deleted successfully!"
+                });
+            }
+        })
+        .catch(err => {
+            console.log("err")
+            res.status(500).send({
+                message: "Could not delete Form with id=" + id
+            });
         });
 };
