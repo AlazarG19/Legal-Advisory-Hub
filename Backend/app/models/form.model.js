@@ -19,6 +19,9 @@ module.exports = mongoose => {
             formdescription: {
                 type: String
             },
+            category: {
+                type: String
+            },
             isDeleted: {
                 type: Number,
                 default: 0

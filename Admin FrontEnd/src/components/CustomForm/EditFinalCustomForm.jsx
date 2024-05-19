@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { editstatement } from '../../../../FrontEnd/src/redux/Reducers/sectionreducer';
 uuidv4();
 import store from '../../redux/Store';
+import { useParams } from 'react-router-dom';
+import { increment } from '../../redux/Reducers';
 const CustomButton = () => <span className="octicon octicon-star" >BLANK SPACE</span>;
 const CustomRemoveButton = () => <span className="octicon octicon-remove" >REMOVE BLANK SPACE</span>;
 function insertStar() {
@@ -103,12 +105,15 @@ const CustomToolbar = () => (
         </button>
     </div>
 );
+
 const FinalCustomForm = () => {
     const today = new Date();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     const date = today.getDate();
     const currentDate = month + "/" + date + "/" + year;
+    const [formdate, setformdate] = useState(currentDate)
+    const [formid, setformid] = useState("")
     let modules = {
         toolbar: {
             container: '#toolbar',
@@ -130,8 +135,9 @@ const FinalCustomForm = () => {
     const [formName, setFormName] = useState('');
     const [formDescription, setFormDescription] = useState('');
     const [sections, setsections] = useState([])
-    const [questions, setquestion] = useState([])
+    const [questions, setquestions] = useState([])
     const [category, setCategory] = useState("")
+
 
     const handleSubmit = () => {
         const state = store.getState()
@@ -139,23 +145,23 @@ const FinalCustomForm = () => {
         // console.log("final value", value)
         // setValue2(value)
         console.log("new question", questions)
-        let body = { formid: uuidv4(), sections: state.sections.value, formtext: "<pre class='pretext'>" + value + "</pre>", formname: formName, formdescription: formDescription, category: category }
+        let body = { formid: formid, sections: state.sections.value, formtext: "<pre class='pretext'>" + value + "</pre>", formname: formName, formdescription: formDescription, category: category }
         console.log(body)
-        fetch(`http://localhost:3000/api/forms`, {
+        fetch(`http://localhost:3000/api/forms/edit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body)
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Successfully sent")
-            })
-            .catch((error) => {
-                console.log("error while sending")
-                console.error('Error:', error);
-            });
+        // .then((response) => response.json())
+        // .then((data) => {
+        //     console.log("Successfully sent")
+        // })
+        // .catch((error) => {
+        //     console.log("error while sending")
+        //     console.error('Error:', error);
+        // });
 
     }
 
@@ -167,6 +173,16 @@ const FinalCustomForm = () => {
         const oldSections = Array.from(state.sections.value)
         const index = oldSections.findIndex(item => item.id === idToUpdate);
         oldSections[index] = { ...oldSections[index], questions: specificquestion.value }
+        store.dispatch(editstatement({ section: oldSections }))
+    }
+    const editQuestion = (idToUpdate) => {
+        console.log(idToUpdate)
+        console.log("question")
+        console.log(questions)
+        const state = store.getState()
+        const oldSections = Array.from(state.sections.value)
+        const index = oldSections.findIndex(item => item.id === idToUpdate);
+        oldSections[index] = { ...oldSections[index], questions: "" }
         store.dispatch(editstatement({ section: oldSections }))
     }
     const handleChange = (id, value) => {
@@ -184,13 +200,63 @@ const FinalCustomForm = () => {
         } else {
             newQuestions.push({ id: id, value: value })
         }
-        setquestion(newQuestions);
+        setquestions(newQuestions);
     };
+    const { id } = useParams();
+    const quillRef = useRef();
     useEffect(() => {
         // fetching the state initially so that the sections can be up
         const state = store.getState()
+        console.log("state")
+        console.log(state)
         const updatedSections = state.sections.value
         setsections(updatedSections)
+        console.log(id)
+        if (state.counter.value == 0) {
+            fetch(`http://localhost:3000/api/forms/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("dataloaded")
+                    console.log(data)
+                    console.log(state.counter)
+                    let formdate = new Date(data[0].createdAt)
+                    console.log(formdate)
+                    const month = formdate.getMonth() + 1;
+                    const year = formdate.getFullYear();
+                    const date = formdate.getDate();
+                    const currentDate = month + "/" + date + "/" + year;
+                    console.log(currentDate)
+                    setFormName(data[0].formname)
+                    setFormDescription(data[0].formdescription)
+                    setCategory(data[0].category)
+                    setformdate(currentDate)
+                    let editor = quillRef.current.getEditor()
+                    let delta = editor.clipboard.convert(data[0].formtext)
+                    editor.setContents(delta, 'silent')
+                    // const state = store.getState()
+                    // console.log(state)
+                    console.log(data[0].sections)
+                    setsections(data[0].sections)
+                    setformid(data[0].formid)
+                    let uploadedquestions = data[0].sections.map(item => ({
+                        id: item.id,
+                        value: item.questions
+                    }));
+                    setquestions(uploadedquestions)
+
+                    dispatch(editstatement({ section: data[0].sections }))
+                    dispatch(increment())
+                })
+                .catch((error) => {
+                    // console.log("error while sending")
+                    console.error('Error:', error);
+                });
+        }
     }, [reduxsections])
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
@@ -248,7 +314,7 @@ const FinalCustomForm = () => {
                                                             <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                                                 {/* <!--begin::Number--> */}
                                                                 <div className="d-flex align-items-center">
-                                                                    <div className="fs-4 fw-bold">{currentDate}</div>
+                                                                    <div className="fs-4 fw-bold">{formdate}</div>
                                                                 </div>
                                                                 {/* <!--end::Number--> */}
                                                                 {/* <!--begin::Label--> */}
@@ -325,16 +391,16 @@ const FinalCustomForm = () => {
                                                                     <div className="d-flex flex-wrap my-2 border-grey-500" style={{ width: "100% !important" }} >
                                                                         <div style={{ width: "100% !important" }} className="me-4 ">
                                                                             {/* <!--begin::Select--> */}
-                                                                            <select style={{ width: "100% !important" }} onChange={(e) => { setCategory(e.target.value) }} name="status" data-control="select2" data-hide-search="true" className="form-select form-select-sm border-grey-500 bg-body border-body">
-                                                                                <option value="Active" selected="selected"> Select a Category</option>
-                                                                                <option value="Criminal" >Criminal</option>
+                                                                            <select style={{ width: "100% !important" }} value={category} onChange={(e) => { setCategory(e.target.value) }} name="status" data-control="select2" data-hide-search="true" className="form-select form-select-sm border-grey-500 bg-body border-body">
+                                                                                <option value="Active"> Select a Category</option>
+                                                                                <option value="Criminal"  >Criminal</option>
                                                                                 <option value="Civil">Civil</option>
                                                                                 <option value="Family">Family</option>
                                                                                 <option value="Employement">Employement</option>
                                                                                 <option value="Contract">Contract</option>
                                                                                 <option value="Intellectual Property">Intellectual Property</option>
                                                                                 <option value="Constitutional">Constitutional</option>
-                                                                                <option value="Administrative">Administrative</option>
+                                                                                <option value="Administrative" >Administrative</option>
                                                                                 <option value="Real Estate">Real Estate</option>
                                                                                 <option value="Tort">Tort</option>
                                                                             </select>
@@ -413,7 +479,7 @@ const FinalCustomForm = () => {
                                                                             {/* <!--end::Title--> */}
                                                                             {/* <!--begin::User--> */}
                                                                             <div className="text-gray-400">
-                                                                                <input id={section.id} key={section.id} type="text" onChange={(e) => { handleChange(section.id, e.target.value) }} className="form-control form-control" placeholder="Enter Project Name" defaultValue={section.questions} name="settings_name" />
+                                                                                <input id={section.id} key={section.id} type="text" onChange={(e) => { handleChange(section.id, e.target.value) }} className="form-control form-control" placeholder="Enter your question" defaultValue={section.questions} name="settings_name" />
 
                                                                             </div>
                                                                             {/* <!--end::User--> */}
@@ -421,7 +487,7 @@ const FinalCustomForm = () => {
                                                                         {/* <!--end::Info--> */}
                                                                         {/* <!--begin::Action--> */}
                                                                         {section.questions != "" ?
-                                                                            <button onClick={(e) => { e.preventDefault(); addQuestion(section.id) }} className="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply">
+                                                                            <button onClick={(e) => { e.preventDefault(); editQuestion(section.id) }} className="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply">
 
                                                                                 <span className="svg-icon svg-icon-2 m-0">
                                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -432,6 +498,7 @@ const FinalCustomForm = () => {
                                                                                 </span>
                                                                             </button> :
                                                                             <button onClick={(e) => { e.preventDefault(); addQuestion(section.id) }} className="btn btn-icon btn-sm btn-success flex-shrink-0 ms-4" >
+
                                                                                 <span className="svg-icon svg-icon-2">
                                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                         <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
@@ -476,6 +543,7 @@ const FinalCustomForm = () => {
                                                         <CustomToolbar />
 
                                                         <ReactQuill theme="snow"
+                                                            ref={quillRef}
                                                             modules={modules}
                                                             formats={formats} defaultValue={value} onChange={setValue} />
                                                     </div>

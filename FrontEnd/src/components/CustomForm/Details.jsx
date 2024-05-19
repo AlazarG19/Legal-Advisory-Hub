@@ -7,6 +7,8 @@ const Details = () => {
     const { id } = useParams();
     console.log(id)
     const [formdetail, setFormDetail] = useState({})
+    const [data, setData] = useState([])
+
     useEffect(() => {
         fetch(`http://localhost:3000/api/forms/${id}`, {
             method: 'GET',
@@ -18,7 +20,24 @@ const Details = () => {
             .then((data) => {
                 console.log("dataloaded")
                 console.log(data)
-                setFormDetail({ formname: data[0]["formname"], formid: data[0]["formid"], formdescription: data[0]["formdescription"] })
+                setFormDetail({ formname: data[0]["formname"], formid: data[0]["formid"], formdescription: data[0]["formdescription"], category: data[0]["category"] })
+                fetch(`http://localhost:3000/api/forms`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data2) => {
+                        let filtereddata = data2.filter(form => form.category === data[0]["category"] && form.formid != data[0]["formid"]);
+                        console.log("dataloaded")
+                        console.log(filtereddata)
+                        setData(filtereddata)
+                    })
+                    .catch((error) => {
+                        // console.log("error while sending")
+                        console.error('Error:', error);
+                    });
             })
             .catch((error) => {
                 // console.log("error while sending") 
@@ -71,7 +90,16 @@ const Details = () => {
                                                         <div class="d-flex align-items-center mb-5">
                                                             {/* <!--begin::Details--> */}
                                                             <div class="fw-semibold">
-                                                                <div class="fs-5 fw-bold text-gray-900 ">{formdetail["formname"]}</div>
+                                                                <div class="fs-5 fw-bold text-gray-900 ">Category : {formdetail["category"]}</div>
+                                                            </div>
+                                                            {/* <!--end::Details--> */}
+                                                        </div>
+                                                        {/* <!--end::Item--> */}
+                                                        {/* <!--begin::Item--> */}
+                                                        <div class="d-flex align-items-center mb-5">
+                                                            {/* <!--begin::Details--> */}
+                                                            <div class="fw-semibold">
+                                                                <div class="fs-5 fw-bold text-gray-900 "> {formdetail["formname"]}</div>
                                                             </div>
                                                             {/* <!--end::Details--> */}
                                                         </div>
@@ -112,21 +140,25 @@ const Details = () => {
                                                     <div class="card-body p-9 pt-3">
                                                         {/* <!--begin::Files--> */}
                                                         <div class="d-flex flex-column mb-9">
-                                                            {/* <!--begin::File--> */}
-                                                            <div class="d-flex align-items-center mb-5">
-                                                                {/* <!--begin::Icon--> */}
-                                                                <div class="symbol symbol-30px me-5">
-                                                                    <img alt="Icon" src="assets/media/svg/files/doc.svg" />
-                                                                </div>
-                                                                {/* <!--end::Icon--> */}
-                                                                {/* <!--begin::Details--> */}
-                                                                <div class="fw-semibold">
-                                                                    <a class="fs-6 fw-bold text-dark text-hover-primary" href="#">Create FureStibe branding proposal</a>
+                                                            {
+                                                                data.map((element) => {
+                                                                    {/* <!--begin::File--> */ }
+                                                                    return <div class="d-flex align-items-center mb-5">
+                                                                        {/* <!--begin::Icon--> */}
+                                                                        <div class="symbol symbol-30px me-5">
+                                                                            <img alt="Icon" src="assets/media/svg/files/doc.svg" />
+                                                                        </div>
+                                                                        {/* <!--end::Icon--> */}
+                                                                        {/* <!--begin::Details--> */}
+                                                                        <div class="fw-semibold">
+                                                                            <a class="fs-6 fw-bold text-dark text-hover-primary" href="#">{element.formname}</a>
 
-                                                                </div>
-                                                                {/* <!--end::Details--> */}
-                                                            </div>
-                                                            {/* <!--end::File--> */}
+                                                                        </div>
+                                                                        {/* <!--end::Details--> */}
+                                                                    </div>
+                                                                    {/* <!--end::File--> */ }
+                                                                })
+                                                            }
                                                         </div>
                                                         {/* <!--end::Files--> */}
                                                     </div>
