@@ -17,7 +17,7 @@ function MessageOut({ message }) {
                         {/* <!--end::Details--> */}
                         {/* <!--begin::Avatar--> */}
                         <div className="symbol symbol-35px symbol-circle">
-                            <img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+                            <img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
                         </div>
                         {/* <!--end::Avatar--> */}
                     </div>

@@ -13,11 +13,22 @@ import FreelancerProfile from './components/Users/freelancerProfile'
 import Clients from './components/Users/Clients'
 import SignInForm from './components/Authentication/SignInForm'
 import SignUpForm from './components/Authentication/SignupForm'
+import AdminFinalCustomForm from './components/AdminCustomForm/AdminFinalCustomForm'
+import AdminDetails from './components/AdminCustomForm/AdminDetails'
+import AdminIndex from './components/AdminCustomForm/AdminIndex'
 import CustomForm2 from './components/CustomForm/CustomForm2'
+import AdminEditFinalCustomForm from './components/AdminCustomForm/AdminEditFinalCustomForm'
 import Details from './components/CustomForm/Details'
 import Index from './components/CustomForm/Index'
 import CheckEmail from './components/Authentication/CheckEmail/CheckEmail'
 import EmailVerified from './components/Authentication/VerifyEmail/EmailVerified'
+import Documents from "./components/Documents/User/Documents";
+import Home from "./components/Documents/User/Home";
+import ReadPdfPage from "./components/Documents/User/ReadPdfPage";
+import CategoryDocuments from "./components/Documents/Admin/CategoryDocuments.";
+import UpdateDocument from "./components/Documents/Admin/UpdateDocument";
+import DeleteDoc from "./components/Documents/Admin/DeleteDoc";
+
 import "./App.css"
 function App() {
 
@@ -38,11 +49,31 @@ function App() {
           <Route path="/multistep" element={<MultiStepForm />}></Route>
           <Route path="/freelancerProfile" element={<FreelancerProfile/>}></Route>
           <Route path="/clients" element={<Clients />}></Route>
+          {/* Custom Form Routes */}
           <Route path="/customform" element={<Index />}></Route>
           <Route path="/customform/:id" element={<Details />}></Route>
           <Route path="/customform/edit/:id" element={<CustomForm2 />}></Route>
+          <Route path="/customform/edit/:id" element={<CustomForm2 />}></Route>
+          {/* End of Custom Form Routes */}
+
           <Route path="/checkemail/:type" element={<CheckEmail />}></Route>
           <Route path="/emailverified/:id/:token" element={<EmailVerified />}></Route>
+          {/* Admin Custom Form Routes */}
+          <Route path="/customforms" element={<AdminIndex />}></Route>
+          <Route path="/customforms/:id" element={<AdminDetails />}></Route>
+          <Route path="/customforms/edit/:id" element={<AdminEditFinalCustomForm />}></Route>
+          <Route path="/customforms/add" element={<AdminFinalCustomForm />}></Route>
+          {/* End Admin Custom Form Routes */}
+
+          {/* document database */}
+
+          <Route path="/docdb/documents" element={<Documents />} />
+          <Route path="/docdb/card" element={<Home />} />
+          <Route path="/docdb/read-pdf/:id" element={<ReadPdfPage />} />
+          <Route path="/docdb/category/:categoryName" element={<CategoryDocuments />} />
+          <Route path="/docdb/docs/edit/:id" element={<UpdateDocument />} />
+          <Route path="/docdb/docs/delete/:id" element={<DeleteDoc />} />
+          {/* end  document database */}
         </Routes>
       </BrowserRouter>
     </>

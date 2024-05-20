@@ -3,14 +3,14 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux'
-import { editstatement } from '../../../../FrontEnd/src/redux/Reducers/sectionreducer';
+import { editadminstatement } from '../../redux/Reducers/adminsectionreducer';
 uuidv4();
 import store from '../../redux/Store';
 const CustomButton = () => <span className="octicon octicon-star" >BLANK SPACE</span>;
 const CustomRemoveButton = () => <span className="octicon octicon-remove" >REMOVE BLANK SPACE</span>;
 function insertStar() {
     const state = store.getState()
-    const oldSections = Array.from(state.sections.value)
+    const oldadminsections = Array.from(state.adminsections.value)
     const cursorPosition = this.quill.getSelection().index;
 
     let mainString = this.quill.getText().substring(0, this.quill.getSelection().index)
@@ -18,11 +18,11 @@ function insertStar() {
     // Use the match method to find all matches of the substring in the main string
     let occurrences = (mainString.match(regex) || []).length;
     console.log("occurences", occurrences)
-    let test = [...oldSections]
+    let test = [...oldadminsections]
     console.log("test before", test)
     test.splice(occurrences, 0, {
         id: uuidv4(),
-        questionNumber: oldSections.length,
+        questionNumber: oldadminsections.length,
         questions: ""
     })
     console.log("test after", test)
@@ -31,18 +31,18 @@ function insertStar() {
     this.quill.setSelection(cursorPosition + 8);
 
 
-    const updatedSections = [...oldSections,
+    const updatedadminsections = [...oldadminsections,
     {
         id: uuidv4(),
-        questionNumber: oldSections.length,
+        questionNumber: oldadminsections.length,
         questions: ""
     }]
-    console.log("updatedSections", updatedSections)
-    store.dispatch(editstatement({ section: test }))
+    console.log("updatedadminsections", updatedadminsections)
+    store.dispatch(editadminstatement({ adminsection: test }))
 }
 function removeStar() {
     const state = store.getState()
-    const oldSections = Array.from(state.sections.value)
+    const oldadminsections = Array.from(state.adminsections.value)
     // const cursorPosition = this.quill.getSelection().index;
     // this.quill.insertText(cursorPosition, '________');
     // this.quill.setSelection(cursorPosition + 8);
@@ -64,13 +64,13 @@ function removeStar() {
     let changedValue = mainString.substring(0, lastIndex) + mainString.substring(lastIndex + 8);
     changedValue = changedValue + remaining
     console.log("changed", changedValue)
-    console.log("oldSections", oldSections)
-    oldSections.splice(occurrences - 1, 1)
-    // let popped = oldSections.pop(occurrences - 1)
+    console.log("oldadminsections", oldadminsections)
+    oldadminsections.splice(occurrences - 1, 1)
+    // let popped = oldadminsections.pop(occurrences - 1)
     // myArray.splice(n - 1, 1)
     // console.log("popped", popped, occurrences - 1)
-    console.log("changed old sections", oldSections)
-    store.dispatch(editstatement({ section: oldSections }))
+    console.log("changed old adminsections", oldadminsections)
+    store.dispatch(editadminstatement({ adminsection: oldadminsections }))
     this.quill.setText(changedValue);
 }
 const CustomToolbar = () => (
@@ -124,12 +124,12 @@ const FinalCustomForm = () => {
         'list', 'bullet', 'indent',
         'link', 'image'
     ]
-    const reduxsections = useSelector((state) => state.sections.value)
+    const reduxadminsections = useSelector((state) => state.adminsections.value)
     const dispatch = useDispatch()
     const [value, setValue] = useState('');
     const [formName, setFormName] = useState('');
     const [formDescription, setFormDescription] = useState('');
-    const [sections, setsections] = useState([])
+    const [adminsections, setadminsections] = useState([])
     const [questions, setquestion] = useState([])
     const [category, setCategory] = useState("")
 
@@ -139,7 +139,7 @@ const FinalCustomForm = () => {
         // console.log("final value", value)
         // setValue2(value)
         console.log("new question", questions)
-        let body = { formid: uuidv4(), sections: state.sections.value, formtext: "<pre class='pretext'>" + value + "</pre>", formname: formName, formdescription: formDescription, category: category }
+        let body = { formid: uuidv4(), sections: state.adminsections.value, formtext: "<pre class='pretext'>" + value + "</pre>", formname: formName, formdescription: formDescription, category: category }
         console.log(body)
         fetch(`http://localhost:3000/api/forms`, {
             method: 'POST',
@@ -164,10 +164,10 @@ const FinalCustomForm = () => {
             return element.id == idToUpdate
         })
         const state = store.getState()
-        const oldSections = Array.from(state.sections.value)
-        const index = oldSections.findIndex(item => item.id === idToUpdate);
-        oldSections[index] = { ...oldSections[index], questions: specificquestion.value }
-        store.dispatch(editstatement({ section: oldSections }))
+        const oldadminsections = Array.from(state.adminsections.value)
+        const index = oldadminsections.findIndex(item => item.id === idToUpdate);
+        oldadminsections[index] = { ...oldadminsections[index], questions: specificquestion.value }
+        store.dispatch(editadminstatement({ adminsection: oldadminsections }))
     }
     const handleChange = (id, value) => {
         let newQuestions = [...questions];
@@ -187,11 +187,11 @@ const FinalCustomForm = () => {
         setquestion(newQuestions);
     };
     useEffect(() => {
-        // fetching the state initially so that the sections can be up
+        // fetching the state initially so that the adminsections can be up
         const state = store.getState()
-        const updatedSections = state.sections.value
-        setsections(updatedSections)
-    }, [reduxsections])
+        const updatedadminsections = state.adminsections.value
+        setadminsections(updatedadminsections)
+    }, [reduxadminsections])
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
             {/* <!--begin::Page--> */}
@@ -373,7 +373,7 @@ const FinalCustomForm = () => {
                                                     {/* <!--begin::Card title--> */}
                                                     <div className="card-title flex-column">
                                                         <h3 className="fw-bold mb-1">Questions That will be asked on the form</h3>
-                                                        <div className="fs-6 text-gray-400">Total Questions : {sections.length}</div>
+                                                        <div className="fs-6 text-gray-400">Total Questions : {adminsections.length}</div>
                                                     </div>
                                                     {/* <!--end::Card title--> */}
                                                     {/* <!--begin::Card toolbar--> */}
@@ -395,11 +395,11 @@ const FinalCustomForm = () => {
                                                         <div id="kt_schedule_day_1" className="tab-pane fade show active">
 
                                                             {
-                                                                sections.map((section, index) => {
+                                                                adminsections.map((adminsection, index) => {
                                                                     return <div className="d-flex flex-stack position-relative mt-8">
                                                                         {/* <!--begin::Bar--> */}
 
-                                                                        <div className={section.questions != "" ? "position-absolute h-100 w-4px bg-success rounded top-0 start-0" : "position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"}></div>
+                                                                        <div className={adminsection.questions != "" ? "position-absolute h-100 w-4px bg-success rounded top-0 start-0" : "position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"}></div>
                                                                         {/* <!--end::Bar--> */}
                                                                         {/* <!--begin::Info--> */}
                                                                         <div className="fw-semibold ms-5 text-green-600">
@@ -413,15 +413,15 @@ const FinalCustomForm = () => {
                                                                             {/* <!--end::Title--> */}
                                                                             {/* <!--begin::User--> */}
                                                                             <div className="text-gray-400">
-                                                                                <input id={section.id} key={section.id} type="text" onChange={(e) => { handleChange(section.id, e.target.value) }} className="form-control form-control" placeholder="Enter Project Name" defaultValue={section.questions} name="settings_name" />
+                                                                                <input id={adminsection.id} key={adminsection.id} type="text" onChange={(e) => { handleChange(adminsection.id, e.target.value) }} className="form-control form-control" placeholder="Enter Project Name" defaultValue={adminsection.questions} name="settings_name" />
 
                                                                             </div>
                                                                             {/* <!--end::User--> */}
                                                                         </div>
                                                                         {/* <!--end::Info--> */}
                                                                         {/* <!--begin::Action--> */}
-                                                                        {section.questions != "" ?
-                                                                            <button onClick={(e) => { e.preventDefault(); addQuestion(section.id) }} className="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply">
+                                                                        {adminsection.questions != "" ?
+                                                                            <button onClick={(e) => { e.preventDefault(); addQuestion(adminsection.id) }} className="btn btn-sm btn-icon btn-clear btn-active-light-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply">
 
                                                                                 <span className="svg-icon svg-icon-2 m-0">
                                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -431,7 +431,7 @@ const FinalCustomForm = () => {
                                                                                     </svg>
                                                                                 </span>
                                                                             </button> :
-                                                                            <button onClick={(e) => { e.preventDefault(); addQuestion(section.id) }} className="btn btn-icon btn-sm btn-success flex-shrink-0 ms-4" >
+                                                                            <button onClick={(e) => { e.preventDefault(); addQuestion(adminsection.id) }} className="btn btn-icon btn-sm btn-success flex-shrink-0 ms-4" >
                                                                                 <span className="svg-icon svg-icon-2">
                                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                         <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />

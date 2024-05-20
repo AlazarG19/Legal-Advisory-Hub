@@ -14,6 +14,7 @@ function App() {
           <Route path="/customforms" element={<Index />}></Route>
           <Route path="/customforms/:id" element={<Details />}></Route>
           <Route path="/customforms/edit/:id" element={<EditFinalCustomForm />}></Route>
+          <Route path="/customforms/add" element={<FinalCustomForm />}></Route>
         </Routes>
       </BrowserRouter>
     </>

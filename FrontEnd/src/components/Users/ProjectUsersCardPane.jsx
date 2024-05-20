@@ -3,7 +3,6 @@ import '../../../public/assets/css/style.bundle.css'
 import Pagination from './Pagination';
 import UserCard from './UserCard';
 import { Link, useNavigate } from 'react-router-dom';
-import Navbar from '../Navbar';
 
 const ProjectUsersCardPane = () => {
     const handleLogout = () => {
@@ -15,7 +14,6 @@ const ProjectUsersCardPane = () => {
 
     return (
         <>
-            <Navbar />
             <div id="kt_project_users_card_pane" className="tab-pane fade show active">
                 <Link to="/create" className='btn btn-success'>Register +</Link>
                 <button className='btn btn-success' onClick={handleLogout}>Logout</button>
