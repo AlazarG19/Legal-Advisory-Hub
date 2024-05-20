@@ -18,19 +18,19 @@ function Chat({ socket, username, room, clients }) {
   const [createdAt, setCreatedAt] = useState([]);
   const [dateInstance] = useState(new Date());
 
-  useEffect(()=>{
+  useEffect(() => {
     axios
       .get(`http://localhost:3000/getOffers/${id}`)
       .then((response) => {
         if (response.data.length > 0) {
           setOfferText("Complete Offer")
-          
+
         }
       })
       .catch((error) => console.error(error));
   })
- 
-  
+
+
   const sendMessage = async () => {
     if (currentMessage.trim() !== "") {
       const messageData = {
@@ -64,7 +64,7 @@ function Chat({ socket, username, room, clients }) {
         const response = await axios.get(`http://localhost:3000/getMessage/${room}`);
         setMessageList(response.data);
         console.log("this is the message list", response.data);
-  
+
         const userString = sessionStorage.getItem('user');
         if (userString) {
           const user = JSON.parse(userString);
@@ -81,29 +81,29 @@ function Chat({ socket, username, room, clients }) {
         console.error("Error fetching messages:", error);
       }
     };
-  
+
     const handleReceiveMessage = (data) => {
       setMessageList((prevMessages) => [...prevMessages, data]);
     };
-  
+
     // Initial fetch
     fetchMessages();
-  
+
     // Fetch messages every second
     const intervalId = setInterval(fetchMessages, 1000);
-  
+
     // Socket event handling
     socket.on("receive_message", handleReceiveMessage);
-  
+
     // Clean up
     return () => {
       clearInterval(intervalId);
       socket.off("receive_message", handleReceiveMessage);
     };
   }, [room, socket, clients]);
-  
-  
-  
+
+
+
   return (
     <div
       id="kt_drawer_chat"
@@ -117,10 +117,10 @@ function Chat({ socket, username, room, clients }) {
       data-kt-drawer-toggle="#kt_drawer_chat_toggle"
       data-kt-drawer-close="#kt_drawer_chat_close"
       style={{
-  width: userType === "freelancer" ? "37vw" : "50vw",
-  marginTop: "85px",
-  marginRight: userType === "freelancer" ? '12.5vw' : undefined
-}}
+        width: userType === "freelancer" ? "37vw" : "50vw",
+        marginTop: "85px",
+        marginRight: userType === "freelancer" ? '12.5vw' : undefined
+      }}
 
     >
       {/*begin::Messenger*/}
@@ -129,7 +129,7 @@ function Chat({ socket, username, room, clients }) {
         id="kt_drawer_chat_messenger"
       >
         {/*begin::Card header*/}
-        <ProfileHeader name = {userName}/>
+        <ProfileHeader name={userName} />
         {/*begin::Card body*/}
         <div className="card-body" id="kt_drawer_chat_messenger_body">
           {/*begin::Messages*/}
@@ -153,7 +153,7 @@ function Chat({ socket, username, room, clients }) {
                     <div className="d-flex align-items-center mb-2">
                       {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
-                        <img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+                        <img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
                       </div>
                       {/*end::Avatar*/}
                       {/*begin::Details*/}
@@ -199,7 +199,7 @@ function Chat({ socket, username, room, clients }) {
                       {/*end::Details*/}
                       {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
-                        <img alt="Pic" src="assets/media/avatars/300-1.jpg" />
+                        <img alt="Pic" src="/assets/media/avatars/300-1.jpg" />
                       </div>
                       {/*end::Avatar*/}
                     </div>
@@ -277,7 +277,7 @@ function Chat({ socket, username, room, clients }) {
           </div>
           <div className="d-flex flex-stack">
             {/*begin::Send*/}
-            {userType == 'freelancer' ?  <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >{offerText}</Link> : <></>}
+            {userType == 'freelancer' ? <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >{offerText}</Link> : <></>}
             {/* <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> */}
             {/*end::Send*/}
           </div>

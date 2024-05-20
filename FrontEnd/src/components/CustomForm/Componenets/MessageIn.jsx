@@ -12,7 +12,7 @@ function MessageIn({ message }) {
                     <div className="d-flex align-items-center mb-2">
                         {/* <!--begin::Avatar--> */}
                         <div className="symbol symbol-35px symbol-circle">
-                            <img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+                            <img alt="Pic" src="/assets/media/avatars/300-25.jpg" />
                         </div>
                         {/* <!--end::Avatar--> */}
                         {/* <!--begin::Details--> */}

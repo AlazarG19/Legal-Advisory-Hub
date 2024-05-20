@@ -67,13 +67,14 @@ function CustomForm2() {
     return (
         <>
             <Navigation />
+
             <div id="kt_app_content" className="app-content flex-column-fluid">
 
                 <div id="kt_app_content_container" className="app-container container-xxl">
                     {/* <!--begin::Layout--> */}
-                    <div className="d-flex flex-column flex-lg-row">
+                    <div className="d-flex flex-column flex-lg-row ">
                         {/* <!--begin::Content--> */}
-                        <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6 chatbotdiv">
+                        <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6 chatbotdiv mb-20 pb-10">
                             {/* <!--begin::Messenger--> */}
 
                             <div className="card" id="kt_chat_messenger">

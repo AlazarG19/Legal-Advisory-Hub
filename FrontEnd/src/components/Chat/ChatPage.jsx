@@ -194,7 +194,7 @@ const ChatPage = () => {
                     {/*begin::Avatar*/}
                     <div className="symbol symbol-50px w-50px bg-light">
                       <img
-                        src="assets/media/svg/brand-logos/plurk.svg"
+                        src="/assets/media/svg/brand-logos/plurk.svg"
                         alt="image"
                         className="p-3"
                       />
@@ -235,13 +235,13 @@ const ChatPage = () => {
                       <div className="fw-semibold text-gray-400">Price</div>
                     </div>
                   </div>
-                      <Link
-                        to={`/acceptOffer/${id}`}
-                        className="btn container btn-primary mt-5"
-                        target="_blank"
-                      >
-                        Accept Offer
-                      </Link>
+                  <Link
+                    to={`/acceptOffer/${id}`}
+                    className="btn container btn-primary mt-5"
+                    target="_blank"
+                  >
+                    Accept Offer
+                  </Link>
                 </div>
               </a>
             </div>

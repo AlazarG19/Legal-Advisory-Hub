@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -15,13 +15,15 @@ const Navigation = () => {
   const handleViewProfile = () => {
     navigate('/freelancerProfile')
   }
-
+  let location = useLocation()
+  console.log("locaiton", location.pathname)
   const navigateToClientsPage = () => {
     navigate("/clients");
   };
   let onLinkClick = (link) => {
     navigate(link)
   }
+
   return (
     <>
       <div id="kt_app_header" className="app-header">
@@ -63,7 +65,7 @@ const Navigation = () => {
                 </div>
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className="menu-item here show">
+                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Legal Experts</span>
@@ -73,7 +75,7 @@ const Navigation = () => {
                 </div>
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div onClick={() => { onLinkClick("/customform") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                <div onClick={() => { onLinkClick("/customform") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("customform") ? "menu-item here " : "menu-item "}>
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Custom Form</span>
@@ -83,7 +85,7 @@ const Navigation = () => {
                 </div>
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                <div onClick={() => { onLinkClick("/docdb/documents") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("docdb") ? "menu-item here " : "menu-item "}>
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Document Database</span>
@@ -169,7 +171,7 @@ const Navigation = () => {
                     className="cursor-pointer symbol symbol-35px symbol-md-40px"
                     onClick={toggleDropdown}
                   >
-                    <img src="assets/media/avatars/300-3.jpg" alt="user" />
+                    <img src="/assets/media/avatars/300-3.jpg" alt="user" />
                   </div>
                   {isOpen && (
                     <div className="dropdown-menu show">
@@ -194,7 +196,7 @@ const Navigation = () => {
                     <div className="menu-content d-flex align-items-center px-3">
                       {/*begin::Avatar*/}
                       <div className="symbol symbol-50px me-5">
-                        <img alt="Logo" src="assets/media/avatars/300-3.jpg" />
+                        <img alt="Logo" src="/assets/media/avatars/300-3.jpg" />
                       </div>
                       {/*end::Avatar*/}
                       {/*begin::Username*/}
@@ -356,7 +358,7 @@ const Navigation = () => {
                           English
                           <img
                             className="w-15px h-15px rounded-1 ms-2"
-                            src="assets/media/flags/united-states.svg"
+                            src="/assets/media/flags/united-states.svg"
                             alt=""
                           />
                         </span>
@@ -373,7 +375,7 @@ const Navigation = () => {
                           <span className="symbol symbol-20px me-4">
                             <img
                               className="rounded-1"
-                              src="assets/media/flags/united-states.svg"
+                              src="/assets/media/flags/united-states.svg"
                               alt=""
                             />
                           </span>
@@ -390,7 +392,7 @@ const Navigation = () => {
                           <span className="symbol symbol-20px me-4">
                             <img
                               className="rounded-1"
-                              src="assets/media/flags/spain.svg"
+                              src="/assets/media/flags/spain.svg"
                               alt=""
                             />
                           </span>
@@ -407,7 +409,7 @@ const Navigation = () => {
                           <span className="symbol symbol-20px me-4">
                             <img
                               className="rounded-1"
-                              src="assets/media/flags/germany.svg"
+                              src="/assets/media/flags/germany.svg"
                               alt=""
                             />
                           </span>
@@ -424,7 +426,7 @@ const Navigation = () => {
                           <span className="symbol symbol-20px me-4">
                             <img
                               className="rounded-1"
-                              src="assets/media/flags/japan.svg"
+                              src="/assets/media/flags/japan.svg"
                               alt=""
                             />
                           </span>
@@ -441,7 +443,7 @@ const Navigation = () => {
                           <span className="symbol symbol-20px me-4">
                             <img
                               className="rounded-1"
-                              src="assets/media/flags/france.svg"
+                              src="/assets/media/flags/france.svg"
                               alt=""
                             />
                           </span>

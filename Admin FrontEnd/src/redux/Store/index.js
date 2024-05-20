@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../Reducers/index';
-import sectionreducer from '../Reducers/sectionreducer';
+import adminsectionreducer from '../Reducers/adminsectionreducer';
 
 const store = configureStore({
-    reducer: { counter: counterReducer, sections: sectionreducer },
+    reducer: { counter: counterReducer, adminsections: adminsectionreducer },
 });
 
 export default store;

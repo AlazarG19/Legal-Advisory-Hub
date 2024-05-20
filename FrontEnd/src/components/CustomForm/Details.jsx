@@ -54,6 +54,39 @@ const Details = () => {
     return (
         <>
             <Navigation />
+
+            {/* <!--begin::Toolbar--> */}
+            <div id="kt_app_toolbar" className="app-toolbar py-3 py-lg-6">
+                {/* <!--begin::Toolbar container--> */}
+                <div id="kt_app_toolbar_container" className="app-container container-xxl d-flex flex-stack">
+                    {/* <!--begin::Page title--> */}
+                    <div className="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                        {/* <!--begin::Title--> */}
+                        <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Custom Form</h1>
+                        {/* <!--end::Title--> */}
+                        {/* <!--begin::Breadcrumb--> */}
+                        <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                            {/* <!--begin::Item--> */}
+                            <li className="breadcrumb-item text-muted">
+                                <a href="../../demo1/dist/index.html" className="text-muted text-hover-primary">Home</a>
+                            </li>
+                            {/* <!--end::Item--> */}
+                            {/* <!--begin::Item--> */}
+                            <li className="breadcrumb-item">
+                                <span className="bullet bg-gray-400 w-5px h-2px"></span>
+                            </li>
+                            {/* <!--end::Item--> */}
+                            {/* <!--begin::Item--> */}
+                            <li className="breadcrumb-item text-muted">Custom Form</li>
+                            {/* <!--end::Item--> */}
+                        </ul>
+                        {/* <!--end::Breadcrumb--> */}
+                    </div>
+                    {/* <!--end::Page title--> */}
+                </div>
+                {/* <!--end::Toolbar container--> */}
+            </div>
+            {/* <!--end::Toolbar--> */}
             <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
                 {/* <!--begin::Page--> */}
                 <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -126,7 +159,7 @@ const Details = () => {
                                                         {/* <!--begin::Card title--> */}
                                                         <div class="card-title flex-column">
                                                             <h3 class="fw-bold mb-1">Related Files</h3>
-                                                            <div class="fs-6 text-gray-400">Total 382 fiels</div>
+                                                            <div class="fs-6 text-gray-400">Total {data.length} files</div>
                                                         </div>
                                                         {/* <!--end::Card title--> */}
                                                         {/* <!--begin::Card toolbar--> */}
