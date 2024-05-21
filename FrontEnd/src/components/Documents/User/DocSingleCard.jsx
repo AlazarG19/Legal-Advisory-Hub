@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import PdfToImage from "./PdfToImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaDownload, FaBookReader, FaEye } from "react-icons/fa";
 
 const DocSingleCard = ({ doc }) => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,7 @@ const DocSingleCard = ({ doc }) => {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3000/${doc.path}`, {
-        responseType: "blob", // Important for downloading files
+        responseType: "blob",
       });
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = window.URL.createObjectURL(blob);
@@ -29,22 +30,16 @@ const DocSingleCard = ({ doc }) => {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3000/${doc.path}`, {
-        responseType: "blob", // Important for downloading files
+        responseType: "blob",
       });
       const blob = new Blob([response.data], { type: "application/pdf" });
-
-      // Create a temporary anchor element
       const downloadLink = document.createElement("a");
       downloadLink.href = window.URL.createObjectURL(blob);
-
-      // Set the file name for the download
       downloadLink.setAttribute("download", "document.pdf");
 
-      // Append the anchor to the body and click it programmatically
       document.body.appendChild(downloadLink);
       downloadLink.click();
 
-      // Clean up
       document.body.removeChild(downloadLink);
       window.URL.revokeObjectURL(downloadLink.href);
 
@@ -56,22 +51,35 @@ const DocSingleCard = ({ doc }) => {
   };
 
   return (
-    <div className="rounded-lg px-4 py-2 m-4 position-relative shadow-hover-xl">
-      <Card style={{ width: "22rem" }}>
+    <div className="rounded-lg px-4 py-4 position-relative">
+      <Card className="m-4" style={{ width: "22rem" }}>
         {doc.path && <PdfToImage documentPath={doc.path} />}
-        <Card.Body>
-          <Card.Title>{doc.title}</Card.Title>
-          <Card.Title>{doc.path}</Card.Title>
-          <Card.Text>{doc.description}</Card.Text>
-        </Card.Body>
-        <Card.Body>
-          <button onClick={handleReadDocument} disabled={loading}>
-            {loading ? "Loading..." : "Read"}
-          </button>
-          <button onClick={handleDownloadDoc} disabled={loading}>
-            {loading ? "Loading..." : "download"}
-          </button>
-        </Card.Body>
+        <div className="card-body d-flex flex-column ">
+          <p className="fw-bolder fs-4">{doc.title}</p>
+
+          <p className="text-primary fs-5">
+            {doc.path.substring(doc.path.lastIndexOf("\\") + 1)}
+          </p>
+
+          <div className="d-flex justify-content-end  ">
+            <FaBookReader
+              size={24}
+              className="text-primary me-8"
+              onClick={handleReadDocument}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Read"}
+            </FaBookReader>
+            <FaDownload
+              size={24}
+              className="text-primary"
+              onClick={handleDownloadDoc}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Download"}
+            </FaDownload>
+          </div>
+        </div>
       </Card>
     </div>
   );
