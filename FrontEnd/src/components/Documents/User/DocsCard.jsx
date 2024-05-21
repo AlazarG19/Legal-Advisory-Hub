@@ -16,19 +16,29 @@ const DocsCard = ({ docs }) => {
 
   return (
     <div className="">
-      <Search onSearch={handleSearch} />
+      <div className="d-flex flex-wrap flex-stack mb-6 m-10 ps-15 pe-15 ">
+        <h3 className="fw-bold my-2">
+          Legal Documents
+          <span className="fs-6 text-gray-400 fw-semibold ms-1">
+            100+ resources
+          </span>
+        </h3>
+        <Search onSearch={handleSearch} />
+      </div>
+
       {searchTerm !== "" ? (
-        <div className="grid grid-cols-sm-2 grid-cols-lg-3 grid-cols-xl-4">
+        <div className="row row-cols-1  row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
           {filteredDocs.length > 0 ? (
             filteredDocs.map((item) => (
-              <DocSingleCard key={item._id} doc={item} />
+              <div className="col" key={item._id}>
+                <DocSingleCard doc={item} />
+              </div>
             ))
           ) : (
-            <div>No search results found.</div>
+            <div className="col">No search results found.</div>
           )}
         </div>
       ) : (
-        // Render books by title
         Object.entries(
           docs.reduce((acc, curr) => {
             if (!acc[curr.category]) {
@@ -39,10 +49,12 @@ const DocsCard = ({ docs }) => {
           }, {})
         ).map(([category, docsArray]) => (
           <div className="" key={category}>
-            <h1>{category}</h1>
-            <div className="d-flex flex-wrap  align-items-center">
+            <h1 className="fw-bold ms-7">{category}</h1>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
               {docsArray.map((doc) => (
-                <DocSingleCard key={doc._id} doc={doc} />
+                <div className="col" key={doc._id}>
+                  <DocSingleCard doc={doc} />
+                </div>
               ))}
             </div>
           </div>
