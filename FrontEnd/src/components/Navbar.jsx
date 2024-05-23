@@ -93,7 +93,7 @@ function Navbar() {
                         <div className="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                             {/* <!--begin::Menu wrapper--> */}
                             <div className="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                <img src={img} alt="user" />
+                                <img src="" alt="user" />
                             </div>
                             {/* <!--begin::User account menu--> */}
                             <div className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -102,7 +102,7 @@ function Navbar() {
                                     <div className="menu-content d-flex align-items-center px-3">
                                         {/* <!--begin::Avatar--> */}
                                         <div className="symbol symbol-50px me-5">
-                                            <img alt="Logo" src={img} />
+                                            <img alt="Logo" src="" />
                                         </div>
                                         {/* <!--end::Avatar--> */}
                                         {/* <!--begin::Username--> */}
