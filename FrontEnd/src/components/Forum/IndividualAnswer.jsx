@@ -98,11 +98,11 @@ function IndividualAnswer({Answer, Feed}) {
             <>
             <div className="fs-6 fw-normal text-gray-700 mb-5" dangerouslySetInnerHTML={{ __html: limitedContent }} />
             <Link to={`/detail/${Answer._id}`}>View detail</Link>
-            <IndividualAnswer Answer = {Answer} Feed = {true} />
+            
 
 
             </>            
-                
+                    
                         
           );
         } else {
@@ -140,7 +140,6 @@ function IndividualAnswer({Answer, Feed}) {
                     {/* <!--end::Avatar--> */}
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
-                        <div>Helloo it is me</div>
                         {/* <!--begin::Name--> */}
                         <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Answer.author}</a>
                         {/* <!--end::Name--> */}

@@ -4,25 +4,93 @@ import Header from '../Header'
 import CategoriesSection from './CategoriesSection'
 import IndividualPost from './IndividualPost'
 import { useParams } from 'react-router-dom';
-
-const Post = {
-    Author: 'John Doe',
-    Category: "Marriage",
-    Date: 'March 2, 2024',
-    Content:
-        'Legal history refers to the study of how law has evolved and developed over time. It encompasses the historical origins of legal systems, the evolution of legal principles and doctrines, and the social, political, and cultural contexts that have shaped legal systems throughout history. Legal systems have existed in various forms in different civilizations and cultures throughout the world. For example, ancient legal systems include Hammurabis Code in ancient Mesopotamia, the Twelve Tables in ancient Rome, and the Code of Justinian in the Byzantine Empire. The development of legal systems has been influenced by various factors, including religious and moral principles, political structures, economic systems, and societal norms. Over time, legal systems have evolved to address the changing needs and challenges of societies. During the Middle Ages, legal systems in Europe were heavily influenced by Canon law, which was based on the teachings of the Christian Church. In parallel, Islamic law (Sharia) developed in the Muslim world, drawing upon Islamic teachings and jurisprudence. The modern legal systems in many countries have roots in the common law tradition, which originated in England and spread to other English-speaking countries, including the United States. Common law is based on judicial decisions and legal precedents, emphasizing the importance of case law in the development of legal principles. Civil law systems, on the other hand, have their origins in Roman law and the legal codes of continental Europe. Civil law is codified and relies on written laws and statutes as the primary source of legal authority. Throughout history, legal systems have undergone significant transformations due to social, political, and technological changes. Important milestones in legal history include the Magna Carta in 1215, which established principles of limited government and individual rights, and the Enlightenment era, which emphasized the importance of reason, human rights, and the rule of law. In recent times, legal systems have continued to evolve to address contemporary issues such as human rights, constitutional law, international law, and emerging areas like technology and intellectual property. Studying legal history provides insights into the development of legal systems, the principles that underpin them, and the societal forces that have shaped them. It helps us understand the foundations of modern legal systems and provides a historical context for contemporary legal issues and debates.'
-}
+import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
+import Comment from './Elements/Comment'
 
 function DetailPost() {
     const { id } = useParams();
 
     const [Post, setPost] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+
+    const handleCommentChange = (event) => {
+        setNewComment(event.target.value);
+      };
+
+
+      const handleCommentSubmit = async() => {
+        if (newComment.trim() !== '') {
+            const commentData = { body: newComment, postId: id, author: "System User"};
+
+          setComments([...comments, commentData ]);
+
+            const url = 'http://localhost:8080/api/comments/'; // Replace with your API endpoint
+          
+            try {
+              const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(commentData),
+              });
+          
+              if (!response.ok) {
+                throw new Error('Request failed');
+              }
+          
+              const responseData = await response.json();
+              // Process the response data here
+              console.log(responseData);
+            } catch (error) {
+              // Handle the error here
+              console.error(error);
+            }
+        
+          setNewComment('');
+        }
+      };
+
+      
+    const populateComments= () => {
+        if (comments.length > 0) {
+            return comments.map((comment, index) => {
+                return (
+                    <>
+                    <Comment comment={comment}/>
+                    </>
+                )
+            })
+        }else{
+            return <h1>No Comments</h1>
+        };
+    
+    
+
+    }
+    
 
     useEffect(() => {
         console.log('http://localhost:8080/api/questions/')
-        fetch(`http://localhost:8080/api/questions/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:8080/api/answers/${id}`).then(res => res.json()).then(result => {
           setPost(result)
           console.log(JSON.stringify(result))
+        }).catch((error) => {
+          console.log(error)
+        });
+      }, [])
+
+      useEffect(() => {
+        console.log('http://localhost:8080/api/questions/')
+        fetch(`http://localhost:8080/api/comments/all/${id}`).then(res => res.json()).then(result => {
+
+          setTimeout(() => {
+            setComments(result)
+            // Update the component's state
+          }, 1000);
+          console.log("Commentsss", comments)
+          console.log("Result Comment", result)
         }).catch((error) => {
           console.log(error)
         });
@@ -46,7 +114,122 @@ function DetailPost() {
                             {/* <!--begin::Posts--> */}
                             <div className="mb-10" id="kt_social_feeds_posts">
                                 {/* <!--begin::Post 1--> */}
-                                <IndividualPost Post={Post} Feed={false} />
+                                <div className="card card-flush mb-10">
+            {/* <!--begin::Card header--> */}
+            <div className="card-header pt-9">
+                {/* <!--begin::Author--> */}
+                <div className="d-flex align-items-center">
+                    {/* <!--begin::Avatar--> */}
+                    <div className="symbol symbol-50px me-5">
+                        <img src="/assets/media/avatars/300-4.jpg" className="" alt="" />
+                    </div>
+                    {/* <!--end::Avatar--> */}
+                    {/* <!--begin::Info--> */}
+                    <div className="flex-grow-1">
+                        {/* <!--begin::Name--> */}
+                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.author}</a>
+                        {/* <!--end::Name--> */}
+                        {/* <!--begin::Date--> */}
+                        <span className="text-gray-400 fw-semibold d-block">{new Date(Post.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        {/* <!--end::Date--> */}
+                    </div>
+                    {/* <!--end::Info--> */}
+                </div>
+                {/* <!--end::Author--> */}
+                {/* <!--begin::Card toolbar--> */}
+               
+                {/* <!--end::Card toolbar--> */}
+            </div>
+            {/* <!--end::Card header--> */}
+            {/* <!--begin::Card body--> */}
+            <div className="card-body">
+                {/* <!--begin::Post content--> */}
+                <>
+                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.body}  </div>
+                <Card.Body>
+                <Card.Text className=" mb-4">
+                    Category: <Badge variant="primary">{Post.Category}</Badge>
+                </Card.Text>
+                <Card.Link href="#" className="text-center">
+                    <strong>Link to Experts </strong> {Post.expert}
+                </Card.Link>
+                <Card.Link href="#" className="text-center">
+                    <strong>Related Documents </strong>
+                </Card.Link>
+                </Card.Body>    
+            </>
+               
+                {/* <!--end::Post content--> */}
+                {/* <!--begin::Post media--> */}
+                
+                {/* <!--end::Post media--> */}
+            </div>
+            {/* <!--end::Card body--> */}
+            {/* <!--begin::Card footer--> */}
+            <div className="card-footer pt-0">
+                {/* <!--begin::Info--> */}
+                <div className="mb-6">
+                    {/* <!--begin::Separator--> */}
+                    <div className="separator separator-solid"></div>
+                    {/* <!--end::Separator--> */}
+                    {/* <!--begin::Nav--> */}
+                    <ul className="nav py-3">
+                        {/* <!--begin::Item--> */}
+                        <li className="nav-item">
+                            <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
+                            <i class="bi bi-pencil-fill"></i> Answer</a>
+                        </li>
+                        {/* <!--end::Item--> */}
+                        {/* <!--begin::Item--> */}
+                        <li className="nav-item">
+                            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
+                                <i className="bi bi-hand-thumbs-up"></i> Upvote</a>
+                        </li>
+                        {/* <!--end::Item--> */}
+                        {/* <!--begin::Item--> */}
+                        
+                        {/* <!--end::Item--> */}
+                    </ul>
+                    {/* <!--end::Nav--> */}
+                    {/* <!--begin::Separator--> */}
+                    <div className="separator separator-solid mb-1"></div>
+                    {/* <!--end::Separator--> */}
+                    {/* <!--begin::Comments--> */}
+                    <div className="collapse show" id="kt_social_feeds_comments_1">
+                            {populateComments()}
+                    </div>
+                    {/* <!--end::Collapse--> */}
+                </div>
+                {/* <!--end::Info--> */}
+                {/* <!--begin::Comment form--> */}
+                <div className="d-flex align-items-center">
+                    {/* <!--begin::Author--> */}
+                    <div className="symbol symbol-35px me-3">
+                        <img src="/assets/media/avatars/300-3.jpg" alt="" />
+                    </div>
+                    {/* <!--end::Author--> */}
+                    {/* <!--begin::Input group--> */}
+                    <div className="position-relative w-100">
+                        {/* <!--begin::Input--> */}
+                        <textarea type="text"   value={newComment} onChange={handleCommentChange}  className="form-control form-control-solid border ps-5" rows="1" name="search" defaultValue="" data-kt-autosize="true" placeholder="Write your comment.."></textarea>
+                        {/* <!--end::Input--> */}
+                        {/* <!--begin::Actions--> */}
+                        <div className="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
+                            {/* <!--begin::Btn--> */}
+                                    
+                        <button  onClick={handleCommentSubmit}  className="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
+                        <i className="bi bi-send fs-2"></i>
+                        </button>
+                            {/* <!--end::Btn--> */}
+                        </div>
+                        {/* <!--end::Actions--> */}
+                    </div>
+                    {/* <!--end::Input group--> */}
+                </div>
+                {/* <!--end::Comment form--> */}
+            </div>
+            {/* <!--end::Card footer--> */}
+        </div>
 
                             </div>
                             {/* <!--end::Posts--> */}

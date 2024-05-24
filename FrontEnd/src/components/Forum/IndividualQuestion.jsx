@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Vote from "../Forum/Elements/voteButton"
 import Comment from './Elements/Comment'
 import AddAnswerModal from './Elements/AddAnswerModal'
@@ -8,49 +8,38 @@ import { Link } from 'react-router-dom';
 
 function IndividualQuestion({ Question }) {
   const [upvoteCount, setUpvoteCount] = useState(0);
+  const [numAns, setNumAns] = useState(0);
+  const [hasUpvoted, setHasUpvoted] = useState(false);
 
   const handleUpvoteClick = () => {
-    // Increment the upvote count
-    setUpvoteCount((prevCount) => prevCount + 1);
+    // Check if the user has already upvoted
+    if (!hasUpvoted) {
+      // Increment the upvote count
+      setUpvoteCount((prevCount) => prevCount + 1);
+      // Set the hasUpvoted flag to true
+      setHasUpvoted(true);
+    }
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/answers/all/${Question._id}`).then(res => res.json()).then(result => {
+        
+        setTimeout(() => {
+            setNumAns(result.length)
+             // Update the component's state
+          }, 1000);
+    }).catch((error) => {
+      console.log(error)
+    });
+  }, [])
 
   return (
     <div className="card card-flush">
-      {/* <!--begin::Card header--> */}
-      <div className="card-header pt-9">
-        {/* <!--begin::Author--> */}
-        <div className="d-flex align-items-center">
-          {/* <!--begin::Avatar--> */}
-
-          {/* <!--end::Avatar--> */}
-          {/* <!--begin::Info--> */}
-          <div className="flex-grow-1">
-            {/* <!--begin::Name--> */}
-
-            {/* <!--begin::Date--> */}
-            <span className="text-gray-400 fw-semibold d-block">
-              {new Date(Question.createdAt).toLocaleString('en-US', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </span>
-            {/* <!--end::Date--> */}
-          </div>
-          {/* <!--end::Info--> */}
-        </div>
-        {/* <!--end::Author--> */}
-        {/* <!--begin::Card toolbar--> */}
-
-        {/* <!--end::Card toolbar--> */}
-      </div>
-      {/* <!--end::Card header--> */}
-      {/* <!--begin::Card body--> */}
       <div className="card-body">
         {/* <!--begin::Post content--> */}
         <div className="fs-4 font-weight-bold  text-gray-700">
-          <strong>
-            {' '}
+          
+          <i className="bi bi-question-circle-fill me-2" >   </i><strong>
             <Link to={`/answers/${Question._id}`}>{Question.title}</Link>{' '}
           </strong>{' '}
         </div>
@@ -59,7 +48,7 @@ function IndividualQuestion({ Question }) {
           <Row>
             <Col className="q-text qu-dynamicFontSize--small qu-mt--small qu-color--gray_light qu-passColorToLinks text-right">
               <span className="q-text qu-bold">
-                <Link to={`/answers/${Question._id}`}>17 Answers</Link>
+                <Link to={`/answers/${Question._id}`}>{numAns} Answers</Link>
               </span>
               <span> · </span>
               <span>{Question.category}</span>
@@ -86,15 +75,21 @@ function IndividualQuestion({ Question }) {
             {/* <!--end::Item--> */}
             {/* <!--begin::Item--> */}
 
-            <span>{upvoteCount}</span> {/* Display the upvote count */}
+            <li className="nav-item me-2">
+              <span className={`nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-2 ${hasUpvoted ? 'text-primary' : ''}`}>
+                {upvoteCount}
+              </span>
+            </li>
 
+            <li className="nav-item">
               <a
                 href="#"
-                className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-2 me-1"
+                className={`nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-2 me-1 ${hasUpvoted ? 'text-primary' : ''}`}
                 onClick={handleUpvoteClick}
               >
                 <i className="bi bi-hand-thumbs-up"></i> Upvote
               </a>
+            </li>
 
             {/* <!--end::Item--> */}
             {/* <!--begin::Item--> */}
