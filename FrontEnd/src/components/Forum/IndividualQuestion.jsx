@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Vote from "../Forum/Elements/voteButton"
 import Comment from './Elements/Comment'
+import ReportModal from './Elements/ReportModal'
 import AddAnswerModal from './Elements/AddAnswerModal'
-import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card, ListGroup, Button } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
@@ -12,22 +13,24 @@ function IndividualQuestion({ Question }) {
   const [hasUpvoted, setHasUpvoted] = useState(false);
 
   const handleUpvoteClick = () => {
-    // Check if the user has already upvoted
     if (!hasUpvoted) {
-      // Increment the upvote count
       setUpvoteCount((prevCount) => prevCount + 1);
-      // Set the hasUpvoted flag to true
       setHasUpvoted(true);
     }
   };
 
+  const handleReportClick = () => {
+    // Implement your report functionality here
+    // e.g., send a report to your server, update the isReported state, etc.
+    setIsReported(true);
+    console.log('Question reported:', Question);
+  };
+
   useEffect(() => {
     fetch(`http://localhost:8080/api/answers/all/${Question._id}`).then(res => res.json()).then(result => {
-        
-        setTimeout(() => {
-            setNumAns(result.length)
-             // Update the component's state
-          }, 1000);
+      setTimeout(() => {
+        setNumAns(result.length);
+      }, 1000);
     }).catch((error) => {
       console.log(error)
     });
@@ -38,7 +41,6 @@ function IndividualQuestion({ Question }) {
       <div className="card-body">
         {/* <!--begin::Post content--> */}
         <div className="fs-4 font-weight-bold  text-gray-700">
-          
           <i className="bi bi-question-circle-fill me-2" >   </i><strong>
             <Link to={`/answers/${Question._id}`}>{Question.title}</Link>{' '}
           </strong>{' '}
@@ -93,6 +95,10 @@ function IndividualQuestion({ Question }) {
 
             {/* <!--end::Item--> */}
             {/* <!--begin::Item--> */}
+            <li className="nav-item">  
+                <ReportModal Question={Question} />
+            </li>
+
 
             {/* <!--end::Item--> */}
           </ul>

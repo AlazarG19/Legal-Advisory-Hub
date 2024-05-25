@@ -30,7 +30,7 @@ function DetailAnswer() {
                 {/* <!--begin::Content wrapper--> */}
                 <div className="d-flex flex-column flex-column-fluid">
                     <div className="d-flex flex-row">
-                        <CategoriesSection />
+
                         {/* <!--begin::Content--> */}
                         <div className="w-100 flex-lg-row-fluid mx-lg-13">
                             {/* <!--begin::Main form--> */}

@@ -2,18 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header'
 import CategoriesSection from './CategoriesSection'
-import IndividualPost from './IndividualPost'
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import Comment from './Elements/Comment'
+import ReportModal from './Elements/ReportModal';
 
 function DetailPost() {
     const { id } = useParams();
 
-    const [Post, setPost] = useState([]);
+    const [Answer, setAnswer] = useState([]);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-
+    const [hasUpvoted, setHasUpvoted] = useState(false);
+  
+    const handleUpvoteClick = () => {
+      if (!hasUpvoted) {
+        setUpvoteCount((prevCount) => prevCount + 1);
+        setHasUpvoted(true);
+      }
+    };
+  
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
       };
@@ -74,7 +82,7 @@ function DetailPost() {
     useEffect(() => {
         console.log('http://localhost:8080/api/questions/')
         fetch(`http://localhost:8080/api/answers/${id}`).then(res => res.json()).then(result => {
-          setPost(result)
+          setAnswer(result)
           console.log(JSON.stringify(result))
         }).catch((error) => {
           console.log(error)
@@ -100,12 +108,11 @@ function DetailPost() {
     return (
         <>
             {/* <!--begin::Main--> */}
-            <Header />
             <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
                 {/* <!--begin::Content wrapper--> */}
                 <div className="d-flex flex-column flex-column-fluid">
                     <div className="d-flex flex-row">
-                        <CategoriesSection />
+                        
                         {/* <!--begin::Content--> */}
                         <div className="w-100 flex-lg-row-fluid mx-lg-13">
                             {/* <!--begin::Main form--> */}
@@ -127,10 +134,10 @@ function DetailPost() {
                     {/* <!--begin::Info--> */}
                     <div className="flex-grow-1">
                         {/* <!--begin::Name--> */}
-                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Post.author}</a>
+                        <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Answer.author}</a>
                         {/* <!--end::Name--> */}
                         {/* <!--begin::Date--> */}
-                        <span className="text-gray-400 fw-semibold d-block">{new Date(Post.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        <span className="text-gray-400 fw-semibold d-block">{new Date(Answer.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                         {/* <!--end::Date--> */}
                     </div>
                     {/* <!--end::Info--> */}
@@ -145,13 +152,13 @@ function DetailPost() {
             <div className="card-body">
                 {/* <!--begin::Post content--> */}
                 <>
-                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.body}  </div>
+                <div className="fs-6 fw-normal text-gray-700 mb-5">{Answer.body}  </div>
                 <Card.Body>
                 <Card.Text className=" mb-4">
-                    Category: <Badge variant="primary">{Post.Category}</Badge>
+                    Category: <Badge variant="primary">{Answer.Category}</Badge>
                 </Card.Text>
                 <Card.Link href="#" className="text-center">
-                    <strong>Link to Experts </strong> {Post.expert}
+                    <strong>Link to Experts </strong> {Answer.expert}
                 </Card.Link>
                 <Card.Link href="#" className="text-center">
                     <strong>Related Documents </strong>
@@ -173,23 +180,26 @@ function DetailPost() {
                     <div className="separator separator-solid"></div>
                     {/* <!--end::Separator--> */}
                     {/* <!--begin::Nav--> */}
-                    <ul className="nav py-3">
-                        {/* <!--begin::Item--> */}
-                        <li className="nav-item">
-                            <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
-                            <i class="bi bi-pencil-fill"></i> Answer</a>
-                        </li>
-                        {/* <!--end::Item--> */}
-                        {/* <!--begin::Item--> */}
-                        <li className="nav-item">
-                            <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                <i className="bi bi-hand-thumbs-up"></i> Upvote</a>
-                        </li>
-                        {/* <!--end::Item--> */}
-                        {/* <!--begin::Item--> */}
-                        
-                        {/* <!--end::Item--> */}
-                    </ul>
+                    <ul className="nav py-3 d-flex justify-content-around">
+  <li className="nav-item">
+    <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
+      <i className="bi bi-chat-square fs-2 me-1"></i> {Comment.length} Comments
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
+      <i className="bi bi-hand-thumbs-up fs-2 me-1"></i>{Answer.upvotes} Upvotes
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
+      <i className="bi bi-hand-thumbs-down fs-2 me-1"></i>{Answer.downvotes} Downvotes
+    </a>
+  </li>
+  <li className="nav-item">
+    <ReportModal Question={Answer} />
+  </li>
+</ul>
                     {/* <!--end::Nav--> */}
                     {/* <!--begin::Separator--> */}
                     <div className="separator separator-solid mb-1"></div>

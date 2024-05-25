@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Alert } from "react-bootstrap";
 
 function Component() {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("add-question");
   const [question, setQuestion] = useState("");
   const [questionCategory, setQuestionCategory] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const handleButtonClick = () => {
     setShowModal(true);
@@ -13,8 +14,8 @@ function Component() {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setShowError(false);
   };
-
 
   const handleQuestionCategoryChange = (e) => {
     setQuestionCategory(e.target.value);
@@ -25,16 +26,21 @@ function Component() {
   };
 
   const handleAddQuestion = async () => {
+    if (questionCategory === "") {
+      setShowError(true);
+      return;
+    }
+
     console.log(question, questionCategory);
     const url = 'http://localhost:8080/api/questions/'; // Replace with your API endpoint
-  
+
     const requestData = {
       title: question,
       category: questionCategory,
       body: "It has no body",
       author: "anonymous user"
     };
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -43,77 +49,41 @@ function Component() {
         },
         body: JSON.stringify(requestData),
       });
-  
+
       if (!response.ok) {
         throw new Error('Request failed');
       }
-  
+
       const responseData = await response.json();
       // Process the response data here
       console.log(responseData);
+      handleCloseModal();
     } catch (error) {
       // Handle the error here
       console.error(error);
     }
-
-    handleCloseModal();
   };
-
-
-
-  const handleAddQuestions = (event) => {
-        // Perform add question logic here
-        console.log("Question:", question);
-        console.log("Category:", questionCategory);
-        
-        const formData = new FormData();
-
-        // Update the formData object
-        formData.append(
-            'title',
-            question
-        );
-        formData.append(
-            'category',
-            questionCategory
-        );
-        formData.append(
-          'body',
-          "It has no body"
-      );
-        formData.append(
-          'author',
-          "anonymous user"
-      );
-        
-        fetch('http://localhost:8080/api/questions/', {
-            method: 'POST',
-            body: formData
-        })
-            .then((response) => response.json())
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    
-            handleCloseModal();
-          }
-
-
 
   return (
     <>
-      <Button variant = 'secondary' onClick={handleButtonClick}>Ask a Question </Button>
+      <Button variant="secondary" onClick={handleButtonClick}>
+        Ask a Question
+      </Button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Ask Question </Modal.Title>
+          <Modal.Title>Ask Question</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {showError && (
+            <Alert variant="danger">
+              Please select a category for your question.
+            </Alert>
+          )}
 
           <div className="tab-content mt-3">
             {activeTab === "add-question" && (
-                <div className="tab-pane fade show active">
-
+              <div className="tab-pane fade show active">
                 <select
                   className="form-control mb-2 form-control-sm"
                   style={{ width: "100%", height: "40px" }}
@@ -131,7 +101,6 @@ function Component() {
                   <option value="Administrative">Administrative</option>
                   <option value="Real Estate">Real Estate</option>
                   <option value="Tort">Tort</option>
-
                 </select>
                 <input
                   type="text"
@@ -141,7 +110,6 @@ function Component() {
                   value={question}
                   onChange={handlePostContentChange}
                 />
-                
 
                 <div className="d-flex justify-content-end">
                   <Button variant="secondary" className="mr-2" onClick={handleCloseModal}>
@@ -153,7 +121,6 @@ function Component() {
                 </div>
               </div>
             )}
-
           </div>
         </Modal.Body>
       </Modal>

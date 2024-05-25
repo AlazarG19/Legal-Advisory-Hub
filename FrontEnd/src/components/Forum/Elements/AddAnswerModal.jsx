@@ -1,11 +1,13 @@
+
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import RichText from "../RichText";
+import { useNavigate } from 'react-router-dom';
 
 function AnswerModal({ Question }) {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [Answerbody, setAnswerbody] = useState("");
-  
 
   const handleInputSubmit = (inputValue) => {
     console.log('Received input:', inputValue);
@@ -23,19 +25,17 @@ function AnswerModal({ Question }) {
     setShowModal(false);
   };
 
+  const handleAddAnswer = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
 
-
-  const handleAddAnswer = async () => {
-    // console.log(question, questionCategory);
     const url = 'http://localhost:8080/api/answers/'; // Replace with your API endpoint
-  
 
     const requestData = {
       questionId: Question._id,
       body: Answerbody,
       author: "System User",
-  };
-  
+    };
+
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -44,14 +44,17 @@ function AnswerModal({ Question }) {
         },
         body: JSON.stringify(requestData),
       });
-  
+
       if (!response.ok) {
         throw new Error('Request failed');
       }
-  
+
       const responseData = await response.json();
       // Process the response data here
       console.log(responseData);
+
+      // Navigate to the desired route after successful submission
+      navigate('/'); // Replace '/your-desired-route' with the actual route you want to navigate to
     } catch (error) {
       // Handle the error here
       console.error(error);
@@ -60,13 +63,8 @@ function AnswerModal({ Question }) {
     handleCloseModal();
   };
 
-
-
- 
-
-
   return (
-    <>
+<>
       <li className="nav-item">
         <a
           onClick={handleButtonClick}
@@ -84,8 +82,7 @@ function AnswerModal({ Question }) {
         </Modal.Header>
         <Modal.Body>
           <p>Question: {Question.title}</p>
-          <RichText  onEditorChange={handleInputSubmit} />
-          
+          <RichText onEditorChange={handleInputSubmit} />
 
           <div className="d-flex justify-content-end mt-3">
             <Button variant="secondary" className="mr-2" onClick={handleCloseModal}>

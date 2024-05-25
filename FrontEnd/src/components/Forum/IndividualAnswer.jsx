@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Vote from "../Forum/Elements/voteButton"
 import Comment from './Elements/Comment'
+import ReportModal from './Elements/ReportModal';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
@@ -139,7 +140,7 @@ function IndividualAnswer({Answer, Feed}) {
                     </div>
                     {/* <!--end::Avatar--> */}
                     {/* <!--begin::Info--> */}
-                    <div className="flex-grow-1">
+                    <div className="flex-grow-1">   
                         {/* <!--begin::Name--> */}
                         <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Answer.author}</a>
                         {/* <!--end::Name--> */}
@@ -190,6 +191,10 @@ function IndividualAnswer({Answer, Feed}) {
                             <a href="#" className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
                                 <i className="bi bi-hand-thumbs-down fs-2 me-1" onClick={handleVote}></i>{Answer.downvotes}  Downvotes</a>
                         </li>
+                        <li className="nav-item">
+                        <ReportModal Question={Answer} />
+
+                            </li>
                     </ul>
                     {/* <!--end::Nav--> */}
                     {/* <!--begin::Separator--> */}
