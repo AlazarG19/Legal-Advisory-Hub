@@ -299,7 +299,7 @@ app.post("/accept-payment", async (req, res) => {
       last_name: last_name,
       phone_number: phone_number,
       tx_ref: tx_ref,
-      return_url: "http://localhost:5173/chat/6605179e271406574eb44e91",
+      return_url: "",
     }
     let resp = "";
     await axios

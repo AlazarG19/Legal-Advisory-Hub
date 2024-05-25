@@ -1,7 +1,18 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 function Navbar() {
+    const [user, setUser] = useState([])
     const navigate = useNavigate();
+    useEffect(()=>{
+        const getUser = sessionStorage.getItem("user");
+        if(getUser){
+          const session =JSON.parse(getUser);
+          setUser(session);
+        }else{
+          navigate('/login')
+        }
+      },[])
+      console.log(user)
 
     return (
         // <!--begin::Header-->
