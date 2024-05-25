@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
-    name: String,
     catagory: String,
     email: String,
     password: String,
     firstName: String,
     lastName: String,
-    verified: Boolean
-
+    verified: Boolean,
+    username: String,
+    userType: String
 })
 
 const users = mongoose.model("users", UserSchema)

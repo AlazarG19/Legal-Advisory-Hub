@@ -31,6 +31,7 @@ import DeleteDoc from "./components/Documents/Admin/DeleteDoc";
 import Dashboard from './components/AdminDashboard'
 
 import "./App.css"
+import FreelancerSignup from './components/Authentication/FreelancerSignup'
 function App() {
 
   return (
@@ -42,8 +43,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/login" element={<SignInForm />}></Route>
           <Route path="/signup" element={<SignUpForm />}></Route>
+          <Route path="/freelancersignup/:id" element={<FreelancerSignup />}></Route>
           <Route path="/userdetail/:id" element={<UserDetails />}></Route>
-          <Route path="/users" element={<ProjectUserCardPane />}></Route>
+          <Route path="/legalexperts" element={<ProjectUserCardPane />}></Route>
           <Route path="/chat/:id" element={<ChatPage />}></Route>
           <Route path="/createOffer/:id" element={<CreateOffer />}></Route>
           <Route path="/acceptOffer/:id" element={<OfferComponent />}></Route>

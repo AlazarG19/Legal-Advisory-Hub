@@ -3,26 +3,45 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import DetailSideBar from "./DetailSideBar";
 import Navbar from "../Navbar";
+import Navigation from "../Navigation";
 
 const UserDetails = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
-  const [catagory, setCatagory] = useState("");
+  const [username, setUserName] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [category, setCategory] = useState("");
+  const [firm, setFirm] = useState("");
+  const [contact, setContact] = useState("");
+  const [city, setCity] = useState("");
+  const [language, setLanguage] = useState("");
+  const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const [detail, setDetail] = useState("");
+  const [user, setUser] = useState("");
+
   useEffect(() => {
     axios.get(`http://localhost:3000/getFreelancer/${id}`)
       .then(response => {
-        const { name, catagory, email } = response.data;
-        setName(name);
-        setCatagory(catagory);
-        setEmail(email);
+        console.log(response.data)
+        console.log(response.data[0])
+        setName(response.data[0].firstName + " " + response.data[0].lastName)
+        setUserName(response.data[0].username)
+        setProfilePicture(response.data[0].Details[0].profilePicture)
+        setCategory(response.data[0].Details[0].category)
+        setFirm(response.data[0].Details[0].firm)
+        setContact(response.data[0].Details[0].contact)
+        setCity(response.data[0].Details[0].city)
+        setLanguage(response.data[0].Details[0].language)
+        setBio(response.data[0].Details[0].bio)
+        setEmail(response.data[0].email)
+        setUser(response.data[0].city)
       })
       .catch(error => console.error(error));
   }, [id]);
   return (
     <>
-      <Navbar />
+      <Navigation />
       <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
           <div className="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -34,10 +53,8 @@ const UserDetails = () => {
                     className="app-container container-xxl"
                   >
                     <div className="row g-8">
-                      <div className="col-lg-6 col-xl-3">
-                        <DetailSideBar />
-                      </div>
-                      <div className="col-xl-8">
+
+                      <div className="col">
                         <div
                           className="card card-flush h-lg-100"
                           id="kt_contacts_main"
@@ -161,7 +178,7 @@ const UserDetails = () => {
                             <div className="d-flex gap-7 align-items-center">
                               <div className="symbol symbol-circle symbol-100px">
                                 <img
-                                  src="assets/media/avatars/300-6.jpg"
+                                  src={"http://localhost:3000/uploads/profile/" + profilePicture}
                                   alt="image"
                                 />
                               </div>
@@ -194,33 +211,6 @@ const UserDetails = () => {
                                     {email}
                                   </a>
                                 </div>
-                                <div className="d-flex align-items-center gap-2">
-                                  <span className="svg-icon svg-icon-2">
-                                    <svg
-                                      width={24}
-                                      height={24}
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
-                                        fill="currentColor"
-                                      />
-                                      <path
-                                        opacity="0.3"
-                                        d="M19 4H5V20H19V4Z"
-                                        fill="currentColor"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <a
-                                    href="#"
-                                    className="text-muted text-hover-primary"
-                                  >
-                                    {catagory ? catagory : "+251 931 234 567"}
-                                  </a>
-                                </div>
                               </div>
                             </div>
                             <ul className="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-semibold mt-6 mb-8">
@@ -244,7 +234,7 @@ const UserDetails = () => {
                                       />
                                     </svg>
                                   </span>
-                                  Overview
+                                  Basic Informations
                                 </a>
                               </li>
                               <li className="nav-item">
@@ -279,29 +269,6 @@ const UserDetails = () => {
                                   Portifolio/Work Sample
                                 </a>
                               </li>
-                              <li className="nav-item">
-                                <a
-                                  className="nav-link text-active-primary pb-4"
-                                  data-bs-toggle="tab"
-                                  href="#kt_contact_view_activity"
-                                >
-                                  <span className="svg-icon svg-icon-4 me-1">
-                                    <svg
-                                      width={24}
-                                      height={24}
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
-                                        fill="currentColor"
-                                      />
-                                    </svg>
-                                  </span>
-                                  Skill/Expertise
-                                </a>
-                              </li>
                             </ul>
                             <div className="tab-content" id="">
                               <div
@@ -312,22 +279,28 @@ const UserDetails = () => {
                                 <div className="d-flex flex-column gap-5 mt-7">
                                   <div className="d-flex flex-column gap-1">
                                     <div className="fw-bold text-muted">
-                                      Company Name
+                                      Category
                                     </div>
-                                    <div className="fw-bold fs-5">Freelancer</div>
+                                    <div className="fw-bold fs-5">{category}</div>
+                                  </div>
+                                  <div className="d-flex flex-column gap-1">
+                                    <div className="fw-bold text-muted">
+                                      User Name
+                                    </div>
+                                    <div className="fw-bold fs-5">{username}</div>
                                   </div>
                                   <div className="d-flex flex-column gap-1">
                                     <div className="fw-bold text-muted">City</div>
-                                    <div className="fw-bold fs-5">Addis Ababa</div>
+                                    <div className="fw-bold fs-5">{city}</div>
                                   </div>
                                   <div className="d-flex flex-column gap-1">
-                                    <div className="fw-bold text-muted">Country</div>
-                                    <div className="fw-bold fs-5">Ethiopia</div>
+                                    <div className="fw-bold text-muted">Language</div>
+                                    <div className="fw-bold fs-5">{language}</div>
                                   </div>
                                   <div className="d-flex flex-column gap-1">
-                                    <div className="fw-bold text-muted">Details</div>
+                                    <div className="fw-bold text-muted">Bio</div>
                                     <p>
-                                      {detail ? detail : <p>Emma Smith joined the team on September 2019 as a junior associate. She soon showcased her expertise and experience in knowledge and skill in the field, which was very valuable to the company. She was promptly promoted to senior associate on July 2020.</p>}
+                                      <p>{bio}.</p>
 
 
                                     </p>
@@ -1320,118 +1293,6 @@ const UserDetails = () => {
                                       >
                                         View
                                       </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="tab-pane fade"
-                                id="kt_contact_view_activity"
-                                role="tabpanel"
-                              >
-                                <div className="timeline-label">
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      08:42
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-warning fs-1" />
-                                    </div>
-                                    <div className="fw-mormal timeline-content text-muted ps-3">
-                                      Outlines keep you honest. And keep structure
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      10:00
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-success fs-1" />
-                                    </div>
-                                    <div className="timeline-content d-flex">
-                                      <span className="fw-bold text-gray-800 ps-3">
-                                        AEOL meeting
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      14:37
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-danger fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-bold text-gray-800 ps-3">
-                                      Make deposit
-                                      <a href="#" className="text-primary">
-                                        USD 700
-                                      </a>
-                                      . to ESL
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      16:50
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-primary fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-mormal text-muted ps-3">
-                                      Indulging in poorly driving and keep structure
-                                      keep great
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      21:03
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-danger fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-semibold text-gray-800 ps-3">
-                                      New order placed
-                                      <a href="#" className="text-primary">
-                                        #XF-2356
-                                      </a>
-                                      .
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      16:50
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-primary fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-mormal text-muted ps-3">
-                                      Indulging in poorly driving and keep structure
-                                      keep great
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      21:03
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-danger fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-semibold text-gray-800 ps-3">
-                                      New order placed
-                                      <a href="#" className="text-primary">
-                                        #XF-2356
-                                      </a>
-                                      .
-                                    </div>
-                                  </div>
-                                  <div className="timeline-item">
-                                    <div className="timeline-label fw-bold text-gray-800 fs-6">
-                                      10:30
-                                    </div>
-                                    <div className="timeline-badge">
-                                      <i className="fa fa-genderless text-success fs-1" />
-                                    </div>
-                                    <div className="timeline-content fw-mormal text-muted ps-3">
-                                      Finance KPI Mobile app launch preparion meeting
                                     </div>
                                   </div>
                                 </div>

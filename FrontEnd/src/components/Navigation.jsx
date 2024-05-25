@@ -65,7 +65,7 @@ const Navigation = () => {
                 </div>
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
+                <div onClick={() => { onLinkClick("/legalexperts") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Legal Experts</span>
@@ -113,7 +113,7 @@ const Navigation = () => {
             <div className="app-navbar flex-shrink-0">
 
               {/*begin::Chat*/}
-              <div className="app-navbar-item ms-1 ms-lg-3">
+              <div className="app-navbar-item ms-1 ms-lg-3" >
                 {/*begin::Menu wrapper*/}
                 <div
                   className="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative"
@@ -164,9 +164,10 @@ const Navigation = () => {
               <div
                 className="app-navbar-item ms-1 ms-lg-3"
                 id="kt_header_user_menu_toggle"
+
               >
                 {/*begin::Menu wrapper*/}
-                <div className="dropdown">
+                <div className="dropdown" style={{ marginRight: "70px" }}>
                   <div
                     className="cursor-pointer symbol symbol-35px symbol-md-40px"
                     onClick={toggleDropdown}
@@ -190,6 +191,7 @@ const Navigation = () => {
                 <div
                   className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                   data-kt-menu="true"
+
                 >
                   {/*begin::Menu item*/}
                   <div className="menu-item px-3">

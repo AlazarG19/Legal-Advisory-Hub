@@ -64,6 +64,27 @@ const SignupForm = () => {
     } else {
       console.log("error")
     }
+    if (!errors.username) {
+
+      await fetch(`http://localhost:3000/checkusername/${values.username}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          if (data.length != 0) {
+            errors.username = 'username Exist!';
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+    } else {
+      console.log("error")
+    }
     console.log("error", errors)
     return errors;
   };
@@ -74,6 +95,8 @@ const SignupForm = () => {
       confirmPassword: "",
       firstName: "",
       lastName: "",
+      username: "",
+      userType: "client",
     },
     validate,
     validateOnChange: false,
@@ -84,10 +107,11 @@ const SignupForm = () => {
         password: values.password,
         firstName: values.firstName,
         lastName: values.lastName,
+        userType: values.userType,
+        username: values.username
       }
       body = JSON.stringify(body)
       console.log(body)
-      // setSubmitting(false);
       await fetch(`http://localhost:3000/createUser`, {
         method: 'POST',
         headers: {
@@ -97,10 +121,15 @@ const SignupForm = () => {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log("data")
           console.log(data)
-          if (data.success) {
+          if (data.message == "User created successfully") {
             // sessionStorage.setItem("user", JSON.stringify(data.info));
-            window.location.href = `http://localhost:5173/checkemail/0`
+            if (values.userType == "freelancer") {
+              window.location.href = `http://localhost:5173/freelancersignup/${data.user._id}`
+            } else {
+              window.location.href = `http://localhost:5173/checkemail/0`
+            }
           } else {
           }
         })
@@ -151,9 +180,6 @@ const SignupForm = () => {
                 {/* begin::Title */}
                 <h1 className="text-dark fw-bolder mb-3">Sign Up</h1>
                 {/* end::Title */}
-                {/* begin::Subtitle */}
-                <div className="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
-                {/* end::Subtitle= */}
               </div>
               {/* begin::Heading */}
               {/* begin::Input group= */}
@@ -184,6 +210,15 @@ const SignupForm = () => {
               {/* begin::Input group */}
               {/* begin::Input group= */}
               <div className="fv-row mb-8">
+                <input type="email" onChange={formik.handleChange}
+
+                  value={formik.values.username} name='username' placeholder='User Name' className="form-control bg-transparent" />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.username}</div>
+              </div>
+              {/* begin::Input group */}
+
+              {/* begin::Input group= */}
+              <div className="fv-row mb-8">
                 <input onChange={formik.handleChange}
 
                   value={formik.values.password} type="password" name='password' placeholder='Password' className="form-control bg-transparent" />
@@ -196,6 +231,16 @@ const SignupForm = () => {
 
                   value={formik.values.confirmPassword} name='confirmPassword' placeholder='Confirm Password' className="form-control bg-transparent" />
                 <div style={{ marginLeft: "40px" }} className='input-error-display' >{formik.errors.confirmPassword}</div>
+              </div>
+              {/* begin::Input group */}
+              {/* begin::Input group= */}
+              <div className="fv-row mb-8">
+                <select onChange={formik.handleChange} value={formik.values.userType} name='userType' placeholder='User Type' defaultValue="client" className="form-control bg-transparent" >
+                  <option value="client" selected>Client</option>
+                  <option value="freelancer">Freelancer</option>
+                </select>
+
+                <div style={{ marginLeft: "40px" }} className='input-error-display' >{formik.errors.userType}</div>
               </div>
               {/* begin::Input group */}
               {/* begin::Submit button */}

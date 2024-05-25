@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { Types } = mongoose;
 const fs = require("fs");
 const cors = require('cors');
 const axios = require('axios');
@@ -30,6 +31,7 @@ const { fileURLToPath, pathToFileURL } = require('url');
 const Token = db.tokens;
 var jwt = require("jsonwebtoken");
 const { isAsyncFunction } = require('util/types');
+const FreelancerProfile = require('./app/models/freelancerprofile');
 
 const importMetaUrl = pathToFileURL(__filename).href;
 const fileURLToPathNew = (url) => {
@@ -52,6 +54,55 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+const profileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/profile");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const uploadProfile = multer({ storage: profileStorage });
+
+// create freelancer profile
+app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
+  try {
+    // console.log(req.body)
+    const {
+      userid,
+      category,
+      firm,
+      contact,
+      city,
+      language,
+      bio,
+    } = req.body;
+
+    const profilePicture = req.files['profilePicture'][0].filename;
+
+    const freelancerprofile = new FreelancerProfile({
+      userid,
+      category,
+      firm,
+      contact,
+      city,
+      language,
+      bio,
+      profilePicture
+    });
+
+    await freelancerprofile.save();
+    res.status(201).json({ message: "Freelancer Profile Created Successfully" });
+  } catch (error) {
+    console.log("error")
+    console.error(error);
+    res.status(500).json({ message: "Failed to create freelancer" });
+  }
+});
+
+// 
 
 // Routes for Documents
 app.post("/Docs", upload.single("pdf"), async (req, res) => {
@@ -212,6 +263,13 @@ app.get('/checkEmail/:email', (req, res) => {
     .then(user => res.json(user))
     .catch(err => res.json(err));
 });
+app.get('/checkusername/:username', (req, res) => {
+  console.log(req.params)
+  const username = req.params.username;
+  users.find({ username: username })
+    .then(user => res.json(user))
+    .catch(err => res.json(err));
+});
 
 
 // 
@@ -272,14 +330,38 @@ app.get("/", (request, response) => {
 });
 
 app.get('/getFreelancers', (req, res) => {
-  users.find({})
-    .then(user => res.json(user))
-    .catch(err => res.json(err));
+  // users.find({})
+  //   .then(user => res.json(user))
+  //   .catch(user => res.json(user));
+  // FreelancerProfile.find({})
+  //   .then(user => { console.log("freelancer", user) })
+  //   .catch(err => { console.log("err", err) });
+  users.aggregate([
+    {
+      $lookup: {
+        from: "freelancerprofiles",
+        localField: "_id",
+        foreignField: "userid",
+        as: "Details"
+      }
+    }
+  ]).then(user => res.json(user))
+    .catch(user => res.json(user));
 });
 
 app.get('/getFreelancer/:id', (req, res) => {
   const id = req.params.id;
-  users.findById({ _id: id })
+  users.aggregate([
+    {
+      $lookup: {
+        from: "freelancerprofiles",
+        localField: "_id",
+        foreignField: "userid",
+        as: "Details"
+      }
+    },
+    { $match: { _id: new Types.ObjectId(id) } }
+  ])
     .then(user => res.json(user))
     .catch(err => res.json(err));
 });
@@ -307,14 +389,42 @@ app.post('/clientlogin', async (req, res) => {
 
 app.post("/createUser", async (req, res) => {
   try {
-    const { name, catagory, email } = req.body;
-    console.log(req.body);
+    console.log(req.body)
+    const { password, firstName, lastName, userType, username, email } = req.body;
+
     const user = new users({
-      name,
-      catagory,
-      email
+      password,
+      firstName,
+      lastName,
+      userType,
+      username,
+      email,
+      verified: false
     });
-    await user.save();
+    try {
+      const createduser = await user.save();
+      console.log(createduser, "createduser");
+      try {
+        let token = await new Token({
+          userId: createduser._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        })
+        const createdtoken = await token.save()
+        console.log(createdtoken, "createdtoken");
+        const message = `http://localhost:5173/emailverified/${createduser.id}/${token.token}`;
+
+        EmailSender("Legal Advisory Hub", "alazargetachew70@gmail.com", "Verify Email", message);
+      } catch (err) {
+        console.log(err, "first error for token")
+        res.status(500).send({ message: err });
+        return;
+      }
+
+    } catch (err) {
+      console.log(err, "first error for token")
+      res.status(500).send({ message: err });
+      return;
+    }
     res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     console.error(error);

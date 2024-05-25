@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -19,25 +19,25 @@ const LoginPage = () => {
         password,
       });
       axios.get(`http://localhost:3000/getUser/${username}`).then(result => {
-            sessionStorage.setItem('user', JSON.stringify(result.data));
-            setUser(result.data);
-            console.log("from session", sessionStorage.getItem('user'));
-            if(result.data[0].userType == 'client'){
-              console.log("this user is a client")
-              navigate('/users')
-            }else{
-              console.log("this is a freelancer")
-              navigate('/freelancerProfile')
-            }
+        sessionStorage.setItem('user', JSON.stringify(result.data));
+        setUser(result.data);
+        console.log("from session", sessionStorage.getItem('user'));
+        if (result.data[0].userType == 'client') {
+          console.log("this user is a client")
+          navigate('/legalexperts')
+        } else {
+          console.log("this is a freelancer")
+          navigate('/freelancerProfile')
+        }
 
-            
-          
-        });
-        
+
+
+      });
+
       if (response.status === 200) {
         console.log('Login successful');
-        
-        
+
+
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -55,15 +55,15 @@ const LoginPage = () => {
     if (userData) {
       const userType = userData[0].userType;
       if (userType == 'client') {
-        navigate('/users');
+        navigate('/legalexperts');
       } else {
         navigate('/freelancerProfile');
       }
-    }else{
+    } else {
       navigate('/login')
     }
   }, [navigate]);
-  
+
 
   return (
     <div className="login-container">
