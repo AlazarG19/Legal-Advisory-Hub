@@ -32,6 +32,8 @@ import Dashboard from './components/AdminDashboard'
 
 import "./App.css"
 import FreelancerSignup from './components/Authentication/FreelancerSignup'
+import CompleteOffer from './components/Offer/CompleteOffer'
+import CancelOffer from './components/Offer/CancelOffer'
 function App() {
 
   return (
@@ -48,6 +50,8 @@ function App() {
           <Route path="/legalexperts" element={<ProjectUserCardPane />}></Route>
           <Route path="/chat/:id" element={<ChatPage />}></Route>
           <Route path="/createOffer/:id" element={<CreateOffer />}></Route>
+          <Route path="/cancelOffer/:id" element={<CancelOffer />}></Route>
+          <Route path="/completeOffer/:id" element={<CompleteOffer />}></Route>
           <Route path="/acceptOffer/:id" element={<OfferComponent />}></Route>
           <Route path="/paymentPage/:id" element={<Payment />}></Route>
           <Route path="/multistep" element={<MultiStepForm />}></Route>

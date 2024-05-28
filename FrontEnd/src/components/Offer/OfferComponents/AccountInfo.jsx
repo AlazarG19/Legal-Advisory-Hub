@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccountInfo = ({ handleSubmit, handlePrevStep }) => {
+const AccountInfo = () => {
   return (
     <div>
       <div data-kt-stepper-element="content" className="current">
@@ -330,8 +330,6 @@ const AccountInfo = ({ handleSubmit, handlePrevStep }) => {
         </div>
         {/*end::Wrapper*/}
       </div>
-      <button onClick={handleSubmit}>Submit</button>
-      <button onClick={handlePrevStep}>Previous</button>
     </div>
   );
 };

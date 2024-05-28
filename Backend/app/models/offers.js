@@ -4,6 +4,7 @@ const OfferSchema = new mongoose.Schema({
     title: String,
     description: String,
     price: String,
+    status: String,
 })
 
 const offer = mongoose.model("offers", OfferSchema)

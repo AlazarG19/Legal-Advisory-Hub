@@ -16,20 +16,32 @@ function Chat({ socket, username, room, clients }) {
   const [userType, setUserType] = useState("");
   const [client, setClient] = useState([]);
   const [createdAt, setCreatedAt] = useState([]);
+  const [linkAddress, setLinkAddress] = useState(`/createOffer/${id}`);
+  const [file, setFile] = useState("");
   const [dateInstance] = useState(new Date());
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/getOffers/${id}`)
       .then((response) => {
-        if (response.data.length > 0) {
-          setOfferText("Complete Offer")
+        console.log(response.data[0].status)
+        if (response.data[0].status == "Complete" || response.data[0].status == "Cancel") {
+          setOfferText("Create Offer");
+          setLinkAddress(`/createOffer/${id}`);
+        } else if (response.data[0].status == "InProgress") {
+          setOfferText("Complete Offer");
+          setLinkAddress(`/completeOffer/${id}`);
+        } else if (response.data[0].status == "Waiting") {
+          setOfferText("Cancel Offer");
+          setLinkAddress(`/cancelOffer/${id}`);
 
         }
       })
       .catch((error) => console.error(error));
-  })
-
+  });
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   const sendMessage = async () => {
     if (currentMessage.trim() !== "") {
@@ -61,11 +73,13 @@ function Chat({ socket, username, room, clients }) {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/getMessage/${room}`);
+        const response = await axios.get(
+          `http://localhost:3000/getMessage/${room}`
+        );
         setMessageList(response.data);
         console.log("this is the message list", response.data);
 
-        const userString = sessionStorage.getItem('user');
+        const userString = sessionStorage.getItem("user");
         if (userString) {
           const user = JSON.parse(userString);
           setUser(user);
@@ -102,8 +116,6 @@ function Chat({ socket, username, room, clients }) {
     };
   }, [room, socket, clients]);
 
-
-
   return (
     <div
       id="kt_drawer_chat"
@@ -119,9 +131,8 @@ function Chat({ socket, username, room, clients }) {
       style={{
         width: userType === "freelancer" ? "37vw" : "50vw",
         marginTop: "85px",
-        marginRight: userType === "freelancer" ? '12.5vw' : undefined
+        marginRight: userType === "freelancer" ? "12.5vw" : undefined,
       }}
-
     >
       {/*begin::Messenger*/}
       <div
@@ -242,6 +253,7 @@ function Chat({ socket, username, room, clients }) {
           <div className="d-flex flex-stack">
             {/*begin::Actions*/}
             <div className="d-flex align-items-center me-2">
+              <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
               <button
                 className="btn btn-sm btn-icon btn-active-light-primary me-1"
                 type="button"
@@ -249,16 +261,7 @@ function Chat({ socket, username, room, clients }) {
                 aria-label="Coming soon"
                 data-bs-original-title="Coming soon"
                 data-kt-initialized={1}
-              >
-                <i className="bi bi-paperclip fs-3" />
-              </button>
-              <button
-                className="btn btn-sm btn-icon btn-active-light-primary me-1"
-                type="button"
-                data-bs-toggle="tooltip"
-                aria-label="Coming soon"
-                data-bs-original-title="Coming soon"
-                data-kt-initialized={1}
+                onClick={() => document.getElementById('fileInput').click()}
               >
                 <i className="bi bi-upload fs-3" />
               </button>
@@ -277,7 +280,16 @@ function Chat({ socket, username, room, clients }) {
           </div>
           <div className="d-flex flex-stack">
             {/*begin::Send*/}
-            {userType == 'freelancer' ? <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >{offerText}</Link> : <></>}
+            {userType == "freelancer" ? (
+              <Link
+                to={linkAddress}
+                className="btn btn-primary container-fluid mt-5"
+              >
+                {offerText}
+              </Link>
+            ) : (
+              <></>
+            )}
             {/* <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> */}
             {/*end::Send*/}
           </div>

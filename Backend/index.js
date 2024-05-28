@@ -9,6 +9,7 @@ const { Server } = require('socket.io');
 
 const users = require('./app/models/users');
 const offers = require('./app/models/offers');
+const completedOffers = require('./app/models/completedOffers');
 const room = require('./app/models/room');
 const message = require('./app/models/messages');
 // 
@@ -460,9 +461,11 @@ app.delete("/deleteUser/:id", (req, res) => {
     });
 });
 
+
+
 app.post("/createOffer", async (req, res) => {
   try {
-    const { title, userid, description, price } = req.body;
+    const { title, userid, description, price, status } = req.body;
     console.log(req.body);
 
     const offer = new offers({
@@ -470,6 +473,7 @@ app.post("/createOffer", async (req, res) => {
       userid,
       description,
       price,
+      status,
     });
     await offer.save();
     res.status(201).json({ message: "offer created successfully", offer });
@@ -479,12 +483,77 @@ app.post("/createOffer", async (req, res) => {
   }
 });
 
+
+app.post("/createCompleteOffer", async (req, res) => {
+  try {
+    const { title, userid, description, price, status } = req.body;
+    console.log(req.body);
+
+    const completedOffer = new completedOffers({
+      title,
+      userid,
+      description,
+      price,
+      status,
+    });
+    await completedOffer.save();
+    res.status(201).json({ message: "offer created successfully", completedOffer });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create offer" });
+  }
+});
+
+
+
+
+
 app.get('/getOffers/:id', (req, res) => {
   const id = req.params.id;
   offers.find({ userid: id })
     .then(offers => res.json(offers))
     .catch(err => res.json(err));
 });
+
+app.post("/offerInProgress/:userId", async (req, res) => {
+  const userId = req.params.id;
+  console.log("this is the userId", userId);
+  offers.findOneAndUpdate({ userId: userId }, { ...req.body, status: "InProgress" }, {
+    new: true,
+  })
+    .then(updatedOffer => res.json(updatedOffer))
+    .catch(err => res.status(400).json(err));
+});
+
+app.post("/completeOffer/:userId", async (req, res) => {
+  const userId = req.params.id;
+  console.log("this is the userId", userId);
+  offers.findOneAndUpdate({ userId: userId }, { ...req.body, status: "Complete" }, {
+    new: true,
+  })
+    .then(updatedOffer => res.json(updatedOffer))
+    .catch(err => res.status(400).json(err));
+});
+app.post("/cancelOffer/:userId", async (req, res) => {
+  const userId = req.params.id;
+  console.log("this is the userId", userId);
+  offers.findOneAndUpdate({ userId: userId }, { ...req.body, status: "Cancel" }, {
+    new: true,
+  })
+    .then(updatedOffer => res.json(updatedOffer))
+    .catch(err => res.status(400).json(err));
+});
+app.post("/waitingOffer/:userId", async (req, res) => {
+  const userId = req.params.id;
+  console.log("this is the userId", userId);
+  offers.findOneAndUpdate({ userId: userId }, { ...req.body, status: "Waiting" }, {
+    new: true,
+  })
+    .then(updatedOffer => res.json(updatedOffer))
+    .catch(err => res.status(400).json(err));
+});
+
+
 app.get('/getRoom/:id', (req, res) => {
   const id = req.params.id;
   room.find({ userId: id })

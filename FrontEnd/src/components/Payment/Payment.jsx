@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const Payment = () => {
+  const { id } = useParams()
+
   const [form, setForm] = useState({
     amount: "",
     currency: "",
@@ -35,7 +37,10 @@ const Payment = () => {
         {
           headers: { "Content-Type": "application/json" },
         }
-      );
+      )
+      axios.post(`http://localhost:3000/offerInProgress/${id}`).then(() => {
+        console.log("offer in progress")
+      })
       window.location.href = res.data.data.checkout_url;
       console.log(res);
       setForm({
@@ -87,35 +92,35 @@ const Payment = () => {
               onSubmit={handleSubmit}
             >
               <div className="mb-3">
-                  <label htmlFor="personName" name="first_name" className="form-label">
-                    Person's Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="personName"
-                    placeholder="Enter person's name"
-                    onChange={handleChange}
-                    required
-                  />
-                  
-                </div>
+                <label htmlFor="personName" name="first_name" className="form-label">
+                  Person's Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="personName"
+                  placeholder="Enter person's name"
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
               <div className="mb-3">
-                  <label htmlFor="personName" className="form-label">
-                    Amount
-                  </label>
-                  <input
-                className="form-control"
-                onChange={handleChange}
-                type="text"
-                name="amount"
-                value={form.amount}
-                placeholder="amount"
-                required
-              />
-                  
-                </div>
-              
+                <label htmlFor="personName" className="form-label">
+                  Amount
+                </label>
+                <input
+                  className="form-control"
+                  onChange={handleChange}
+                  type="text"
+                  name="amount"
+                  value={form.amount}
+                  placeholder="amount"
+                  required
+                />
+
+              </div>
+
               <br />
               <input
                 className="m-3 border border-black px-5 py-2 rounded-lg"
@@ -125,7 +130,7 @@ const Payment = () => {
                 value={form.currency = "ETB"}
                 placeholder="currency"
               />
-              
+
               <button
                 className="px-[100px] py-3 rounded-md bg-green-600 text-white"
                 type="submit"
@@ -134,15 +139,15 @@ const Payment = () => {
               </button>
             </form>
             {/* Offer details container */}
-            
+
             {/* Proceed to Payment button */}
-            
+
           </div>
           {/* End Modal body */}
         </div>
       </div>
 
-      
+
     </>
   );
 };

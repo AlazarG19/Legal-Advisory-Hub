@@ -83,8 +83,8 @@ const CheckEmail = () => {
                                                     <h2 style={{ color: "#6787FE" }} >Email Verification failed Please Try Again</h2>}
                                                 {verified ? <h3>Please Continue To The Next Page</h3> : verificationerror == "Invalid link" ? <h3>Invalid Link Please Try Again</h3> :
                                                     <h3>You Must First Verify Your Email For Your Account To Be Activated.</h3>}
-                                                {verified ? <p><a href="/" className="btn btn-redirect">Continue To Login</a></p> :
-                                                    <p><a href="/login" onClick={resendEmail} className="btn btn-redirect">Resend Email</a></p>}
+                                                {verified ? <p><a href="/signin" className="btn btn-redirect">Continue To Login</a></p> :
+                                                    <p><a href="/signin" onClick={resendEmail} className="btn btn-redirect">Resend Email</a></p>}
 
 
                                             </div>

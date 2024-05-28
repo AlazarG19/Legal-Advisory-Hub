@@ -14,6 +14,7 @@ const ChatPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [status, setStatus] = useState("");
   const [offer, setOffer] = useState(false);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -57,10 +58,11 @@ const ChatPage = () => {
       .get(`http://localhost:3000/getOffers/${id}`)
       .then((response) => {
         if (response.data.length > 0) {
-          const { title, description, price } = response.data[0];
+          const { title, description, price, status } = response.data[0];
           setTitle(title);
           setDescription(description);
           setPrice(price);
+          setStatus(status);
           setOffer(true);
         }
       })
@@ -205,7 +207,7 @@ const ChatPage = () => {
                   {/*begin::Card toolbar*/}
                   <div className="card-toolbar">
                     <span className="badge badge-light-primary fw-bold me-auto px-4 py-3">
-                      In Progress
+                      {status}
                     </span>
                   </div>
                   {/*end::Card toolbar*/}

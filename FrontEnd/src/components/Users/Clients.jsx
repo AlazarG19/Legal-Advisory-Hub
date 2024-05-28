@@ -17,6 +17,7 @@ const Clients = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [offer, setOffer] = useState(false);
+  const [status, setStatus] = useState(false);
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const socket = io.connect("http://localhost:3000");
@@ -53,10 +54,11 @@ const Clients = () => {
           .get(`http://localhost:3000/getOffers/${firstUser._id}`)
           .then((response) => {
             if (response.data.length > 0) {
-              const { title, description, price } = response.data[0];
+              const { title, description, price, status } = response.data[0];
               setTitle(title);
               setDescription(description);
               setPrice(price);
+              setStatus(status);
               if (clients[0].userType == "client") {
                 setOffer(true);
               } else {
@@ -175,9 +177,8 @@ const Clients = () => {
                 {clients.map((client, index) => (
                   <button
                     key={index}
-                    className={`d-flex flex-stack py-4 list-group-item list-group-item-action ${
-                      selectedClient === client ? "active" : ""
-                    }`}
+                    className={`d-flex flex-stack py-4 list-group-item list-group-item-action ${selectedClient === client ? "active" : ""
+                      }`}
                     onClick={() => handleClientSelect(client)}
                   >
                     {/*begin::Details*/}
@@ -257,11 +258,11 @@ const Clients = () => {
                             </div>
                             {/*end::Avatar*/}
                           </div>
-                          {/*end::Car Title*/}
+                          {/*end::Card Title*/}
                           {/*begin::Card toolbar*/}
                           <div className="card-toolbar">
                             <span className="badge badge-light-primary fw-bold me-auto px-4 py-3">
-                              In Progress
+                              {status}
                             </span>
                           </div>
                           {/*end::Card toolbar*/}
@@ -270,9 +271,7 @@ const Clients = () => {
                         {/*begin:: Card body*/}
                         <div className="card-body p-9">
                           {/*begin::Name*/}
-                          <div className="fs-3 fw-bold text-dark">
-                            {title}
-                          </div>
+                          <div className="fs-3 fw-bold text-dark">{title}</div>
                           {/*end::Name*/}
                           {/*begin::Description*/}
                           <p className="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
@@ -299,14 +298,15 @@ const Clients = () => {
                               </div>
                             </div>
                           </div>
-                          
                         </div>
+                        {/*end:: Card body*/}
                       </a>
                     </div>
-
-                    
                   </div>
                 )}
+
+                {!offer && <>Select clients to view offers</>}
+
                 <div className="separator separator-dashed d-none" />
               </div>
               {/*end::List*/}
