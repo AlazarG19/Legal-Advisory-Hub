@@ -3,7 +3,6 @@ const { Schema } = mongoose;
 const ObjectId = Schema.Types.ObjectId;
 const FreelancerProfileSchema = new mongoose.Schema({
     userid: Schema.Types.ObjectId,
-    profilePicture: String,
     category: String,
     firm: String,
     contact: String,

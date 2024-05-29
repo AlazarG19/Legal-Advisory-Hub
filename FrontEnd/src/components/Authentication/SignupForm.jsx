@@ -128,7 +128,7 @@ const SignupForm = () => {
             if (values.userType == "freelancer") {
               window.location.href = `http://localhost:5173/freelancersignup/${data.user._id}`
             } else {
-              window.location.href = `http://localhost:5173/checkemail/0`
+              window.location.href = `http://localhost:5173/usersignup/${data.user._id}`
             }
           } else {
           }

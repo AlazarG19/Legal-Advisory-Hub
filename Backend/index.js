@@ -75,6 +75,7 @@ const uploadProfile = multer({ storage: profileStorage });
 app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
   try {
     // console.log(req.body)
+
     const {
       userid,
       category,
@@ -84,9 +85,9 @@ app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePictu
       language,
       bio,
     } = req.body;
-
     const profilePicture = req.files['profilePicture'][0].filename;
 
+    await users.findByIdAndUpdate(userid, { profilePicture: profilePicture });
     const freelancerprofile = new FreelancerProfile({
       userid,
       category,
@@ -94,12 +95,28 @@ app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePictu
       contact,
       city,
       language,
-      bio,
-      profilePicture
+      bio
     });
 
     await freelancerprofile.save();
     res.status(201).json({ message: "Freelancer Profile Created Successfully" });
+  } catch (error) {
+    console.log("error")
+    console.error(error);
+    res.status(500).json({ message: "Failed to create freelancer" });
+  }
+});
+// create user profile
+app.post("/createUserProfile", uploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
+  const {
+    userid
+  } = req.body;
+  try {
+    // console.log(req.body)
+    const profilePicture = req.files['profilePicture'][0].filename;
+
+    await users.findByIdAndUpdate(userid, { profilePicture: profilePicture });
+    res.status(201).json({ message: "User Profile Created Successfully" });
   } catch (error) {
     console.log("error")
     console.error(error);

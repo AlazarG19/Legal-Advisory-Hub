@@ -15,7 +15,7 @@ function DetailPost() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [hasUpvoted, setHasUpvoted] = useState(false);
-
+  const [img, setimg] = useState("")
   const handleUpvoteClick = () => {
     if (!hasUpvoted) {
       setUpvoteCount((prevCount) => prevCount + 1);
@@ -83,7 +83,18 @@ function DetailPost() {
   useEffect(() => {
     console.log('http://localhost:3000/api/questions/')
     fetch(`http://localhost:3000/api/answers/${id}`).then(res => res.json()).then(result => {
+
       setAnswer(result)
+      try {
+
+        let profilePicture = result.userDetails[0].profilePicture
+        setimg("http://localhost:3000/uploads/profile/" + profilePicture)
+      } catch (error) {
+        setimg("")
+
+      }
+      console.log("http://localhost/3000/uploads/profile/" + result[0]["profilePicture"])
+      setimg("http://localhost/3000/uploads/profile/" + result[0]["profilePicture"])
       console.log(JSON.stringify(result))
     }).catch((error) => {
       console.log(error)
@@ -130,7 +141,7 @@ function DetailPost() {
                     <div className="d-flex align-items-center">
                       {/* <!--begin::Avatar--> */}
                       <div className="symbol symbol-50px me-5">
-                        <img src="/assets/media/avatars/300-4.jpg" className="" alt="" />
+                        <img src={img} className="" alt="" />
                       </div>
                       {/* <!--end::Avatar--> */}
                       {/* <!--begin::Info--> */}

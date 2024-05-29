@@ -1,5 +1,7 @@
 const db = require("../models");
 const Answer = db.answers;
+const mongoose = require('mongoose');
+const { Types } = mongoose;
 
 // Create and Save a new answer
 exports.create = (req, res) => {
@@ -11,13 +13,13 @@ exports.create = (req, res) => {
 
   // Create an answer
   const answer = new Answer({
-			questionId:req.body.questionId,
-			body:req.body.body,
-			author:req.body.author,
-			upvotes:req.body.upvotes,
-			downvotes:req.body.downvotes,
-			reported:false
-        });
+    questionId: req.body.questionId,
+    body: req.body.body,
+    author: req.body.author,
+    upvotes: req.body.upvotes,
+    downvotes: req.body.downvotes,
+    reported: false
+  });
 
   // Save Answer in the database
   answer.save(answer)
@@ -35,30 +37,50 @@ exports.create = (req, res) => {
 // Retrieve all answers from the database.
 exports.findAll = (req, res) => {
   const questionId = req.params.id;
-  Answer.find({ questionId: questionId })
-    .then(data => { 
-      res.send(data);
-    })
+  Answer.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "username",
+        as: "userDetails"
+      }
+    }
+  ]).then(data => {
+    res.send(data);
+  })
     .catch(err => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving answers."
       });
     });
+
 };
 // Find a single answer with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Answer.findById(id)
+  Answer.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "username",
+        as: "userDetails"
+      }
+    },
+    { $match: { _id: new Types.ObjectId(id) } }
+  ])
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Answer with id " + id });
-      else res.send(data);
+      else res.send(data[0]);
     })
     .catch(err => {
       res
         .status(500)
         .send({ message: "Error retrieving Answer with id=" + id });
     });
+
 };
 
 // Update a Answer by the id in the request
@@ -110,7 +132,7 @@ exports.delete = (req, res) => {
 
 // Delete all answer from the database.
 exports.deleteAll = (req, res) => {
-    Answer.deleteMany({})
+  Answer.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Answer were deleted successfully!`

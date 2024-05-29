@@ -42,6 +42,7 @@ import ManageAnswer from './components/Forum/ManageAnswer';
 import ManageComment from './components/Forum/ManageComment';
 import TrainAI from './components/Forum/TrainAI';
 import Chatbot from './components/Forum/Chatbot';
+import UserSignup from './components/Authentication/UserSignup'
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/login" element={<SignInForm />}></Route>
           <Route path="/signup" element={<SignUpForm />}></Route>
+          <Route path="/usersignup/:id" element={<UserSignup />}></Route>
           <Route path="/freelancersignup/:id" element={<FreelancerSignup />}></Route>
           <Route path="/userdetail/:id" element={<UserDetails />}></Route>
           <Route path="/legalexperts" element={<ProjectUserCardPane />}></Route>

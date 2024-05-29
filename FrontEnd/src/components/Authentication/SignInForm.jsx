@@ -25,7 +25,7 @@ const SignInForm = () => {
                 if (userData && userData[0]) {
                     sessionStorage.setItem('user', JSON.stringify(userData));
                     if (userData[0].userType === 'client') {
-                        navigate('/legalexperts');
+                        navigate('/forum');
                     } else {
                         navigate('/freelancerProfile');
                     }

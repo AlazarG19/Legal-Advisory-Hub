@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
     lastName: String,
     verified: Boolean,
     username: String,
-    userType: String
+    userType: String,
+    profilePicture: String
 })
 
 const users = mongoose.model("users", UserSchema)

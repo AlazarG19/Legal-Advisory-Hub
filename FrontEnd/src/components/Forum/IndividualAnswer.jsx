@@ -8,13 +8,21 @@ import { Link } from 'react-router-dom';
 function IndividualAnswer({ Answer, Feed }) {
     const [Comment, setComment] = useState("");
     const [Vote, setVote] = useState();
-
+    const [img, setimg] = useState("")
     const handleVote = () => {
 
 
     }
     useEffect(() => {
-        fetch(`http://localhost:3000/api/comments/all/${Answer._id}`).then(res => res.json()).then(result => {
+        try {
+
+            let profilePicture = Answer.userDetails[0].profilePicture
+            setimg("http://localhost:3000/uploads/profile/" + profilePicture)
+        } catch (error) {
+            setimg("")
+
+        }
+        fetch(`http://localhost:8080/api/comments/all/${Answer._id}`).then(res => res.json()).then(result => {
             setComment(result)
         }).catch((error) => {
             console.log(error)
@@ -36,7 +44,7 @@ function IndividualAnswer({ Answer, Feed }) {
                     <div className="d-flex align-items-center">
                         {/* <!--begin::Author--> */}
                         <div className="symbol symbol-35px me-3">
-                            <img src="/assets/media/avatars/300-3.jpg" alt="" />
+                            <img src={img} alt="" />
                         </div>
                         {/* <!--end::Author--> */}
                         {/* <!--begin::Input group--> */}
@@ -136,7 +144,7 @@ function IndividualAnswer({ Answer, Feed }) {
                 <div className="d-flex align-items-center">
                     {/* <!--begin::Avatar--> */}
                     <div className="symbol symbol-50px me-5">
-                        <img src="/assets/media/avatars/300-4.jpg" className="" alt="" />
+                        <img src={img} className="" alt="" />
                     </div>
                     {/* <!--end::Avatar--> */}
                     {/* <!--begin::Info--> */}

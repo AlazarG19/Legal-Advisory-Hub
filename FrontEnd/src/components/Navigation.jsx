@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
+  const [img, setimg] = useState("#")
+  const [usertype, setusertype] = useState("")
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -13,7 +14,13 @@ const Navigation = () => {
     navigate('/login')
   }
   const handleViewProfile = () => {
-    navigate('/freelancerProfile')
+    if (usertype == "client") {
+      navigate('/user')
+
+    } else if (usertype == "freelancer") {
+
+      navigate('/freelancerProfile')
+    }
   }
   let location = useLocation()
   console.log("locaiton", location.pathname)
@@ -23,6 +30,11 @@ const Navigation = () => {
   let onLinkClick = (link) => {
     navigate(link)
   }
+  useEffect(() => {
+    setimg("http://localhost:3000/uploads/profile/" + JSON.parse(sessionStorage.getItem('user'))[0]["profilePicture"])
+    setusertype(JSON.parse(sessionStorage.getItem('user'))[0]["userType"])
+
+  }, [])
 
   return (
     <>
@@ -162,7 +174,7 @@ const Navigation = () => {
                     className="cursor-pointer symbol symbol-35px symbol-md-40px"
                     onClick={toggleDropdown}
                   >
-                    <img src="/assets/media/avatars/300-3.jpg" alt="user" />
+                    <img src={img} alt="user" />
                   </div>
                   {isOpen && (
                     <div className="dropdown-menu show">
@@ -177,297 +189,6 @@ const Navigation = () => {
                   )}
                 </div>
 
-                {/*begin::User account menu*/}
-                <div
-                  className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
-                  data-kt-menu="true"
-                >
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-3">
-                    <div className="menu-content d-flex align-items-center px-3">
-                      {/*begin::Avatar*/}
-                      <div className="symbol symbol-50px me-5">
-                        <img alt="Logo" src="/assets/media/avatars/300-3.jpg" />
-                      </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Username*/}
-                      <div className="d-flex flex-column">
-                        <div className="fw-bold d-flex align-items-center fs-5">
-                          Max Smith
-                          <span className="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
-                            Pro
-                          </span>
-                        </div>
-                        <a
-                          href="#"
-                          className="fw-semibold text-muted text-hover-primary fs-7"
-                        >
-                          max@kt.com
-                        </a>
-                      </div>
-                      {/*end::Username*/}
-                    </div>
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu separator*/}
-                  <div className="separator my-2" />
-                  {/*end::Menu separator*/}
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-5">
-                    <a
-                      href="../../demo1/dist/account/overview.html"
-                      className="menu-link px-5"
-                    >
-                      My Profile
-                    </a>
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-5">
-                    <a
-                      href="../../demo1/dist/apps/projects/list.html"
-                      className="menu-link px-5"
-                    >
-                      <span className="menu-text">My Projects</span>
-                      <span className="menu-badge">
-                        <span className="badge badge-light-danger badge-circle fw-bold fs-7">
-                          3
-                        </span>
-                      </span>
-                    </a>
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
-                  <div
-                    className="menu-item px-5"
-                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                    data-kt-menu-placement="left-start"
-                    data-kt-menu-offset="-15px, 0"
-                  >
-                    <a href="#" className="menu-link px-5">
-                      <span className="menu-title">My Subscription</span>
-                      <span className="menu-arrow" />
-                    </a>
-                    {/*begin::Menu sub*/}
-                    <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/referrals.html"
-                          className="menu-link px-5"
-                        >
-                          Referrals
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/billing.html"
-                          className="menu-link px-5"
-                        >
-                          Billing
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/statements.html"
-                          className="menu-link px-5"
-                        >
-                          Payments
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/statements.html"
-                          className="menu-link d-flex flex-stack px-5"
-                        >
-                          Statements
-                          <i
-                            className="fas fa-exclamation-circle ms-2 fs-7"
-                            data-bs-toggle="tooltip"
-                            aria-label="View your statements"
-                            data-bs-original-title="View your statements"
-                            data-kt-initialized={1}
-                          />
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu separator*/}
-                      <div className="separator my-2" />
-                      {/*end::Menu separator*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <div className="menu-content px-3">
-                          <label className="form-check form-switch form-check-custom form-check-solid">
-                            <input
-                              className="form-check-input w-30px h-20px"
-                              type="checkbox"
-                              defaultValue={1}
-                              defaultChecked="checked"
-                              name="notifications"
-                            />
-                            <span className="form-check-label text-muted fs-7">
-                              Notifications
-                            </span>
-                          </label>
-                        </div>
-                      </div>
-                      {/*end::Menu item*/}
-                    </div>
-                    {/*end::Menu sub*/}
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-5">
-                    <a
-                      href="../../demo1/dist/account/statements.html"
-                      className="menu-link px-5"
-                    >
-                      My Statements
-                    </a>
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu separator*/}
-                  <div className="separator my-2" />
-                  {/*end::Menu separator*/}
-                  {/*begin::Menu item*/}
-                  <div
-                    className="menu-item px-5"
-                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                    data-kt-menu-placement="left-start"
-                    data-kt-menu-offset="-15px, 0"
-                  >
-                    <a href="#" className="menu-link px-5">
-                      <span className="menu-title position-relative">
-                        Language
-                        <span className="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
-                          English
-                          <img
-                            className="w-15px h-15px rounded-1 ms-2"
-                            src="/assets/media/flags/united-states.svg"
-                            alt=""
-                          />
-                        </span>
-                      </span>
-                    </a>
-                    {/*begin::Menu sub*/}
-                    <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/settings.html"
-                          className="menu-link d-flex px-5 active"
-                        >
-                          <span className="symbol symbol-20px me-4">
-                            <img
-                              className="rounded-1"
-                              src="/assets/media/flags/united-states.svg"
-                              alt=""
-                            />
-                          </span>
-                          English
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/settings.html"
-                          className="menu-link d-flex px-5"
-                        >
-                          <span className="symbol symbol-20px me-4">
-                            <img
-                              className="rounded-1"
-                              src="/assets/media/flags/spain.svg"
-                              alt=""
-                            />
-                          </span>
-                          Spanish
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/settings.html"
-                          className="menu-link d-flex px-5"
-                        >
-                          <span className="symbol symbol-20px me-4">
-                            <img
-                              className="rounded-1"
-                              src="/assets/media/flags/germany.svg"
-                              alt=""
-                            />
-                          </span>
-                          German
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/settings.html"
-                          className="menu-link d-flex px-5"
-                        >
-                          <span className="symbol symbol-20px me-4">
-                            <img
-                              className="rounded-1"
-                              src="/assets/media/flags/japan.svg"
-                              alt=""
-                            />
-                          </span>
-                          Japanese
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
-                      <div className="menu-item px-3">
-                        <a
-                          href="../../demo1/dist/account/settings.html"
-                          className="menu-link d-flex px-5"
-                        >
-                          <span className="symbol symbol-20px me-4">
-                            <img
-                              className="rounded-1"
-                              src="/assets/media/flags/france.svg"
-                              alt=""
-                            />
-                          </span>
-                          French
-                        </a>
-                      </div>
-                      {/*end::Menu item*/}
-                    </div>
-                    {/*end::Menu sub*/}
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-5 my-1">
-                    <a
-                      href="../../demo1/dist/account/settings.html"
-                      className="menu-link px-5"
-                    >
-                      Account Settings
-                    </a>
-                  </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
-                  <div className="menu-item px-5">
-                    <a
-                      href="../../demo1/dist/authentication/layouts/corporate/sign-in.html"
-                      className="menu-link px-5"
-                    >
-                      Sign Out
-                    </a>
-                  </div>
-                  {/*end::Menu item*/}
-                </div>
-                {/*end::User account menu*/}
                 {/*end::Menu wrapper*/}
               </div>
               {/*end::User menu*/}
