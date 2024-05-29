@@ -17,10 +17,14 @@ const db = require("./app/models");
 const EmailSender = require("./app/helpers/emailVerification");
 const crypto = require("crypto")
 // 
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// env
+require("dotenv").config();
 const CHAPA_AUTH_KEY = 'CHASECK_TEST-AluGHWd8Xjp9Ya6voAW7CERLkf6JXjEK';
 
 // 
@@ -666,6 +670,10 @@ app.get('/getMessage/:id', (req, res) => {
 // 
 app.use(express.urlencoded({ extended: true }));
 require("./app/routes/form.routes")(app)
+require("./app/routes/question.routes")(app)
+require("./app/routes/answer.routes")(app)
+require("./app/routes/comment.routes")(app)
+require("./app/routes/thread.routes")(app)
 // 
 
 const server = require('http').createServer(app);
@@ -730,3 +738,5 @@ mongoose.connect('mongodb+srv://alazargetachew70:Qwertyuiop123@legaladvisoryhub.
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
+
+

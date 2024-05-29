@@ -34,6 +34,9 @@ import "./App.css"
 import FreelancerSignup from './components/Authentication/FreelancerSignup'
 import CompleteOffer from './components/Offer/CompleteOffer'
 import CancelOffer from './components/Offer/CancelOffer'
+import Routes from './Routes';
+
+
 function App() {
 
   return (
@@ -82,6 +85,10 @@ function App() {
           <Route path="/docdb/docs/edit/:id" element={<UpdateDocument />} />
           <Route path="/docdb/docs/delete/:id" element={<DeleteDoc />} />
           {/* end  document database */}
+          {/* fekedes route */}
+
+          <Routes />
+          {/* end fekedes route */}
         </Routes>
       </BrowserRouter>
     </>
