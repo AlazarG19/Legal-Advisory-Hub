@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import LoadingModal from './Elements/LoadingModal';
+import Navigation from '../Navigation';
 
 
 function TrainAI() {
@@ -12,134 +13,134 @@ function TrainAI() {
 	const [itemsPerPage, setItemsPerPage] = useState(10);
 	const [totalPages, setTotalPages] = useState(1);
 	const [isUploading, setIsUploading] = useState(false);
-  
+
 	useEffect(() => {
-	  const fetchDocuments = async () => {
-		try {
-		  const response = await fetch(`http://localhost:8000/documents`);
-		  const result = await response.json();
-		  setSavedFiles(result);
-		  setTotalPages(Math.ceil(result.length / itemsPerPage));
-		} catch (error) {
-		  console.log(error);
-		}
-	  };
-  
-	  fetchDocuments();
+		const fetchDocuments = async () => {
+			try {
+				const response = await fetch(`http://localhost:8000/documents`);
+				const result = await response.json();
+				setSavedFiles(result);
+				setTotalPages(Math.ceil(result.length / itemsPerPage));
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchDocuments();
 	}, [itemsPerPage]);
-  
+
 	const handleFileUpload = (event) => {
-	  const selectedFiles = Array.from(event.target.files);
-	  setFiles(selectedFiles);
+		const selectedFiles = Array.from(event.target.files);
+		setFiles(selectedFiles);
 	};
-  
+
 	const handleTrain = async () => {
-	  try {
-		setShowLoadingModal(true);
-		const trainResponse = await fetch('http://localhost:8000/import-database', {
-		  method: 'POST',
-		  mode: 'no-cors',
-		});
-  
-		if (!trainResponse.ok) {
-		  throw new Error(`HTTP error ${trainResponse.status}`);
+		try {
+			setShowLoadingModal(true);
+			const trainResponse = await fetch('http://localhost:8000/import-database', {
+				method: 'POST',
+				mode: 'no-cors',
+			});
+
+			if (!trainResponse.ok) {
+				throw new Error(`HTTP error ${trainResponse.status}`);
+			}
+
+			setShowLoadingModal(false);
+		} catch (error) {
+			console.error('Error during upload and training:', error);
+			setShowLoadingModal(false);
 		}
-  
-		setShowLoadingModal(false);
-	  } catch (error) {
-		console.error('Error during upload and training:', error);
-		setShowLoadingModal(false);
-	  }
 	};
-  
+
 	const handleUpload = async () => {
-	  try {
-		setIsUploading(true);
-		const formData = new FormData();
-		files.forEach((file) => {
-		  formData.append('file', file);
-		});
-		const uploadResponse = await fetch('http://localhost:8000/upload', {
-		  method: 'POST',
-		  body: formData,
-		  mode: 'no-cors',
-		});
-  
-		if (!uploadResponse.ok) {
-		  throw new Error(`HTTP error ${uploadResponse.status}`);
+		try {
+			setIsUploading(true);
+			const formData = new FormData();
+			files.forEach((file) => {
+				formData.append('file', file);
+			});
+			const uploadResponse = await fetch('http://localhost:8000/upload', {
+				method: 'POST',
+				body: formData,
+				mode: 'no-cors',
+			});
+
+			if (!uploadResponse.ok) {
+				throw new Error(`HTTP error ${uploadResponse.status}`);
+			}
+
+			setShowLoadingModal(true);
+			const trainResponse = await fetch('http://localhost:8000/import-database', {
+				method: 'POST',
+				mode: 'no-cors',
+			});
+
+			if (!trainResponse.ok) {
+				throw new Error(`HTTP error ${trainResponse.status}`);
+			}
+
+			setShowLoadingModal(false);
+		} catch (error) {
+			console.error('Error during upload and training:', error);
+			setShowLoadingModal(false);
 		}
-  
-		setShowLoadingModal(true);
-		const trainResponse = await fetch('http://localhost:8000/import-database', {
-		  method: 'POST',
-		  mode: 'no-cors',
-		});
-  
-		if (!trainResponse.ok) {
-		  throw new Error(`HTTP error ${trainResponse.status}`);
-		}
-  
-		setShowLoadingModal(false);
-	  } catch (error) {
-		console.error('Error during upload and training:', error);
-		setShowLoadingModal(false);
-	  }
 	};
-  
+
 	const handleDropzoneClick = () => {
-	  fileInputRef.current.click();
+		fileInputRef.current.click();
 	};
-  
+
 	const handlePageChange = (pageNumber) => {
-	  setCurrentPage(pageNumber);
+		setCurrentPage(pageNumber);
 	};
-  
+
 	const populateSavedFiles = () => {
-	  const indexOfLastItem = currentPage * itemsPerPage;
-	  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-	  const currentItems = savedFiles.slice(indexOfFirstItem, indexOfLastItem);
-  
-	  return (
-		<div>
-		  {currentItems.map((savedFile, index) => (
-			<>
-			  {/* <!--begin::Item--> */}
-			  <div className="d-flex flex-stack">
-				{/* <!--begin::Symbol--> */}
-				<div className="symbol symbol-40px me-4">
-				  <div className="symbol-label fs-2 fw-semibold bg-success text-inverse-success">{savedFile[0]}</div>
+		const indexOfLastItem = currentPage * itemsPerPage;
+		const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+		const currentItems = savedFiles.slice(indexOfFirstItem, indexOfLastItem);
+
+		return (
+			<div>
+				{currentItems.map((savedFile, index) => (
+					<>
+						{/* <!--begin::Item--> */}
+						<div className="d-flex flex-stack">
+							{/* <!--begin::Symbol--> */}
+							<div className="symbol symbol-40px me-4">
+								<div className="symbol-label fs-2 fw-semibold bg-success text-inverse-success">{savedFile[0]}</div>
+							</div>
+							{/* <!--end::Symbol--> */}
+							{/* <!--begin::Section--> */}
+							<div className="d-flex align-items-center flex-row-fluid flex-wrap">
+								{/* <!--begin:Author--> */}
+								<div className="flex-grow-1 me-2">
+									<p className="text-gray-800 text-hover-primary fs-6 fw-bold">{savedFile}</p>
+								</div>
+								{/* <!--end:Author--> */}
+								{/* <!--begin::Actions--> */}
+							</div>
+							{/* <!--end::Section--> */}
+						</div>
+						{/* <!--end::Item--> */}
+						{/* <!--begin::Separator--> */}
+						<div className="separator separator-dashed my-4"></div>
+						{/* <!--end::Separator--> */}
+					</>
+				))}
+				<div className="pagination">
+					{Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+						<button
+							key={pageNumber}
+							className={`page-link ${currentPage === pageNumber ? 'active' : ''}`}
+							onClick={() => handlePageChange(pageNumber)}
+						>
+							{pageNumber}
+						</button>
+					))}
 				</div>
-				{/* <!--end::Symbol--> */}
-				{/* <!--begin::Section--> */}
-				<div className="d-flex align-items-center flex-row-fluid flex-wrap">
-				  {/* <!--begin:Author--> */}
-				  <div className="flex-grow-1 me-2">
-					<p className="text-gray-800 text-hover-primary fs-6 fw-bold">{savedFile}</p>
-				  </div>
-				  {/* <!--end:Author--> */}
-				  {/* <!--begin::Actions--> */}
-				</div>
-				{/* <!--end::Section--> */}
-			  </div>
-			  {/* <!--end::Item--> */}
-			  {/* <!--begin::Separator--> */}
-			  <div className="separator separator-dashed my-4"></div>
-			  {/* <!--end::Separator--> */}
-			</>
-		  ))}
-		  <div className="pagination">
-			{Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-			   <button
-			   key={pageNumber}
-			   className={`page-link ${currentPage === pageNumber ? 'active' : ''}`}
-			   onClick={() => handlePageChange(pageNumber)}
-			 >
-			   {pageNumber}
-			 </button>
-			))}
-		  </div>
-		</div>
-	  );
+			</div>
+		);
 	};
 	return (
 		<>

@@ -8,6 +8,7 @@ import IndividualAnswer from './IndividualAnswer';
 // import RelatedQuestions from './Elements/RelatedQuestions';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
+import Navigation from '../Navigation';
 
 
 function Answers() {
@@ -20,17 +21,17 @@ function Answers() {
     const [upvoteCount, setUpvoteCount] = useState(0);
     const [numAns, setNumAns] = useState(0);
     const [hasUpvoted, setHasUpvoted] = useState(false);
-  
+
     const handleUpvoteClick = () => {
-      if (!hasUpvoted) {
-        setUpvoteCount((prevCount) => prevCount + 1);
-        setHasUpvoted(true);
-      }
+        if (!hasUpvoted) {
+            setUpvoteCount((prevCount) => prevCount + 1);
+            setHasUpvoted(true);
+        }
     };
-  
+
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/questions/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/questions/${id}`).then(res => res.json()).then(result => {
             setQuestion(result)
             console.log("This is for Question   ", result)
             console.log()
@@ -41,7 +42,7 @@ function Answers() {
     useEffect(() => {
         // console.log(category)
         console.log(Question, "In quote")
-        fetch(`http://localhost:8080/api/questions/category/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/questions/category/${id}`).then(res => res.json()).then(result => {
             // console.log(category)
             setQuestions(result)
             // console.log(category,"Category ")
@@ -67,7 +68,7 @@ function Answers() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/answers/all/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
 
             setTimeout(() => {
                 setAnswer(result)
@@ -99,6 +100,7 @@ function Answers() {
 
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
+            <Navigation />
             {/* <!--begin::Page--> */}
             <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
                 {/* <!--begin::Wrapper--> */}
@@ -205,36 +207,36 @@ function Answers() {
                                                         {/* <!--end::Main form--> */}
                                                         {/* <!--begin::Posts--> */}
                                                         <div className="card mb-3 border-primary">
-  <div className="card-body">
-    <div className="d-flex align-items-center mb-3">
-      <div className="bg-primary p-2 rounded-circle me-2">
-        <BsQuestionCircle className="text-white" />
-      </div>
-      <h5 className="card-title mb-0 text-primary fw-bold">Question</h5>
-    </div>
-    <h6 className="card-title fw-bold p-0 text-dark">{Question.title}</h6>
-    <p className="card-text">
-      <span className="text-primary fw-bold">{Answer.length}</span> Answers · <span className="text-primary fw-bold">{Question.category}</span>
-    </p>
-  </div>
-  <div className="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
-    <div>
-      <a
-        href="#"
-        className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}
-        onClick={handleUpvoteClick}
-      >
-        <i className="bi bi-hand-thumbs-up me-1"></i> Upvote
-      </a>
-    </div>
-    <div>
-      <span className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}>
-        {upvoteCount}
-      </span>
-      <ReportModal Question={Question} />
-    </div>
-  </div>
-</div>
+                                                            <div className="card-body">
+                                                                <div className="d-flex align-items-center mb-3">
+                                                                    <div className="bg-primary p-2 rounded-circle me-2">
+                                                                        <BsQuestionCircle className="text-white" />
+                                                                    </div>
+                                                                    <h5 className="card-title mb-0 text-primary fw-bold">Question</h5>
+                                                                </div>
+                                                                <h6 className="card-title fw-bold p-0 text-dark">{Question.title}</h6>
+                                                                <p className="card-text">
+                                                                    <span className="text-primary fw-bold">{Answer.length}</span> Answers · <span className="text-primary fw-bold">{Question.category}</span>
+                                                                </p>
+                                                            </div>
+                                                            <div className="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
+                                                                <div>
+                                                                    <a
+                                                                        href="#"
+                                                                        className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}
+                                                                        onClick={handleUpvoteClick}
+                                                                    >
+                                                                        <i className="bi bi-hand-thumbs-up me-1"></i> Upvote
+                                                                    </a>
+                                                                </div>
+                                                                <div>
+                                                                    <span className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}>
+                                                                        {upvoteCount}
+                                                                    </span>
+                                                                    <ReportModal Question={Question} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         {populateAnswers()}
                                                         {/* <!--end::Posts--> */}
                                                         {/* <!--begin::Show more feeds--> */}

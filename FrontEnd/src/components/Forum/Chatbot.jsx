@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import Navigation from '../Navigation';
 
-function Chatbot({User}) {
+function Chatbot({ User }) {
     const [messages, setMessages] = useState([]);
     const [userQuestion, setuserQuestion] = useState("");
     const [assistantResponse, setassistantResponse] = useState("");
 
     const UserId = "Fekede"
     useEffect(() => {
-        fetch(`http://localhost:8080/api/threads/all/${UserId}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/threads/all/${UserId}`).then(res => res.json()).then(result => {
             setMessages(result)
             // console.log("This is the thread", result)
             console.log("This is the thread from the Messages", messages)
@@ -19,177 +20,178 @@ function Chatbot({User}) {
 
     function handleUserQuestion(e) {
         setuserQuestion(e.target.value)
-      }
+    }
 
     const handleSendUserQuestion = async (e) => {
         // Start loading indicator
         if (userQuestion.trim() !== '') {
-    
+
             const url = 'http://localhost:8000/ask'; // Replace with your API endpoint
-    
+
             const requestData = {
                 query_text: userQuestion
             }
-        
+
             try {
-              const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
-              });
-        
-              if (!response.ok) {
-                throw new Error('Request failed');
-              }
-        
-              const responseData = await response.json();
-              setassistantResponse(responseData)
-              SaveThread()
-              setuserQuestion("")
-              
-              // Process the response data here
-              console.log(responseData);
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+
+                const responseData = await response.json();
+                setassistantResponse(responseData)
+                SaveThread()
+                setuserQuestion("")
+
+                // Process the response data here
+                console.log(responseData);
             } catch (error) {
-              // Handle the error here
-              console.error(error);
+                // Handle the error here
+                console.error(error);
             }
         }
-        
-      };
 
-      
+    };
+
+
     const SaveThread = async () => {
-    
-        const url = 'http://localhost:8080/api/threads/'; // Replace with your API endpoint
-    
+
+        const url = 'http://localhost:3000/api/threads/'; // Replace with your API endpoint
+
         const requestData = {
-            userId:"Fekede",
-            conversation: 
+            userId: "Fekede",
+            conversation:
             {
                 user: userQuestion,
                 assistant: assistantResponse
-                }
+            }
+        }
+
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Request failed');
             }
 
-    
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData),
-          });
-    
-          if (!response.ok) {
-            throw new Error('Request failed');
-          }
-    
-          const responseData = await response.json();
-          // Process the response data here
-          console.log(responseData);
+            const responseData = await response.json();
+            // Process the response data here
+            console.log(responseData);
         } catch (error) {
-          // Handle the error here
-          console.error(error);
+            // Handle the error here
+            console.error(error);
         }
     }
-    const handleCommentSubmit = async() => {
-        
-      };
-    
+    const handleCommentSubmit = async () => {
+
+    };
+
 
 
     function formatDateToStatement(dateString) {
         const date = new Date(dateString);
-        
+
         // Get the month, day, and year from the date
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const month = months[date.getMonth()];
         const day = date.getDate();
         const year = date.getFullYear();
-      
+
         // Get the hour, minute, and AM/PM designation
         const hours = date.getHours();
         const minutes = date.getMinutes();
         const ampm = hours >= 12 ? 'PM' : 'AM';
         const formattedHours = hours % 12 || 12;
-      
+
         // Construct the statement date
         const statementDate = `${month} ${day}, ${year} at ${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
         return statementDate;
-      }
+    }
 
 
     const PopulateChat = () => {
 
-            return messages.map((chat, index) => {
-                return (
-                    <>
-                        {/* <!--begin::Message(out)--> */}
-                        <div className="d-flex justify-content-end mb-10">
-                            {/* <!--begin::Wrapper--> */}
-                            <div className="d-flex flex-column align-items-end">
-                                {/* <!--begin::User--> */}
-                                <div className="d-flex align-items-center mb-2">
-                                    {/* <!--begin::Details--> */}
-                                    <div className="me-3">
-                                        <span className="text-muted fs-7 mb-1">{formatDateToStatement(chat.createdAt)}</span>
-                                        <a href="#" className="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">{chat.userId}</a>
-                                    </div>
-                                    {/* <!--end::Details-->
+        return messages.map((chat, index) => {
+            return (
+                <>
+                    <Navigation />
+                    {/* <!--begin::Message(out)--> */}
+                    <div className="d-flex justify-content-end mb-10">
+                        {/* <!--begin::Wrapper--> */}
+                        <div className="d-flex flex-column align-items-end">
+                            {/* <!--begin::User--> */}
+                            <div className="d-flex align-items-center mb-2">
+                                {/* <!--begin::Details--> */}
+                                <div className="me-3">
+                                    <span className="text-muted fs-7 mb-1">{formatDateToStatement(chat.createdAt)}</span>
+                                    <a href="#" className="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">{chat.userId}</a>
+                                </div>
+                                {/* <!--end::Details-->
                                     <!--begin::Avatar--> */}
-                                    <div className="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="assets/media/avatars/300-1.jpg" />
-                                    </div>
-                                    {/* <!--end::Avatar--> */}
+                                <div className="symbol symbol-35px symbol-circle">
+                                    <img alt="Pic" src="assets/media/avatars/300-1.jpg" />
                                 </div>
-                                {/* <!--end::User--> */}
-                                {/* <!--begin::Text--> */}
-                                <div className="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end" data-kt-element="message-text">{chat.conversation.user}</div>
-                                {/* <!--end::Text--> */}
+                                {/* <!--end::Avatar--> */}
                             </div>
-                            {/* <!--end::Wrapper--> */}
+                            {/* <!--end::User--> */}
+                            {/* <!--begin::Text--> */}
+                            <div className="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end" data-kt-element="message-text">{chat.conversation.user}</div>
+                            {/* <!--end::Text--> */}
                         </div>
-                        {/* <!--end::Message(out)--> */}
-                       
-                       
-                       
-                         {/* <!--begin::Message(in)--> */}
-                         <div className="d-flex justify-content-start mb-10">
-                            {/* <!--begin::Wrapper--> */}
-                            <div className="d-flex flex-column align-items-start">
-                                {/* <!--begin::User--> */}
-                                <div className="d-flex align-items-center mb-2">
-                                    {/* <!--begin::Avatar--> */}
-                                    <div className="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="assets/media/avatars/300-25.jpg" />
-                                    </div>
-                                    {/* <!--end::Avatar-->
+                        {/* <!--end::Wrapper--> */}
+                    </div>
+                    {/* <!--end::Message(out)--> */}
+
+
+
+                    {/* <!--begin::Message(in)--> */}
+                    <div className="d-flex justify-content-start mb-10">
+                        {/* <!--begin::Wrapper--> */}
+                        <div className="d-flex flex-column align-items-start">
+                            {/* <!--begin::User--> */}
+                            <div className="d-flex align-items-center mb-2">
+                                {/* <!--begin::Avatar--> */}
+                                <div className="symbol symbol-35px symbol-circle">
+                                    <img alt="Pic" src="assets/media/avatars/300-25.jpg" />
+                                </div>
+                                {/* <!--end::Avatar-->
                                     <!--begin::Details--> */}
-                                    <div className="ms-3">
-                                        <a href="#" className="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Chatbot</a>
-                                        <span className="text-muted fs-7 mb-1">{formatDateToStatement(chat.createdAt)}</span>
-                                    </div>
-                                    {/* <!--end::Details--> */}
+                                <div className="ms-3">
+                                    <a href="#" className="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Chatbot</a>
+                                    <span className="text-muted fs-7 mb-1">{formatDateToStatement(chat.createdAt)}</span>
                                 </div>
-                                {/* <!--end::User-->
-                                <!--begin::Text--> */}
-                                <div className="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start" data-kt-element="message-text">{chat.conversation.assistant}</div>
-                                {/* <!--end::Text--> */}
+                                {/* <!--end::Details--> */}
                             </div>
-                            {/* <!--end::Wrapper--> */}
+                            {/* <!--end::User-->
+                                <!--begin::Text--> */}
+                            <div className="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start" data-kt-element="message-text">{chat.conversation.assistant}</div>
+                            {/* <!--end::Text--> */}
                         </div>
-                        {/* <!--end::Message(in)--> */}
+                        {/* <!--end::Wrapper--> */}
+                    </div>
+                    {/* <!--end::Message(in)--> */}
 
-                    </>
+                </>
 
-                )
-            })
+            )
+        })
     }
 
-    
+
     return (
         <>
             {/* <!--begin::Messenger--> */}
@@ -306,8 +308,8 @@ function Chatbot({User}) {
                             {/* <!--end::Wrapper--> */}
                         </div>
                         {/* <!--end::Message(in)--> */}
-                       
-                       {PopulateChat()}
+
+                        {PopulateChat()}
 
                         {/* {/* <!--begin::Message(template for out)--> */}
                         <div className="d-flex justify-content-end mb-10 d-none" data-kt-element="template-out">
@@ -361,7 +363,7 @@ function Chatbot({User}) {
                             {/* <!--end::Wrapper--> */}
                         </div>
                         {/* <!--end::Message(template for in)--> */}
-                        
+
                     </div>
                     {/* <!--end::Messages--> */}
                 </div>
@@ -369,7 +371,7 @@ function Chatbot({User}) {
                 {/* <!--begin::Card footer--> */}
                 <div className="card-footer pt-4" id="kt_chat_messenger_footer">
                     {/* <!--begin::Input--> */}
-                    <textarea className="form-control form-control-flush mb-3" value= {userQuestion} onChange={handleUserQuestion} rows="1" data-kt-element="input" placeholder="Type a message"></textarea>
+                    <textarea className="form-control form-control-flush mb-3" value={userQuestion} onChange={handleUserQuestion} rows="1" data-kt-element="input" placeholder="Type a message"></textarea>
                     {/* <!--end::Input--> */}
                     {/* <!--begin:Toolbar--> */}
                     <div className="d-flex flex-stack">

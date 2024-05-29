@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddQuestionModal from "./Elements/AddQuestionModal"
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import IndividualQuestion from './IndividualQuestion';
+import Navigation from '../Navigation';
 
 function Forum() {
     const [posts, setPosts] = useState([]);
@@ -21,13 +22,13 @@ function Forum() {
         'Administrative',
         'Real Estate',
         'Tort',
-      ];
+    ];
 
 
 
     useEffect(() => {
-        console.log('http://localhost:8080/api/questions/')
-        fetch('http://localhost:8080/api/questions/').then(res => res.json()).then(result => {
+        console.log('http://localhost:3000/api/questions/')
+        fetch('http://localhost:3000/api/questions/').then(res => res.json()).then(result => {
             setPosts(result)
             setFilteredPosts(result)
             setTotalPages(Math.ceil(result.length / postsPerPage))
@@ -66,6 +67,7 @@ function Forum() {
 
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
+            <Navigation />
             {/* <!--begin::Page--> */}
             <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
                 {/* <!--begin::Wrapper--> */}
@@ -81,73 +83,73 @@ function Forum() {
                                     {/* <!--begin::Social - Feeds --> */}
                                     <div className="d-flex flex-row">
                                         <div
-                                        className="d-lg-flex flex-column flex-lg-row-auto w-lg-325px"
-                                        data-kt-drawer="true"
-                                        data-kt-drawer-name="end-sidebar"
-                                        data-kt-drawer-activate="{default: true, lg: false}"
-                                        data-kt-drawer-overlay="true"
-                                        data-kt-drawer-width="{default:'200px', '250px': '300px'}"
-                                        data-kt-drawer-direction="end"
-                                        data-kt-drawer-toggle="#kt_social_end_sidebar_toggle"
+                                            className="d-lg-flex flex-column flex-lg-row-auto w-lg-325px"
+                                            data-kt-drawer="true"
+                                            data-kt-drawer-name="end-sidebar"
+                                            data-kt-drawer-activate="{default: true, lg: false}"
+                                            data-kt-drawer-overlay="true"
+                                            data-kt-drawer-width="{default:'200px', '250px': '300px'}"
+                                            data-kt-drawer-direction="end"
+                                            data-kt-drawer-toggle="#kt_social_end_sidebar_toggle"
                                         >
-                                        <div className="card mb-5 mb-xl-8">
-                                            <div className="card-header border-0 pt-5">
-                                            <h3 className="card-title align-items-start flex-column">
-                                                <span className="card-label fw-bold text-dark">Categories</span>
-                                                <span className="text-muted mt-1 fw-semibold fs-7">Recommended Topics</span>
-                                            </h3>
-                                            </div>
+                                            <div className="card mb-5 mb-xl-8">
+                                                <div className="card-header border-0 pt-5">
+                                                    <h3 className="card-title align-items-start flex-column">
+                                                        <span className="card-label fw-bold text-dark">Categories</span>
+                                                        <span className="text-muted mt-1 fw-semibold fs-7">Recommended Topics</span>
+                                                    </h3>
+                                                </div>
 
-                                            <div className="card-body pt-2">
-                                            {categories.map((item, index) => (
-                                                <div key={index}>
-                                                <div  className="d-flex flex-stack py-3">
-                                                    <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                                                    <div className="flex-grow-1 me-3">
-                                                        <a className="text-gray-800 text-hover-primary fs-6 fw-bold "  >{item}</a>
-                                                    </div>
-                                                    <a
-                                                        onClick={() => handleCategory(item)}
-                                                        href="#"
-                                                        className="btn btn-sm btn-light fs-8 fw-bold"
-                                                    >
-                                                        {'-'}
-                                                    </a>
-                                                    </div>
+                                                <div className="card-body pt-2">
+                                                    {categories.map((item, index) => (
+                                                        <div key={index}>
+                                                            <div className="d-flex flex-stack py-3">
+                                                                <div className="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                                    <div className="flex-grow-1 me-3">
+                                                                        <a className="text-gray-800 text-hover-primary fs-6 fw-bold "  >{item}</a>
+                                                                    </div>
+                                                                    <a
+                                                                        onClick={() => handleCategory(item)}
+                                                                        href="#"
+                                                                        className="btn btn-sm btn-light fs-8 fw-bold"
+                                                                    >
+                                                                        {'-'}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            {index !== categories.length - 1 && (
+                                                                <div className="separator separator-dashed my-4"></div>
+                                                            )}
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                                {index !== categories.length - 1 && (
-                                                    <div className="separator separator-dashed my-4"></div>
-                                                )}
-                                                </div>
-                                            ))}
                                             </div>
-                                        </div>
                                         </div>
                                         {/* <!--begin::Content--> */}
                                         <div className="w-100 flex-lg-row-fluid mx-lg-13">
                                             {/* <!--begin::Main form--> */}
                                             <>
-                                            
-                                            <Row className="mt-5">
-                                            <Col  className="mx-auto">
-                                            <InputGroup className="mb-3">
-                                                <FormControl 
-                                                    placeholder="Search for questions"
-                                                    value={searchText}
-                                                    onChange={(e) => setSearchText(e.target.value)}
-                                                />
-                                                <Button variant="primary" onClick={handleSearch}>Search</Button>
-                                            </InputGroup>
-                                                <AddQuestionModal/>
-                                            </Col>
-                                        </Row>
+
+                                                <Row className="mt-5">
+                                                    <Col className="mx-auto">
+                                                        <InputGroup className="mb-3">
+                                                            <FormControl
+                                                                placeholder="Search for questions"
+                                                                value={searchText}
+                                                                onChange={(e) => setSearchText(e.target.value)}
+                                                            />
+                                                            <Button variant="primary" onClick={handleSearch}>Search</Button>
+                                                        </InputGroup>
+                                                        <AddQuestionModal />
+                                                    </Col>
+                                                </Row>
                                             </>
                                             {/* <!--end::Main form--> */}
                                             {/* <!--begin::Posts--> */}
                                             <div className="mb-10" id="kt_social_feeds_posts">
                                                 {/* <!--begin::Post 1--> */}
                                                 {currentPosts.map((item, index) => (
-                                                    <IndividualQuestion  Question={item} key={index} />
+                                                    <IndividualQuestion Question={item} key={index} />
                                                 ))}
                                             </div>
                                             {/* <!--end::Posts--> */}
@@ -168,13 +170,13 @@ function Forum() {
                                             {/* <!--end::Pagination--> */}
                                         </div>
                                         {/* <!--end::Content--> */}
-                                    </div>
+                                    </div >
                                     {/* <!--end::Social - Feeds--> */}
-                                </div>
+                                </div >
                                 {/* <!--end::Content container--> */}
-                            </div>
+                            </div >
                             {/* <!--end::Content--> */}
-                        </div>
+                        </div >
                         {/* <!--end::Content wrapper--> */}
                         {/* <!--begin::Footer--> */}
                         <div id="kt_app_footer" className="app-footer">
@@ -203,13 +205,12 @@ function Forum() {
                             {/* <!--end::Footer container--> */}
                         </div>
                         {/* <!--end::Footer--> */}
-                    </div>
+                    </div >
                     {/* <!--end:::Main--> */}
-                </div>
+                </div >
                 {/* <!--end::Wrapper--> */}
-            </div>
-
-        </div>
+            </div >
+        </div >
     )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Navigation from '../Navigation';
 
 function ManageAnswer() {
 
@@ -9,7 +10,7 @@ function ManageAnswer() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/answers/all/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
 
             setAnswers(result)
 
@@ -127,6 +128,7 @@ function ManageAnswer() {
     return (
         <>
             <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <Navigation />
                 {/* <!--begin::Content wrapper--> */}
                 <div classNameName="d-flex flex-column flex-column-fluid">
                     {/* <!--begin::Toolbar--> */}

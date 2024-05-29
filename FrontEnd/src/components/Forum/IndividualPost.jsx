@@ -4,33 +4,33 @@ import Comment from './Elements/Comment'
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
-function IndividualPost({Post, Feed}) {
-    
+function IndividualPost({ Post, Feed }) {
+
     const renderPostContent = () => {
         if (Feed) {
-          const words = Post.body.split(' ');
-          const limitedContent = words.slice(0, 25).join(' ');
-          return (
-            <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail/${Post._id}`}>View detail</Link> </div>
-          );
+            const words = Post.body.split(' ');
+            const limitedContent = words.slice(0, 25).join(' ');
+            return (
+                <div className="fs-6 fw-normal text-gray-700 mb-5">{limitedContent} ...<Link to={`/detail/${Post._id}`}>View detail</Link> </div>
+            );
         } else {
-          return (
-            <>
-                <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.body}  </div>
-                <Card.Body>
-                <Card.Text className=" mb-4">
-                    Category: <Badge variant="primary">{Post.Category}</Badge>
-                </Card.Text>
-                <Card.Link href="#" className="text-center">
-                    <strong>Link to Experts </strong> {Post.expert}
-                </Card.Link>
-                <Card.Link href="#" className="text-center">
-                    <strong>Related Documents </strong>
-                </Card.Link>
-                </Card.Body>    
-            </>
-            
-          );
+            return (
+                <>
+                    <div className="fs-6 fw-normal text-gray-700 mb-5">{Post.body}  </div>
+                    <Card.Body>
+                        <Card.Text className=" mb-4">
+                            Category: <Badge variant="primary">{Post.Category}</Badge>
+                        </Card.Text>
+                        <Card.Link href="#" className="text-center">
+                            <strong>Link to Experts </strong> {Post.expert}
+                        </Card.Link>
+                        <Card.Link href="#" className="text-center">
+                            <strong>Related Documents </strong>
+                        </Card.Link>
+                    </Card.Body>
+                </>
+
+            );
         }
     }
 
@@ -58,7 +58,7 @@ function IndividualPost({Post, Feed}) {
                 </div>
                 {/* <!--end::Author--> */}
                 {/* <!--begin::Card toolbar--> */}
-               
+
                 {/* <!--end::Card toolbar--> */}
             </div>
             {/* <!--end::Card header--> */}
@@ -66,10 +66,10 @@ function IndividualPost({Post, Feed}) {
             <div className="card-body">
                 {/* <!--begin::Post content--> */}
                 {renderPostContent()}
-               
+
                 {/* <!--end::Post content--> */}
                 {/* <!--begin::Post media--> */}
-                
+
                 {/* <!--end::Post media--> */}
             </div>
             {/* <!--end::Card body--> */}
@@ -85,7 +85,7 @@ function IndividualPost({Post, Feed}) {
                         {/* <!--begin::Item--> */}
                         <li className="nav-item">
                             <a className="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active" data-bs-toggle="collapse" href="#kt_social_feeds_comments_1">
-                            <i class="bi bi-pencil-fill"></i> Answer</a>
+                                <i class="bi bi-pencil-fill"></i> Answer</a>
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
@@ -95,7 +95,7 @@ function IndividualPost({Post, Feed}) {
                         </li>
                         {/* <!--end::Item--> */}
                         {/* <!--begin::Item--> */}
-                        
+
                         {/* <!--end::Item--> */}
                     </ul>
                     {/* <!--end::Nav--> */}
@@ -104,8 +104,8 @@ function IndividualPost({Post, Feed}) {
                     {/* <!--end::Separator--> */}
                     {/* <!--begin::Comments--> */}
                     <div className="collapse show" id="kt_social_feeds_comments_1">
-                       
-                       <Comment/>
+
+                        <Comment />
                     </div>
                     {/* <!--end::Collapse--> */}
                 </div>

@@ -32,7 +32,7 @@ function Component() {
     }
 
     console.log(question, questionCategory);
-    const url = 'http://localhost:8080/api/questions/'; // Replace with your API endpoint
+    const url = 'http://localhost:3000/api/questions/'; // Replace with your API endpoint
 
     const requestData = {
       title: question,

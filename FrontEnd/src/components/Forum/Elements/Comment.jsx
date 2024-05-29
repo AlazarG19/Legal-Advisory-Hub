@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import VoteButtons from './voteButton';
 
-function Comment({comment}) {
+function Comment({ comment }) {
+  const [img, setimg] = useState("")
+  useEffect(() => {
+
+    try {
+
+      let profilePicture = comment.userDetails[0].profilePicture
+      setimg("http://localhost:3000/uploads/profile/" + profilePicture)
+    } catch (error) {
+      setimg("")
+
+    }
+  }, [])
+
   return (
     <>
       {/* <!--begin::Comment--> */}
       <div className="d-flex pt-6">
         {/* <!--begin::Avatar--> */}
         <div className="symbol symbol-45px me-5">
-          <img src="/assets/media/avatars/300-13.jpg" alt="" />
+          <img src={img} alt="" />
         </div>
         {/* <!--end::Avatar--> */}
         {/* <!--begin::Wrapper--> */}
@@ -27,7 +40,7 @@ function Comment({comment}) {
           {/* <!--end::Info--> */}
           {/* <!--begin::Text--> */}
           <span className="text-gray-800 fs-7 fw-normal pt-1">
-              {comment.body}
+            {comment.body}
           </span>
           {/* <!--end::Text--> */}
           {/* <!--begin::VoteButtons--> */}
@@ -38,16 +51,16 @@ function Comment({comment}) {
             </a>
             <hr className=" " /> {/* Add the separator */}
           </div>
-          
+
           {/* <!--end::VoteButtons--> */}
           {/* <!--begin::Reply--> */}
-          
+
           {/* <!--end::Reply--> */}
         </div>
         {/* <!--end::Wrapper--> */}
       </div>
       {/* <!--end::Comment--> */}
-      
+
     </>
   );
 }
