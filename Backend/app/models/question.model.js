@@ -6,10 +6,6 @@ module.exports = mongoose => {
 			title:{
 				type:String,
 			},
-			body:{
-				type:String,
-				required:true
-			},
 			author:{
 				type:String,
 				required:true
@@ -23,6 +19,9 @@ module.exports = mongoose => {
 			},
 			downvotes:{
 				type:String,
+			},
+			reported:{
+				type:Boolean,
 			},
 		},{ timestamps: true }
          )

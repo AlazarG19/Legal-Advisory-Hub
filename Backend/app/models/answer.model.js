@@ -20,8 +20,9 @@ module.exports = mongoose => {
 			downvotes:{
 				type:String,
 			},
-			comment:{
-				type:String,
+
+			reported:{
+				type:Boolean,
 			}	
 		},{ timestamps: true }
          )

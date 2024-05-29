@@ -12,7 +12,7 @@ exports.create = (req, res) => {
   // Create a Question
   const question = new Question({
 			title:req.body.title,
-			body:req.body.body, 
+			active:true, 
 			author:req.body.author,
 			upvotes:req.body.upvotes,
 			downvotes:req.body.downvotes,

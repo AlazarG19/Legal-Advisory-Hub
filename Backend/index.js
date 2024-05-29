@@ -38,6 +38,7 @@ require("./app/routes/form.routes")(app)
 require("./app/routes/question.routes")(app)
 require("./app/routes/answer.routes")(app)
 require("./app/routes/comment.routes")(app)
+require("./app/routes/thread.routes")(app)
 app.listen(PORT, () => {
     console.log(`Server is running on portl ${PORT}.`);
 });
