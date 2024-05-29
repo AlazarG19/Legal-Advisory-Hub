@@ -218,7 +218,7 @@ const FreelancerProfile = () => {
                     href="#"
                     className="text-gray-800 text-hover-primary fs-2 fw-bolder me-1"
                   >
-                    {name.toUpperCase()}
+                    {name}
                   </a>
                   <a
                     href="#"

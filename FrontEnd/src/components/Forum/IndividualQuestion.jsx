@@ -27,7 +27,7 @@ function IndividualQuestion({ Question }) {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/answers/all/${Question._id}`).then(res => res.json()).then(result => {
+    fetch(`http://localhost:3000/api/answers/all/${Question._id}`).then(res => res.json()).then(result => {
       setTimeout(() => {
         setNumAns(result.length);
       }, 1000);
@@ -95,8 +95,8 @@ function IndividualQuestion({ Question }) {
 
             {/* <!--end::Item--> */}
             {/* <!--begin::Item--> */}
-            <li className="nav-item">  
-                <ReportModal Question={Question} />
+            <li className="nav-item">
+              <ReportModal Question={Question} />
             </li>
 
 

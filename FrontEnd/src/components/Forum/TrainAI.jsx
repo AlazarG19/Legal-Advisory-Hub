@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import LoadingModal from './Elements/LoadingModal';
+import Navigation from '../Navigation';
 
 function TrainAI() {
   const [files, setFiles] = useState([]);
@@ -29,6 +30,7 @@ function TrainAI() {
 
   return (
     <>
+      <Navigation />
       {/* <!--begin::Media--> */}
       <div className="card card-flush py-4">
         {/* <!--begin::Card header--> */}
@@ -72,7 +74,7 @@ function TrainAI() {
               <input type="file" className="dz-input" multiple ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
               {/* <!--end::Input--> */}
               {/* <!--begin::Actions--> */}
-              
+
               {/* <!--end::Actions--> */}
             </div>
             {/* <!--end::Dropzone--> */}
@@ -83,10 +85,10 @@ function TrainAI() {
           {/* <!--end::Description--> */}
 
           <div className="dz-actions">
-                <button className="btn btn-primary" onClick={handleUpload}>
-                  Train AI
-                </button>
-              </div>
+            <button className="btn btn-primary" onClick={handleUpload}>
+              Train AI
+            </button>
+          </div>
         </div>
         {/* <!--end::Card body--> */}
       </div>

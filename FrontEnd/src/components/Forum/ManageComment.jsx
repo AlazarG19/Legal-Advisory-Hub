@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import Navigation from '../Navigation';
 
 function ManageComment() {
 
@@ -8,8 +9,8 @@ function ManageComment() {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        // console.log('http://localhost:8080/api/questions/')
-        fetch(`http://localhost:8080/api/comments/all/${id}`).then(res => res.json()).then(result => {
+        // console.log('http://localhost:3000/api/questions/')
+        fetch(`http://localhost:3000/api/comments/all/${id}`).then(res => res.json()).then(result => {
 
             setComments(result)
             // Update the component's state
@@ -130,6 +131,7 @@ function ManageComment() {
     return (
         <>
             <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <Navigation />
                 {/* <!--begin::Content wrapper--> */}
                 <div classNameName="d-flex flex-column flex-column-fluid">
                     {/* <!--begin::Toolbar--> */}

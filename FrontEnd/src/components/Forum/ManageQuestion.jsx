@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import Navigation from '../Navigation';
 
 function ManageQuestion() {
 
     const [questions, setQuestions] = useState([]);
     useEffect(() => {
-        // console.log('http://localhost:8080/api/questions/')
-        fetch('http://localhost:8080/api/questions/').then(res => res.json()).then(result => {
+        // console.log('http://localhost:3000/api/questions/')
+        fetch('http://localhost:3000/api/questions/').then(res => res.json()).then(result => {
             setQuestions(result)
             // setFilteredPosts(result)
             // setTotalPages(Math.ceil(result.length / postsPerPage))
@@ -124,6 +125,7 @@ function ManageQuestion() {
     return (
         <>
             <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <Navigation />
                 {/* <!--begin::Content wrapper--> */}
                 <div classNameName="d-flex flex-column flex-column-fluid">
                     {/* <!--begin::Toolbar--> */}

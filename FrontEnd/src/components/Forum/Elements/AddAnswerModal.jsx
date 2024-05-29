@@ -28,7 +28,7 @@ function AnswerModal({ Question }) {
   const handleAddAnswer = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    const url = 'http://localhost:8080/api/answers/'; // Replace with your API endpoint
+    const url = 'http://localhost:3000/api/answers/'; // Replace with your API endpoint
 
     const requestData = {
       questionId: Question._id,
@@ -64,7 +64,7 @@ function AnswerModal({ Question }) {
   };
 
   return (
-<>
+    <>
       <li className="nav-item">
         <a
           onClick={handleButtonClick}

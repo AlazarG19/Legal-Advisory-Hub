@@ -7,7 +7,7 @@ import MessageOut from './MessageOut';
 function CustomForm() {
     const [section, setsection] = useState()
     useEffect(() => {
-        fetch(`http://localhost:8080/api/forms`, {
+        fetch(`http://localhost:3000/api/forms`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

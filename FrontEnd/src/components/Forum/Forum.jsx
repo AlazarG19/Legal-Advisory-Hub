@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddQuestionModal from "./Elements/AddQuestionModal"
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import IndividualQuestion from './IndividualQuestion';
+import Navigation from '../Navigation';
 
 function Forum() {
     const [posts, setPosts] = useState([]);
@@ -26,8 +27,8 @@ function Forum() {
 
 
     useEffect(() => {
-        console.log('http://localhost:8080/api/questions/')
-        fetch('http://localhost:8080/api/questions/').then(res => res.json()).then(result => {
+        console.log('http://localhost:3000/api/questions/')
+        fetch('http://localhost:3000/api/questions/').then(res => res.json()).then(result => {
             setPosts(result)
             setFilteredPosts(result)
             setTotalPages(Math.ceil(result.length / postsPerPage))
@@ -66,6 +67,7 @@ function Forum() {
 
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
+            <Navigation />
             {/* <!--begin::Page--> */}
             <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
                 {/* <!--begin::Wrapper--> */}

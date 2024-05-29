@@ -55,7 +55,7 @@ const Navigation = () => {
               {/* <!--begin::Menu--> */}
               <div className="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
                 {/* <!--begin:Menu item--> */}
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+                <div onClick={() => { onLinkClick("/forum") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("forum") ? "menu-item here " : "menu-item "}>
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Forum</span>
@@ -89,16 +89,6 @@ const Navigation = () => {
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Document Database</span>
-                    <span className="menu-arrow d-lg-none"></span>
-                  </span>
-                  {/* <!--end:Menu link--> */}
-                </div>
-                {/* <!--end:Menu item--> */}
-                {/* <!--begin:Menu item--> */}
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
-                  {/* <!--begin:Menu link--> */}
-                  <span className="menu-link">
-                    <span className="menu-title">Help</span>
                     <span className="menu-arrow d-lg-none"></span>
                   </span>
                   {/* <!--end:Menu link--> */}

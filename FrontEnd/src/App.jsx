@@ -34,7 +34,14 @@ import "./App.css"
 import FreelancerSignup from './components/Authentication/FreelancerSignup'
 import CompleteOffer from './components/Offer/CompleteOffer'
 import CancelOffer from './components/Offer/CancelOffer'
-import Routes from './Routes';
+import Forum from './components/Forum/Forum';
+import Answers from './components/Forum/Answers';
+import DetailPost from './components/Forum/DetailPost';
+import ManageQuestion from './components/Forum/ManageQuestion';
+import ManageAnswer from './components/Forum/ManageAnswer';
+import ManageComment from './components/Forum/ManageComment';
+import TrainAI from './components/Forum/TrainAI';
+import Chatbot from './components/Forum/Chatbot';
 
 
 function App() {
@@ -86,8 +93,14 @@ function App() {
           <Route path="/docdb/docs/delete/:id" element={<DeleteDoc />} />
           {/* end  document database */}
           {/* fekedes route */}
-
-          <Routes />
+          <Route path="/detail/:id" element={<DetailPost />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/answers/:id" element={<Answers />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/mquestion" element={<ManageQuestion />} />
+          <Route path="/mcomments/:id" element={<ManageComment />} />
+          <Route path="/manswers/:id" element={<ManageAnswer />} />
+          <Route path="/train" element={<TrainAI />} />
           {/* end fekedes route */}
         </Routes>
       </BrowserRouter>

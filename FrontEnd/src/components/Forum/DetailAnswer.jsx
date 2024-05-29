@@ -12,15 +12,15 @@ function DetailAnswer() {
     const [Answer, setAnswer] = useState([]);
 
     useEffect(() => {
-        console.log('http://localhost:8080/api/answers/')
-        fetch(`http://localhost:8080/api/answers/${id}`).then(res => res.json()).then(result => {
-          setAnswer(result)
-          console.log(JSON.stringify(result))
+        console.log('http://localhost:3000/api/answers/')
+        fetch(`http://localhost:3000/api/answers/${id}`).then(res => res.json()).then(result => {
+            setAnswer(result)
+            console.log(JSON.stringify(result))
         }).catch((error) => {
-          console.log(error)
+            console.log(error)
         });
-      }, [])
-    
+    }, [])
+
 
     return (
         <>
