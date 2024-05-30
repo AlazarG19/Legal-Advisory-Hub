@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@emotion/styled": "^11.11.5",
     "@react-pdf/renderer": "^3.4.2",
     "@reduxjs/toolkit": "^2.2.3",
@@ -33,14 +32,7 @@
     "socket.io-client": "^4.7.5",
     "uuid": "^9.0.1",
     "yup": "^1.4.0",
-=======
-    "axios": "^1.7.2",
->>>>>>> 67d3ec9 (add train ai and show trained documents)
-    "draft-js": "^0.11.7",
-    "flowbite-react": "^0.8.0",
-    "pm2": "^5.3.1",
     "quill": "^1.3.7",
-    "react-paginate": "^8.2.0",
     "react-router": "^6.22.3"
   },
   "devDependencies": {
