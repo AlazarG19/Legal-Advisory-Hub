@@ -691,6 +691,7 @@ require("./app/routes/question.routes")(app)
 require("./app/routes/answer.routes")(app)
 require("./app/routes/comment.routes")(app)
 require("./app/routes/thread.routes")(app)
+require("./app/routes/forumReport.routes")(app)
 // 
 
 const server = require('http').createServer(app);

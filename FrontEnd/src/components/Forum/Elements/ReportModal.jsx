@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const ReportModal = ({ Question }) => {
+const ReportModal = ({ reportType, Content }) => {
   const [show, setShow] = useState(false);
   const [inappropriateContent, setInappropriateContent] = useState('');
   const [reportReason, setReportReason] = useState('');
@@ -25,6 +25,45 @@ const ReportModal = ({ Question }) => {
     'Harassment or Bullying',
     'False or Misleading Information',
   ];
+
+
+
+  const handleAddReport = async () => {
+    
+
+    const url = 'http://localhost:3000/api/forumreport/'; // Replace with your API endpoint
+
+    const requestData = {
+      reportType:reportType,
+			reportedObjectId:Content._id,
+			reportedBy:JSON.parse(sessionStorage.getItem('user'))[0]["_id"],
+      reason:reportReason,
+      resolved: false
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+
+      const responseData = await response.json();
+      // Process the response data here
+      console.log(responseData);
+      handleCloseModal();
+    } catch (error) {
+      // Handle the error here
+      console.error(error);
+    }
+  };
+
 
   return (
     <>
@@ -66,7 +105,7 @@ const ReportModal = ({ Question }) => {
                 placeholder="Describe the inappropriate content..."
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleAddReport}>
               Submit
             </Button>
           </Form>

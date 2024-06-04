@@ -22,7 +22,7 @@ function IndividualAnswer({ Answer, Feed }) {
             setimg("")
 
         }
-        fetch(`http://localhost:8080/api/comments/all/${Answer._id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/comments/all/${Answer._id}`).then(res => res.json()).then(result => {
             setComment(result)
         }).catch((error) => {
             console.log(error)
@@ -200,7 +200,7 @@ function IndividualAnswer({ Answer, Feed }) {
                                 <i className="bi bi-hand-thumbs-down fs-2 me-1" onClick={handleVote}></i>{Answer.downvotes}  Downvotes</a>
                         </li>
                         <li className="nav-item">
-                            <ReportModal Question={Answer} />
+                            <ReportModal reportType = "answer" Content ={Answer} />
 
                         </li>
                     </ul>

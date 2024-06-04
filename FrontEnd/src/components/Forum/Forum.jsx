@@ -147,11 +147,10 @@ function Forum() {
                                             {/* <!--end::Main form--> */}
                                             {/* <!--begin::Posts--> */}
                                             <div className="mb-10" id="kt_social_feeds_posts">
-                                                {/* <!--begin::Post 1--> */}
-                                                {currentPosts.map((item, index) => (
-                                                    <IndividualQuestion Question={item} key={index} />
-                                                ))}
-                                            </div>
+  {currentPosts.filter(item => !item.reported).map((item, index) => (
+    <IndividualQuestion Question={item} key={index} />
+  ))}
+</div>
                                             {/* <!--end::Posts--> */}
                                             {/* <!--begin::Pagination--> */}
                                             <div className="d-flex justify-content-center mb-5">

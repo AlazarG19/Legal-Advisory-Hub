@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import VoteButtons from './voteButton';
+import ReportModal from './ReportModal';
 
 function Comment({ comment }) {
   const [img, setimg] = useState("")
@@ -46,9 +47,7 @@ function Comment({ comment }) {
           {/* <!--begin::VoteButtons--> */}
           <div className="d-flex align-items-center">
             <VoteButtons />
-            <a href="#" className="ms-auto text-gray-400 text-hover-primary fw-semibold fs-7">
-              Reply
-            </a>
+            <ReportModal reportType="comment" Content={comment}/>
             <hr className=" " /> {/* Add the separator */}
           </div>
 
