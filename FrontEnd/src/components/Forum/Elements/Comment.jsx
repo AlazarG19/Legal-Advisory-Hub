@@ -46,16 +46,17 @@ function Comment({ comment }) {
           {/* <!--end::Text--> */}
           {/* <!--begin::VoteButtons--> */}
           <div className="d-flex align-items-center">
-            <VoteButtons />
-            <ReportModal reportType="comment" Content={comment}/>
+            {/* <VoteButtons /> */}
             <hr className=" " /> {/* Add the separator */}
           </div>
 
           {/* <!--end::VoteButtons--> */}
           {/* <!--begin::Reply--> */}
-
+    
           {/* <!--end::Reply--> */}
         </div>
+        <ReportModal reportType="comment" Content={comment}/>
+
         {/* <!--end::Wrapper--> */}
       </div>
       {/* <!--end::Comment--> */}

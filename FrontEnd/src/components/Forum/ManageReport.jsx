@@ -6,6 +6,22 @@ import ReviewModal from './Elements/reviewModal';
 
 function ManageReport() {
 
+
+    function formatDateTime(dateTimeString) {
+        const dateTime = new Date(dateTimeString);
+        const options = { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric',
+          hour: 'numeric', 
+          minute: 'numeric',
+          second: 'numeric',
+          timeZone: 'UTC'
+        };
+      
+        return dateTime.toLocaleString('en-US', options);
+      }
     // const { id } = useParams();
     const [reports, setReport] = useState([]);
     
@@ -58,13 +74,13 @@ function ManageReport() {
                                 {/* <td>{question.category}</td> */}
                                 {/* <!--end::Role=-->
                                                 <!--begin::Last login=--> */}
-                                <td>
+                                {/* <td>
                                     <div className="badge badge-light fw-bold">{report._id}</div>
-                                </td>
+                                </td> */}
                                 {/* <!--end::Last login=-->
                                                 <!--begin::Two step=--> */}
                                 <td><div className="form-check form-switch form-check-custom form-check-solid me-5">
-                                    {report.reportedBy}
+                                    {formatDateTime(report.createdAt)}
                                     </div></td>
                                 <td>{report.reason}</td>
 
@@ -191,9 +207,9 @@ function ManageReport() {
                                                 </th>
                                                 <th className="min-w-125px">Reported Content Type</th>
                                                 {/* <th className="min-w-125px">Category</th> */}
-                                                <th className="min-w-125px">Content Id</th>
+                                                {/* <th className="min-w-125px">Content Id</th> */}
                                                 {/* <th className="min-w-125px">Created At</th> */}
-                                                <th className="min-w-125px">Reported By</th>
+                                                <th className="min-w-125px">Reported On</th>
                                                 <th className="min-w-125px">Reason</th>
                                                 <th className="min-w-125px">Resolved</th>
                                                 <th className="text-end min-w-100px">Actions</th>

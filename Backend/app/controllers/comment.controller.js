@@ -11,10 +11,11 @@ exports.create = (req, res) => {
 
   // Create a new Comment
   const comment = new Comment({
-    postId: req.body.postId,
-    body: req.body.body,
-    author: req.body.author
-  });
+			postId:req.body.postId,
+			body:req.body.body,
+			author:req.body.author,
+      reported:req.body.reported || false,
+        });
 
   // Save a Comment in the database
   comment.save(comment)
@@ -31,28 +32,17 @@ exports.create = (req, res) => {
 
 // Retrieve all comment from the database.
 exports.findAll = (req, res) => {
-  const postId = req.params.id;
-
-  Comment.aggregate([
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "username",
-        as: "userDetails"
-      }
-    },
-    { $match: { postId: postId } }
-  ]).then(data => {
-    res.send(data);
-  })
+  const postId  =  req.params.id;
+  Comment.find({postId})
+    .then(data => {
+      res.send(data);
+    })
     .catch(err => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving answers."
+        message:
+          err.message || "Some error occurred while retrieving comments."
       });
     });
-
-
 };
 
 // Find a single comment with an id
@@ -120,7 +110,7 @@ exports.delete = (req, res) => {
 
 // Delete all comments from the database.
 exports.deleteAll = (req, res) => {
-  Comment.deleteMany({})
+    Comment.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Comments were deleted successfully!`

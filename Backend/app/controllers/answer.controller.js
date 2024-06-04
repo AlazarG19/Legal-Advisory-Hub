@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
         foreignField: "username",
         as: "userDetails"
       }
-    }
+    },{ $match: { questionId: questionId } }
   ]).then(data => {
     res.send(data);
   })

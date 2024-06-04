@@ -29,6 +29,9 @@ function Forum() {
     useEffect(() => {
         console.log('http://localhost:3000/api/questions/')
         fetch('http://localhost:3000/api/questions/').then(res => res.json()).then(result => {
+            result = result.filter(item => item.reported != true )
+            console.log(result.length)
+            
             setPosts(result)
             setFilteredPosts(result)
             setTotalPages(Math.ceil(result.length / postsPerPage))
@@ -147,10 +150,10 @@ function Forum() {
                                             {/* <!--end::Main form--> */}
                                             {/* <!--begin::Posts--> */}
                                             <div className="mb-10" id="kt_social_feeds_posts">
-  {currentPosts.filter(item => !item.reported).map((item, index) => (
-    <IndividualQuestion Question={item} key={index} />
-  ))}
-</div>
+                                                {currentPosts.map((item, index) => (
+                                                    <IndividualQuestion Question={item} key={index} />
+                                                ))}
+                                            </div>
                                             {/* <!--end::Posts--> */}
                                             {/* <!--begin::Pagination--> */}
                                             <div className="d-flex justify-content-center mb-5">

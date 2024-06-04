@@ -10,7 +10,6 @@ import Navigation from '../Navigation';
 
 function DetailPost() {
   const { id } = useParams();
-
   const [Answer, setAnswer] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -30,7 +29,7 @@ function DetailPost() {
 
   const handleCommentSubmit = async () => {
     if (newComment.trim() !== '') {
-      const commentData = { body: newComment, postId: id, author: "System User" };
+      const commentData = { body: newComment, postId: id, author: "System User", reported:false };
 
       setComments([...comments, commentData]);
 
@@ -83,7 +82,6 @@ function DetailPost() {
   useEffect(() => {
     console.log('http://localhost:3000/api/questions/')
     fetch(`http://localhost:3000/api/answers/${id}`).then(res => res.json()).then(result => {
-
       setAnswer(result)
       try {
 
@@ -104,8 +102,9 @@ function DetailPost() {
   useEffect(() => {
     console.log('http://localhost:3000/api/questions/')
     fetch(`http://localhost:3000/api/comments/all/${id}`).then(res => res.json()).then(result => {
-
+      
       setTimeout(() => {
+        result = result.filter(item => item.reported != true )
         setComments(result)
         // Update the component's state
       }, 1000);

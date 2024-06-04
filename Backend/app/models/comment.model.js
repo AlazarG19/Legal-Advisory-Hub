@@ -16,6 +16,9 @@ module.exports = mongoose => {
 				type:String,
 				required:true
 			},	
+			reported:{
+				type:Boolean,
+			}
 		},{ timestamps: true }
          )
     );

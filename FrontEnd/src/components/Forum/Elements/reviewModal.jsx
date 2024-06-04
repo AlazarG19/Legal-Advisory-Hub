@@ -88,21 +88,22 @@ function ReviewModal({ reportType, Content }) {
 
     if (reportType === "comment") {
       const objurl = "http://localhost:3000/api/comments/"; // Replace with your API endpoint for updating reports
-
+      console.log("Comment ID", Content.reportedObjectId)
       const updatedData = {
         reported: isHidden,
       };
   
     
       try {
-        const response = await fetch(`${objurl}${Content._id}`, {
+        const response = await fetch(`${objurl}${Content.reportedObjectId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(updatedData),
         });
-    
+        // console.log("Comment")
+        // console.log(response)
         if (!response.ok) {
           throw new Error('Request failed');
         }
@@ -119,7 +120,7 @@ function ReviewModal({ reportType, Content }) {
   
     
       try {
-        const response = await fetch(`${objurl}${Content._id}`, {
+        const response = await fetch(`${objurl}${Content.reportedObjectId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -144,7 +145,7 @@ function ReviewModal({ reportType, Content }) {
   
     
       try {
-        const response = await fetch(`${objurl}${Content._id}`, {
+        const response = await fetch(`${objurl}${Content.reportedObjectId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

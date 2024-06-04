@@ -31,6 +31,7 @@ function Answers() {
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/questions/${id}`).then(res => res.json()).then(result => {
+            result = result.filter(item => item.reported != true )
             setQuestion(result)
             console.log("This is for Question   ", result)
             console.log()
@@ -43,6 +44,7 @@ function Answers() {
         console.log(Question, "In quote")
         fetch(`http://localhost:3000/api/questions/category/${id}`).then(res => res.json()).then(result => {
             // console.log(category)
+            result = result.filter(item => item.reported != true )
             setQuestions(result)
             // console.log(category,"Category ")
             console.log("this is related squestion start")
@@ -69,6 +71,7 @@ function Answers() {
     useEffect(() => {
         fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
 
+        result = result.filter(item => item.reported != true )
             setTimeout(() => {
                 setAnswer(result)
                 // Update the component's state
