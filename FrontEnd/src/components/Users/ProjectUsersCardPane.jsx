@@ -60,13 +60,13 @@ const ProjectUsersCardPane = () => {
                                 {/* <!--begin::Scroll--> */}
                                 <div className="hover-scroll-overlay-y pe-6 me-n6" style={{ height: "415px" }}>
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("criminal") }} className={selectedcategory == "Criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("criminal") }} className={selectedcategory == "criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Criminal</a>
@@ -78,13 +78,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("family") }} className={selectedcategory == "Family" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("family") }} className={selectedcategory == "family" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Family</a>
@@ -96,13 +96,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("employement") }} className={selectedcategory == "Employement" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("employement") }} className={selectedcategory == "employement" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Employement</a>
@@ -114,13 +114,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("contract") }} className={selectedcategory == "Contract" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("contract") }} className={selectedcategory == "contract" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Contract</a>
@@ -132,13 +132,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("intellectual") }} className={selectedcategory == "Intellectual" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("intellectual") }} className={selectedcategory == "intellectual" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Intellectual Property</a>
@@ -150,13 +150,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("constitutional") }} className={selectedcategory == "Constitutional" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("constitutional") }} className={selectedcategory == "constitutional" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Constitutional</a>
@@ -168,13 +168,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("administrative") }} className={selectedcategory == "Administrative" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("administrative") }} className={selectedcategory == "administrative" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Administrative</a>
@@ -186,13 +186,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("realestate") }} className={selectedcategory == "Real Estate" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("realestate") }} className={selectedcategory == "realestate" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Real Estate</a>
@@ -204,13 +204,13 @@ const ProjectUsersCardPane = () => {
                                     </div>
                                     {/* <!--end::Item--> */}
                                     {/* <!--begin::Item--> */}
-                                    <div onClick={() => { onCategoryClicked("tort") }} className={selectedcategory == "Tort" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                    <div onClick={() => { onCategoryClicked("tort") }} className={selectedcategory == "tort" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
                                         <div className="d-flex flex-stack mb-3">
                                             {/* <!--begin::Wrapper--> */}
                                             <div className="me-3">
                                                 {/* <!--begin::Icon--> */}
-                                                <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                 {/* <!--end::Icon--> */}
                                                 {/* <!--begin::Title--> */}
                                                 <a href="#" className="text-gray-800 text-hover-primary fw-bold">Tort</a>

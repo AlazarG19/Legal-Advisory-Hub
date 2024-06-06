@@ -194,7 +194,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Criminal</a>
@@ -212,7 +212,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Family</a>
@@ -230,7 +230,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Employement</a>
@@ -248,7 +248,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Contract</a>
@@ -266,7 +266,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Intellectual Property</a>
@@ -284,7 +284,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Constitutional</a>
@@ -302,7 +302,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Administrative</a>
@@ -320,7 +320,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Real Estate</a>
@@ -338,7 +338,7 @@ const Index = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
+
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Tort</a>
@@ -373,6 +373,10 @@ const Index = () => {
                                                     </div>
                                                     {/* <!--end::Card header--> */}
                                                     {/* <!--begin::Card body--> */}
+
+                                                    <div className="card-body">
+
+                                                    </div>
                                                     <div className="card-body">
                                                         <MUIDataTable
                                                             data={data}

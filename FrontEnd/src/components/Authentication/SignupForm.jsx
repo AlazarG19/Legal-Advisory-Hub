@@ -8,8 +8,6 @@ const SignupForm = () => {
 
     if (!values.password) {
       errors.password = 'Required';
-    } else if (values.password.length > 15) {
-      errors.password = 'Too Long';
     } else if (values.password.length < 2) {
       errors.password = 'Too Short';
     }
@@ -22,16 +20,12 @@ const SignupForm = () => {
 
     if (!values.lastName) {
       errors.lastName = 'Required';
-    } else if (values.lastName.length > 20) {
-      errors.lastName = 'Too Long!';
     } else if (values.lastName.length < 2) {
       errors.lastName = 'Too Short!';
     }
 
     if (!values.firstName) {
       errors.firstName = 'Required';
-    } else if (values.firstName.length > 20) {
-      errors.firstName = 'Too Long!';
     } else if (values.firstName.length < 2) {
       errors.firstName = 'Too Short!';
     }
@@ -238,7 +232,7 @@ const SignupForm = () => {
               {/* end::Submit button */}
               {/* begin::Sign up */}
               <div className="text-gray-500 text-center fw-semibold fs-6">Already have an Account?
-                <a href="../../demo1/dist/authentication/layouts/corporate/sign-in.html" className="link-primary fw-semibold">Sign in</a></div>
+                <a href="http://localhost:5173/login" className="link-primary fw-semibold">Sign in</a></div>
               {/* end::Sign up */}
             </form>
             {/* end::Form */}

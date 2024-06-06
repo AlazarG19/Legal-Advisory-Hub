@@ -14,7 +14,7 @@ const UserCard = ({ users }) => {
                         <div className="card">
                             <div className="card-body d-flex flex-center flex-column pt-12 p-9">
                                 <div className="symbol symbol-65px symbol-circle mb-5">
-                                    <img src={"http://localhost:3000/uploads/profile/" + user.Details[0].profilePicture} alt="image" />
+                                    <img src={"http://localhost:3000/uploads/profile/" + user.profilePicture} alt="image" />
                                     <div className="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>
                                 </div>
                                 <a href="#" className="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{user.firstName + " " + user.lastName}</a>
