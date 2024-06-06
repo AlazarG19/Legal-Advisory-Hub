@@ -4,20 +4,20 @@ const Question = db.questions;
 // Create and Save a new question
 exports.create = (req, res) => {
   // Validate request
-  //   if (!req.body.title) {
-  //     res.status(400).send({ message: "Content can not be empty!" });
-  //     return;
-  //   }
-
-  // Create a Question
-  const question = new Question({
-    title: req.body.title,
-    active: true,
-    author: req.body.author,
-    upvotes: req.body.upvotes,
-    downvotes: req.body.downvotes,
-    category: req.body.category
-  });
+//   if (!req.body.title) {
+//     res.status(400).send({ message: "Content can not be empty!" });
+//     return;
+//   }
+  
+// Create a Question
+const question = new Question({
+  title: req.body.title,
+  reported: req.body.reported || false, // Set reported to false if req.body.reported is falsy
+  author: req.body.author,
+  upvotes: req.body.upvotes,
+  downvotes: req.body.downvotes,
+  category: req.body.category
+});
 
   // Save Question in the database
   question.save(question)
@@ -30,12 +30,12 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the question."
       });
     });
-  // return
+    // return
 };
 
 // Retrieve all question from the database.
 exports.findAll = (req, res) => {
-  const title = req.body.title;
+  const title  = req.body.title;
   Question.find(title)
     .then(data => {
       res.send(data);
@@ -51,19 +51,18 @@ exports.findAll = (req, res) => {
 exports.findCategories = (req, res) => {
   const id = req.params.id;
 
-  Question.findById({ _id: id })
+  Question.findById({_id: id})
     .then(result => {
-      Question.find({ category: result.category })
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while retrieving questions."
-          });
+      Question.find({category: result.category})
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving questions."
         });
-    })
+      });    })
     .catch(err => {
       res
         .status(500)
@@ -139,7 +138,7 @@ exports.delete = (req, res) => {
 
 // Delete all Question from the database.
 exports.deleteAll = (req, res) => {
-  Question.deleteMany({})
+    Question.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Question were deleted successfully!`

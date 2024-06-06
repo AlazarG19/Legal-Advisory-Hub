@@ -2,29 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
-import NoElementFound from './Elements/NoElement';
+import ReviewModal from './Elements/reviewModal';
 
-function ManageAnswer() {
+function ManageReport() {
 
-    const { id } = useParams();
-    const [answers, setAnswers] = useState([]);
-     // Delete a question from the API
-  const deleteAnswer = async (id) => {
-    try {
-      await fetch(`http://localhost:3000/api/answers/${id}`, {
-        method: 'DELETE',
-      });
-      // Remove the deleted question from the local state
-      setAnswers(answers.filter((question) => question.id !== id));
-    } catch (error) {
-      console.error('Error deleting question:', error);
-    }
-  };
+
+    function formatDateTime(dateTimeString) {
+        const dateTime = new Date(dateTimeString);
+        const options = { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric',
+          hour: 'numeric', 
+          minute: 'numeric',
+          second: 'numeric',
+          timeZone: 'UTC'
+        };
+      
+        return dateTime.toLocaleString('en-US', options);
+      }
+    // const { id } = useParams();
+    const [reports, setReport] = useState([]);
+    
+
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
+        fetch("http://localhost:3000/api/forumreport/").then(res => res.json()).then(result => {
 
-            setAnswers(result)
+            setReport(result)
 
             // console.log("This is for answer")
             // console.log(JSON.stringify(result))
@@ -34,9 +40,11 @@ function ManageAnswer() {
     }, [])
 
 
-    const populateAnswers = () => {
-        if (answers.length > 0) {
-            return answers.map((answer, index) => {
+
+
+    const populateReports = () => {
+        if (reports.length > 0) {
+            return reports.map((report, index) => {
                 return (
                     <>
                         {/* { <!--begin::Table body--> } */}
@@ -55,8 +63,8 @@ function ManageAnswer() {
 
                                     <div className="d-flex flex-column">
                                         {/* <a href="../../demo1/dist/apps/user-management/users/view.html" className=""></a> */}
-                                        <Link to={`/mcomments/${answer._id}`} className="text-gray-800 text-hover-primary mb-1"><div className="text-gray-800 text-hover-primary mb-1" dangerouslySetInnerHTML={{ __html: answer.body }} /></Link>
-
+                                        <div className="badge badge-light fw-bold">{report.reportType}</div>
+                                        {/* <Link to={`/mcomments/${report._id}`} className="text-gray-800 text-hover-primary mb-1"><div className="text-gray-800 text-hover-primary mb-1" dangerouslySetInnerHTML={{ __html: answer.body }} /></Link> */}
                                         {/* <span>smith@kpmg.com</span> */}
                                     </div>
                                     {/* <!--begin::User details--> */}
@@ -66,24 +74,25 @@ function ManageAnswer() {
                                 {/* <td>{question.category}</td> */}
                                 {/* <!--end::Role=-->
                                                 <!--begin::Last login=--> */}
-                                <td>
-                                    <div className="badge badge-light fw-bold">{answer.author}</div>
-                                </td>
+                                {/* <td>
+                                    <div className="badge badge-light fw-bold">{report._id}</div>
+                                </td> */}
                                 {/* <!--end::Last login=-->
                                                 <!--begin::Two step=--> */}
-                                <td>{answer.upvotes}</td>
-                                <td>{answer.downvotes}</td>
+                                <td><div className="form-check form-switch form-check-custom form-check-solid me-5">
+                                    {formatDateTime(report.createdAt)}
+                                    </div></td>
+                                <td>{report.reason}</td>
 
                                 <td>
-                                <span
-                                className={`${
-                                    answer.reported
-                                    ? 'text-danger font-weight-bold'
-                                    : 'text-success font-weight-bold'
-                                }`}
-                                >
-                                {answer.reported ? 'No' : 'Yes'}
-                                </span>
+                                    <div className="form-check form-switch form-check-custom form-check-solid me-5">
+                                    <span
+                                        key={index}
+                                        className={`badge ${report.resolved ? 'text-success' : 'text-danger'} me-2`}
+                                        >
+                                        {report.resolved ? 'Resolved' : 'Not Resolved'}
+                                        </span>
+                                    </div>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -91,13 +100,7 @@ function ManageAnswer() {
 
                                     {/* <!--begin::Close--> */}
                                     <div className="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-
-                                        <button
-                                            className="btn btn-sm btn-danger"
-                                        onClick={() => deleteAnswer(answer.id)}
-                                        >
-                                            Delete
-                                        </button>
+                                            <ReviewModal reportType={report.reportType} Content={report}/>
                                     </div>
                                     {/* <!--end::Close--> */}
                                     {/* <!--begin::Menu--> */}
@@ -131,7 +134,7 @@ function ManageAnswer() {
                 )
             })
         } else {
-            return <NoElementFound elementName={"Answer"}/>
+            return <h1>There are no reports from the forum</h1>
         };
     }
 
@@ -149,7 +152,7 @@ function ManageAnswer() {
                             {/* <!--begin::Page title--> */}
                             <div className="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                                 {/* <!--begin::Title--> */}
-                                <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Question - Answer</h1>
+                                <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Reports from the Forum</h1>
                                 {/* <!--end::Title--> */}
                             </div>
                             {/* <!--end::Page title--> */}
@@ -180,7 +183,7 @@ function ManageAnswer() {
                                                 </svg>
                                             </span>
                                             {/* <!--end::Svg Icon--> */}
-                                            <input type="text" data-kt-user-table-filter="search" className="form-control form-control-solid w-250px ps-14" placeholder="Search Answers" />
+                                            <input type="text" data-kt-user-table-filter="search" className="form-control form-control-solid w-250px ps-14" placeholder="Search Reports" />
                                         </div>
                                         {/* <!--end::Search--> */}
                                     </div>
@@ -202,19 +205,19 @@ function ManageAnswer() {
                                                         <input className="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                                     </div>
                                                 </th>
-                                                <th className="min-w-125px">Answer Body</th>
+                                                <th className="min-w-125px">Reported Content Type</th>
                                                 {/* <th className="min-w-125px">Category</th> */}
-                                                <th className="min-w-125px">Author</th>
+                                                {/* <th className="min-w-125px">Content Id</th> */}
                                                 {/* <th className="min-w-125px">Created At</th> */}
-                                                <th className="min-w-125px">Upvotes</th>
-                                                <th className="min-w-125px">Downvotes</th>
-                                                <th className="min-w-125px">Published</th>
+                                                <th className="min-w-125px">Reported On</th>
+                                                <th className="min-w-125px">Reason</th>
+                                                <th className="min-w-125px">Resolved</th>
                                                 <th className="text-end min-w-100px">Actions</th>
                                             </tr>
                                             {/* <!--end::Table row--> */}
                                         </thead>
                                         {/* {/* <!--end::Table head--> */}
-                                        {populateAnswers()}
+                                        {populateReports()}
 
 
 
@@ -235,4 +238,4 @@ function ManageAnswer() {
     )
 }
 
-export default ManageAnswer
+export default ManageReport

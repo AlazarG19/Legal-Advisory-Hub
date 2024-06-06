@@ -8,4 +8,5 @@ db.answers = require("./answer.model")(mongoose)
 db.questions = require("./question.model")(mongoose)
 db.comments = require("./comment.model")(mongoose)
 db.threads = require("./thread.model")(mongoose)
+db.forumReports = require("./forumReport.model")(mongoose)
 module.exports = db;

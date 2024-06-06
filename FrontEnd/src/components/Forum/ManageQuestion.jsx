@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
+import NoElementFound from './Elements/NoElement';
 
 function ManageQuestion() {
 
@@ -65,16 +66,15 @@ function ManageQuestion() {
                                 <td>{question.upvotes}</td>
                                 <td>{question.downvotes}</td>
                                 <td>
-                                    <div className="form-check form-switch form-check-custom form-check-solid me-5">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            id={`active-toggle-true`}
-                                        />
-                                        <label className="form-check-label" htmlFor={`active-toggle`}>
-                                            Yes
-                                        </label>
-                                    </div>
+                                    <span
+                                className={`${
+                                    question.reported
+                                    ? 'text-danger font-weight-bold'
+                                    : 'text-success font-weight-bold'
+                                }`}
+                                >
+                                {question.reported ? 'No' : 'Yes'}
+                                </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -117,7 +117,7 @@ function ManageQuestion() {
                 )
             })
         } else {
-            return <h1>No Answers</h1>
+            return <NoElementFound/>
         };
     }
 

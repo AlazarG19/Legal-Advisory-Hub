@@ -44,6 +44,7 @@ import TrainAI from './components/Forum/TrainAI';
 import Chatbot from './components/Forum/Chatbot';
 import UserSignup from './components/Authentication/UserSignup'
 import UserMangement from './components/UserManagement/UserMangement'
+import ManageReport from './components/Forum/ManageReport'
 
 
 function App() {
@@ -103,6 +104,7 @@ function App() {
           <Route path="/mquestion" element={<ManageQuestion />} />
           <Route path="/mcomments/:id" element={<ManageComment />} />
           <Route path="/manswers/:id" element={<ManageAnswer />} />
+          <Route path="/mreport" element={<ManageReport />} />
           <Route path="/train" element={<TrainAI />} />
           {/* end fekedes route */}
 

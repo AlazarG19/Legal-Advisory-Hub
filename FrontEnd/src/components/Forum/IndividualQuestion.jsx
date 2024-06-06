@@ -96,7 +96,7 @@ function IndividualQuestion({ Question }) {
             {/* <!--end::Item--> */}
             {/* <!--begin::Item--> */}
             <li className="nav-item">
-              <ReportModal Question={Question} />
+              <ReportModal reportType = "question" Content={Question} />
             </li>
 
 

@@ -128,7 +128,7 @@ function Chatbot({ User }) {
         return messages.map((chat, index) => {
             return (
                 <>
-                    <Navigation />
+                   
                     {/* <!--begin::Message(out)--> */}
                     <div className="d-flex justify-content-end mb-10">
                         {/* <!--begin::Wrapper--> */}
@@ -195,6 +195,7 @@ function Chatbot({ User }) {
     return (
         <>
             {/* <!--begin::Messenger--> */}
+            <Navigation />
             <div className="card" id="kt_chat_messenger">
                 {/* <!--begin::Card header--> */}
                 <div className="card-header" id="kt_chat_messenger_header">

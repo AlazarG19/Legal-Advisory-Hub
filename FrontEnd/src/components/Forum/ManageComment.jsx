@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Navigation from '../Navigation';
+import NoElementFound from './Elements/NoElement';
 
 function ManageComment() {
 
@@ -63,16 +64,15 @@ function ManageComment() {
 
 
                                 <td>
-                                    <div className="form-check form-switch form-check-custom form-check-solid me-5">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            id={`active-toggle-true`}
-                                        />
-                                        <label className="form-check-label" htmlFor={`active-toggle`}>
-                                            Yes
-                                        </label>
-                                    </div>
+                                <span
+                                className={`${
+                                    comment.reported
+                                    ? 'text-danger font-weight-bold'
+                                    : 'text-success font-weight-bold'
+                                }`}
+                                >
+                                {comment.reported ? 'No' : 'Yes'}
+                                </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -123,7 +123,7 @@ function ManageComment() {
                 )
             })
         } else {
-            return <h1>No Comments Found for this Answer</h1>
+            return <NoElementFound/>
         };
     }
 
