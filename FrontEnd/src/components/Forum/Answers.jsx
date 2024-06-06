@@ -31,7 +31,7 @@ function Answers() {
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/questions/${id}`).then(res => res.json()).then(result => {
-            result = result.filter(item => item.reported != true )
+            // result = result.filter(item => item.reported != true )
             setQuestion(result)
             console.log("This is for Question   ", result)
             console.log()

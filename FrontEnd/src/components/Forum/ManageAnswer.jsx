@@ -2,12 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
+import NoElementFound from './Elements/NoElement';
 
 function ManageAnswer() {
 
     const { id } = useParams();
     const [answers, setAnswers] = useState([]);
-
+     // Delete a question from the API
+  const deleteAnswer = async (id) => {
+    try {
+      await fetch(`http://localhost:3000/api/answers/${id}`, {
+        method: 'DELETE',
+      });
+      // Remove the deleted question from the local state
+      setAnswers(answers.filter((question) => question.id !== id));
+    } catch (error) {
+      console.error('Error deleting question:', error);
+    }
+  };
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
@@ -63,16 +75,15 @@ function ManageAnswer() {
                                 <td>{answer.downvotes}</td>
 
                                 <td>
-                                    <div className="form-check form-switch form-check-custom form-check-solid me-5">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            id={`active-toggle-true`}
-                                        />
-                                        <label className="form-check-label" htmlFor={`active-toggle`}>
-                                            Yes
-                                        </label>
-                                    </div>
+                                <span
+                                className={`${
+                                    answer.reported
+                                    ? 'text-danger font-weight-bold'
+                                    : 'text-success font-weight-bold'
+                                }`}
+                                >
+                                {answer.reported ? 'No' : 'Yes'}
+                                </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -83,7 +94,7 @@ function ManageAnswer() {
 
                                         <button
                                             className="btn btn-sm btn-danger"
-                                        // onClick={() => handleDelete(comment.id)}
+                                        onClick={() => deleteAnswer(answer.id)}
                                         >
                                             Delete
                                         </button>
@@ -120,7 +131,7 @@ function ManageAnswer() {
                 )
             })
         } else {
-            return <h1>No Answers Found for this Question</h1>
+            return <NoElementFound elementName={"Answer"}/>
         };
     }
 
