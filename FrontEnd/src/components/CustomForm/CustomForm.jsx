@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 import MessageIn from './MessageIn';
 import MessageOut from './MessageOut';
+import { useSelector } from 'react-redux';
 
 function CustomForm() {
     const [section, setsection] = useState()
@@ -24,7 +25,9 @@ function CustomForm() {
                 console.error('Error:', error);
             });
     }, [])
-
+    console.log("withing the react component")
+    const states = useSelector(state => state);
+    console.log(states)
     return (
         // <!--begin::Content-->
         <div id="kt_app_content" className="app-content flex-column-fluid">

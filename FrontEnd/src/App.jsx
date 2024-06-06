@@ -43,6 +43,7 @@ import ManageComment from './components/Forum/ManageComment';
 import TrainAI from './components/Forum/TrainAI';
 import Chatbot from './components/Forum/Chatbot';
 import UserSignup from './components/Authentication/UserSignup'
+import UserMangement from './components/UserManagement/UserMangement'
 
 
 function App() {
@@ -104,6 +105,10 @@ function App() {
           <Route path="/manswers/:id" element={<ManageAnswer />} />
           <Route path="/train" element={<TrainAI />} />
           {/* end fekedes route */}
+
+          {/* user mangement routes */}
+          <Route path="/usermanagement" element={<UserMangement />} />
+          {/* end user mangement routes */}
         </Routes>
       </BrowserRouter>
     </>

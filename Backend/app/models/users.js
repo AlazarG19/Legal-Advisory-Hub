@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
     verified: Boolean,
     username: String,
     userType: String,
-    profilePicture: String
+    profilePicture: String,
+    disabled: Boolean
 })
 
 const users = mongoose.model("users", UserSchema)

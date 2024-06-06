@@ -142,29 +142,9 @@ const SignupForm = () => {
 
     <div className="d-flex flex-column flex-lg-row flex-column-fluid">
       {/* begin::Aside */}
-      <div className="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style={{ backgroundImage: `url(assets/media/misc/auth-bg.png)` }}>
-        {/* begin::Content */}
-        <div className="d-flex flex-column flex-center p-6 p-lg-10 w-100">
-          {/* begin::Logo */}
-          <a href="../../demo1/dist/index.html" className="mb-0 mb-lg-20">
-            <img alt="Logo" src="assets/media/logos/default-white.svg" className="h-40px h-lg-50px" />
-          </a>
-          {/* end::Logo */}
-          {/* begin::Image */}
-          <img className="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/auth-screens.png" alt="" />
-          {/* end::Image */}
-          {/* begin::Title */}
-          <h1 className="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
-          {/* end::Title */}
-          {/* begin::Text */}
-          <div className="d-none d-lg-block text-white fs-base text-center">In this kind of post,
-            <a href="#" className="opacity-75-hover text-warning fw-semibold me-1">the blogger</a>introduces a person they’ve interviewed
-            <br />and provides some background information about
-            <a href="#" className="opacity-75-hover text-warning fw-semibold me-1">the interviewee</a>and their
-            <br />work following this is a transcript of the interview.</div>
-          {/* end::Text */}
-        </div>
-        {/* end::Content */}
+      <div className="d-flex flex-lg-row-fluid bgi-size-cover bgi-position-center" style={{ backgroundImage: "url(/assets/media/misc/auth-bg.png)" }}>
+        <img style={{ width: "100%" }} className="" src="assets/img/front.png" alt="" />
+
       </div>
       {/* begin::Aside */}
       {/* begin::Body */}
@@ -266,17 +246,6 @@ const SignupForm = () => {
           {/* end::Wrapper */}
         </div>
         {/* end::Form */}
-        {/* begin::Footer */}
-        <div className="d-flex flex-center flex-wrap px-5">
-          {/* begin::Links */}
-          <div className="d-flex fw-semibold text-primary fs-base">
-            <a href="https://keenthemes.com" className="px-5" target="_blank">Terms</a>
-            <a href="https://devs.keenthemes.com" className="px-5" target="_blank">Plans</a>
-            <a href="https://themes.getbootstrap.com/product/keen-the-ultimate-bootstrap-admin-theme/" className="px-5" target="_blank">Contact Us</a>
-          </div>
-          {/* end::Links */}
-        </div>
-        {/* end::Footer */}
       </div>
       {/* end::Body */}
     </div>

@@ -4,7 +4,7 @@ import config from "../ChatbotKit/config.jsx";
 import MessageParser from "../ChatbotKit/MessageParser.jsx";
 import ActionProvider from "../ChatbotKit/ActionProvider.jsx";
 import Chatbot from "react-chatbot-kit";
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, useStore } from "react-redux"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useEffect } from 'react';
@@ -34,6 +34,7 @@ function CustomForm2() {
     const { id } = useParams();
     config["state"]["id"] = id
     const formtext = useSelector((state) => state.formtext.value)
+    const [complete, setcomplete] = useState(false)
     // useEffect(() => {
     //     // console.log("+++++++++++++++++++++use effect in form data")
     //     const editor = quillRef.current.getEditor()
@@ -48,22 +49,21 @@ function CustomForm2() {
     //     }
     // }, [reduxstate])
     const Print = () => {
-        //console.log('print');  
-        let printContents = document.getElementById('printablediv').innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+        print()
     }
-    const reduxstate = store.getState()
-    console.log("store state", reduxstate.formtext)
+    const reduxstate = useSelector(state => state);
+    console.log("???????????????")
+    console.log("store state", reduxstate)
     useEffect(() => {
         console.log("+++++++++++++++++++++use effect in form data")
         // alert("dfadafa")
         if (reduxstate.formtext.completed) {
+            console.log("???????????????")
+            console.log(reduxstate.formtext)
+            setcomplete(true)
         }
 
-    }, [store])
+    }, [reduxstate])
     return (
         <>
             <Navigation />
@@ -82,23 +82,25 @@ function CustomForm2() {
                                     config={config}
                                     messageParser={MessageParser}
                                     actionProvider={ActionProvider}
-                                />
+                                />{
+                                    complete ? <button type="button" className="btn btn-lg btn-primary mt-10" onClick={Print} data-kt-element="settings-next">
+                                        <span className="indicator-label">Print</span>
+                                    </button> : ""
+                                }
+
                             </div>
                             {/* <!--end::Messenger--> */}
                         </div>
+
                         <div className="flex-lg-row-fluid ms-lg-6 ms-xl-6">
 
                             <div id='printablediv' className="content" dangerouslySetInnerHTML={{ __html: formtext }}></div>
                         </div>
                         {/* <!--end::Content--> */}
                         {/* <!--begin::Sidebar--> */}
-                        {/* <ReactQuill theme="snow"
-                        ref={quillRef}
-                        modules={modules}
-                        formats={formats} defaultValue={value} onChange={setValue} /> ; */}
-                        {/* <!--end::Sidebar--> */}
-                        { }
+
                     </div>
+
                     {/* <!--end::Layout--> */}
 
                 </div>

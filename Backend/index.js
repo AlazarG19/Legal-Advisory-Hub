@@ -387,6 +387,12 @@ app.get('/getFreelancer/:id', (req, res) => {
     .then(user => res.json(user))
     .catch(err => res.json(err));
 });
+// this route has been added by alazar for admin purposes
+app.get('/getUser', (req, res) => {
+  users.find({})
+    .then(user => res.json(user))
+    .catch(err => res.json(err));
+});
 app.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
   users.find({ username: username })
@@ -421,7 +427,8 @@ app.post("/createUser", async (req, res) => {
       userType,
       username,
       email,
-      verified: false
+      verified: false,
+      disabled: false
     });
     try {
       const createduser = await user.save();
@@ -435,7 +442,7 @@ app.post("/createUser", async (req, res) => {
         console.log(createdtoken, "createdtoken");
         const message = `http://localhost:5173/emailverified/${createduser.id}/${token.token}`;
 
-        EmailSender("Legal Advisory Hub", "alazargetachew70@gmail.com", "Verify Email", message);
+        EmailSender("Legal Advisory Hub", email, "Verify Email", message);
       } catch (err) {
         console.log(err, "first error for token")
         res.status(500).send({ message: err });
@@ -682,7 +689,17 @@ app.get('/getMessage/:id', (req, res) => {
 });
 
 
-
+app.post("/updateDisabled/:id", async (req, res) => {
+  const id = req.params.id
+  const value = req.body.disabled
+  console.log("this is the id", id)
+  console.log("this is the value", value)
+  users.findByIdAndUpdate(id, req.body, {
+    disabled: true,
+  })
+    .then(users => res.json({ success: true }))
+    .catch(err => res.json({ success: true }))
+});
 
 // 
 app.use(express.urlencoded({ extended: true }));
