@@ -12,7 +12,8 @@ exports.create = (req, res) => {
   // Create a new thread
   const thread = new Thread({
     userId: req.body.userId,
-    conversation: req.body.conversation
+    isUserMessage: req.body.isUserMessage,
+    text: req.body.text
   });
 
   // Save thread in the database
