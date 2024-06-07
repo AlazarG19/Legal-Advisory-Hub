@@ -1,47 +1,88 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
-import OverviewComponent from "../FreelancerComponent/OverviewComponent";
-import ProjectsComponent from "../FreelancerComponent/ProjectsComponent";
-import Settings from "../FreelancerComponent/Settings";
+import OverviewComponent from "./OverviewComponent";
+import ProjectsComponent from "./ProjectsComponent";
+import Settings from "./Settings";
 import axios from 'axios'
-const FreelancerProfile = () => {
-  const [user, setUser] = useState(null);
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
+const Profile = () => {
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [usertype, setUsertype] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [password, setPassword] = useState("");
+
+  // freelancer
   const [catagory, setCatagory] = useState("");
   const [firm, setFirm] = useState("");
-  const [id, setId] = useState("");
-  const [offers, setOffers] = useState([])
+  const [contact, setContact] = useState("");
+  const [city, setCity] = useState([])
+  const [language, setLanguage] = useState([])
+  const [bio, setBio] = useState([])
+
   const navigate = useNavigate();
+
+  const fetchData = async (getUser) => {
+    const session = JSON.parse(getUser);
+    console.log(session)
+    const id2 = session[0]?._id
+    console.log(`http://localhost:3000/getFreelancer/${id2}`)
+    await fetch(`http://localhost:3000/getFreelancer/${id2}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setId(id2)
+        setEmail(data[0].email)
+        setFirstName(data[0].firstName)
+        setLastName(data[0].lastName)
+        setUsername(data[0].username)
+        setUsertype(data[0].userType)
+        setProfilePic(data[0].profilePicture)
+        setPassword(data[0].password)
+        if (data[0].userType == "freelancer") {
+          setCatagory(data[0].Details[0].category)
+          setFirm(data[0].Details[0].firm)
+          setContact(data[0].Details[0].contact)
+          setCity(data[0].Details[0].city)
+          setLanguage(data[0].Details[0].language)
+          setBio(data[0].Details[0].bio)
+        }
+
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  }
 
   useEffect(() => {
     const getUser = sessionStorage.getItem("user");
+
     if (getUser) {
-      const session = JSON.parse(getUser);
-      setName(session[0].name);
-      setBio(session[0].bio);
-      setCatagory(session[0].catagory);
-      setFirm(session[0].firm);
-      setUser(session[0]);
-      setId(session[0]._id)
+      fetchData(getUser)
     } else {
       navigate("/login");
     }
 
   }, []);
-  console.log(user);
 
   const [activeTab, setActiveTab] = useState("overview");
 
   const renderComponent = () => {
     switch (activeTab) {
       case "overview":
-        return <OverviewComponent />;
+        return <OverviewComponent details={{ email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
       case "projects":
         return <ProjectsComponent id={id} />;
       case "settings":
-        return <Settings />;
+        return <Settings details={{ id, profilePic, password, email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
       // case "documents":
       //   return <DocumentsComponent />;
       // case "followers":
@@ -350,4 +391,4 @@ const FreelancerProfile = () => {
   );
 };
 
-export default FreelancerProfile;
+export default Profile;

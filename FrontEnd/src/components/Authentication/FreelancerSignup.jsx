@@ -250,9 +250,12 @@ const FreelancerSignup = () => {
                                         {/* <!--end::Label--> */}
                                         {/* <!--begin::Col--> */}
                                         <div class="col-lg-8 fv-row">
-                                            <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
-
-                                                value={formik.values.firm} name='firm' placeholder='Firm' />
+                                            <input
+                                                type="text"
+                                                class="form-control form-control-lg form-control-solid"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.firm}
+                                                name='firm' placeholder='Firm' />
                                             <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.firm}</div>
 
                                         </div>

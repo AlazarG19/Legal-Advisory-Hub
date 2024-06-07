@@ -10,52 +10,11 @@ const FormTable = ({ columns, data }) => {
         pageIndex: 0
     };
 
-    const handleDropdownEnable = async (userId) => {
-        let body = { disabled: false }
-        body = JSON.stringify(body)
-        await fetch(`http://localhost:3000/updateDisabled/${userId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: body
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("data")
-                console.log(data)
-                if (data.success) {
-                    window.location.reload()
-                }
-
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    };
-    const handleDropdownDisable = async (userId) => {
-        let body = { disabled: true }
-        body = JSON.stringify(body)
-        await fetch(`http://localhost:3000/updateDisabled/${userId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: body
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("data")
-                console.log(data)
-                if (data.success) {
-                    window.location.reload()
-                }
-
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    };
+    const onRowClick = (e) => {
+        console.log(e)
+        let link = "http://localhost:5173/customform/" + e
+        window.location.href = link
+    }
     // Use the state and functions returned from useTable to build your UI
     const {
         getTableProps,
@@ -116,7 +75,9 @@ const FormTable = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
-                                    if (cell.column.id == "_id") {
+
+                                    if (cell.column.id == "formid") {
+                                        console.log(cell.value)
                                         return <td class="text-end">
                                             <div class="d-flex align-items-center">
                                                 <div class="ms-2">
@@ -158,20 +119,9 @@ const FormTable = ({ columns, data }) => {
                                                             </span>
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            {cell.column.id.disabled}
-                                                            {cell.row.values.disabled ? <Dropdown.Item
-                                                                onClick={() => handleDropdownEnable(cell.value)}
-                                                            >
-                                                                Enable
-                                                            </Dropdown.Item> : <Dropdown.Item
-                                                                onClick={() => handleDropdownDisable(cell.value)}
-                                                            >
-                                                                Disable
-                                                            </Dropdown.Item>}
-
 
                                                             <Dropdown.Item
-                                                                onClick={() => handleDropDownView(cell.value)}
+                                                                onClick={() => onRowClick(cell.value)}
                                                             >
                                                                 View
                                                             </Dropdown.Item>

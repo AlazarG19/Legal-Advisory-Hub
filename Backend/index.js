@@ -460,6 +460,53 @@ app.post("/createUser", async (req, res) => {
     res.status(500).json({ message: "Failed to create user" });
   }
 });
+const updateprofileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/profile");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const updateuploadProfile = multer({ storage: updateprofileStorage });
+app.post("/updateProfile", updateuploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
+  console.log(req.body)
+  try {
+    const profilePicture = req.files['profilePicture'][0].filename;
+    console.log(profilePicture)
+    await users.findByIdAndUpdate(req.body.userid, { profilePicture: profilePicture });
+  } catch (error) {
+
+  }
+  if (req.body.usertype == "client") {
+    if (req.body.newpassword == "") {
+
+      users.findByIdAndUpdate(req.body.userid,
+        {
+          firstName: req.body.firstname,
+          lastName: req.body.lastname,
+          username: req.body.username,
+        })
+        .then(users => res.json({ success: true }))
+        .catch(err => res.json({ success: false }));
+    } else {
+
+      users.findByIdAndUpdate(req.body.userid,
+        {
+          firstName: req.body.firstname,
+          lastName: req.body.lastname,
+          username: req.body.username,
+          password: req.body.newpassword
+        })
+        .then(users => res.json({ success: true }))
+        .catch(err => res.json({ success: false }));
+    }
+
+  } else {
+
+  }
+})
 
 app.post("/updateUser/:id", async (req, res) => {
   const id = req.params.id
