@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import SuccessModal from './SuccessModal'
+import ErrorModal from './ErrorModal';
 
 const ReportModal = ({ reportType, Content }) => {
   const [show, setShow] = useState(false);
   const [inappropriateContent, setInappropriateContent] = useState('');
   const [reportReason, setReportReason] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showConfirmationError, setShowConfirmationError] = useState(false);
+  const handleSuccess = () => {
+      setShowConfirmation(true);
+  };
+  const handleError = () => {
+      setShowConfirmationError(true);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -57,9 +67,11 @@ const ReportModal = ({ reportType, Content }) => {
       const responseData = await response.json();
       // Process the response data here
       console.log(responseData);
+      handleSuccess()
       handleCloseModal();
     } catch (error) {
       // Handle the error here
+      handleError()
       console.error(error);
     }
   };
@@ -111,6 +123,8 @@ const ReportModal = ({ reportType, Content }) => {
           </Form>
         </Modal.Body>
       </Modal>
+      {showConfirmation && <SuccessModal message="Thank you for the report. Our moderators will review the content and take appropriate action."/>}
+      {showConfirmationError && <ErrorModal  message="Please fill the neccessary reason for reporting!"/>}
     </>
   );
 };
