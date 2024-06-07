@@ -98,46 +98,6 @@ function UserMangement() {
 
     }, [])
 
-
-    const data = [
-        {
-            "_id": "6657a042dd50c9afc228c6b3",
-            "email": "alazargetachew70@gmail.com",
-            "password": "password",
-            "firstName": "Alazar",
-            "lastName": "Getachew",
-            "verified": "true",
-            "username": "alazarg",
-            "userType": "client",
-            "__v": { "$numberInt": "0" },
-            "profilePicture": "1717019053636.jpg"
-        },
-        {
-            "_id": "6657a042dd50c9afc228c6b3",
-            "email": "alazargetachew70@gmail.com",
-            "password": "password",
-            "firstName": "Alazar2",
-            "lastName": "Getachew",
-            "verified": "true",
-            "username": "alazarg",
-            "userType": "client",
-            "__v": { "$numberInt": "0" },
-            "profilePicture": "1717019053636.jpg"
-        },
-        {
-            "_id": "6657a042dd50c9afc228c6b3",
-            "email": "alazargetachew70@gmail.com",
-            "password": "password",
-            "firstName": "Alazar3",
-            "lastName": "Getachew",
-            "verified": "true",
-            "username": "alazarg",
-            "userType": "client",
-            "__v": { "$numberInt": "0" },
-            "profilePicture": "1717019053636.jpg"
-        },
-    ]
-    console.log(data)
     return (
         <div id="kt_app_content" className="app-content flex-column-fluid">
             {/* <Navigation /> */}

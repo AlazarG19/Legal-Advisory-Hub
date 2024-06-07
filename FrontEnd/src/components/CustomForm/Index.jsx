@@ -3,6 +3,7 @@ import MUIDataTable from "mui-datatables";
 import { Checkbox, Hidden } from '@mui/material';
 import Navbar from '../Navbar';
 import Navigation from '../Navigation';
+import FormTable from './FormTable';
 const Index = () => {
 
     const columns = [
@@ -44,12 +45,37 @@ const Index = () => {
     const [selectedcategory, setSelectedCategory] = useState("")
     const [data, setData] = useState([])
     const [olddata, setOldData] = useState([])
-    // const data = [
-    //     { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
-    //     { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
-    //     { name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL" },
-    //     { name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX" },
-    // ];
+
+    const columns2 = [
+        {
+
+            Header: 'Name',
+            accessor: 'formname',
+
+
+        },
+        {
+
+            Header: 'Category',
+            accessor: 'category',
+
+
+        },
+        {
+
+            Header: 'Description',
+            accessor: 'formdescription',
+
+
+        },
+        {
+
+            Header: 'Actions',
+            accessor: 'formid',
+
+
+        },
+    ]
     const onRowClick = (e) => {
         console.log(e)
         let link = "http://localhost:5173/customform/" + e[0]
@@ -374,18 +400,8 @@ const Index = () => {
                                                     {/* <!--end::Card header--> */}
                                                     {/* <!--begin::Card body--> */}
 
-                                                    <div className="card-body">
-
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <MUIDataTable
-                                                            data={data}
-                                                            columns={columns}
-                                                            options={options}
-                                                            isRowSelectable={true}
-
-                                                            selectableRowsHideCheckboxes={false}
-                                                        />
+                                                    <div className="card-body" style={{ overflow: "scroll" }}>
+                                                        <FormTable columns={columns2} data={data} />
                                                     </div>
                                                     {/* <!--end::Card body--> */}
                                                 </div>
