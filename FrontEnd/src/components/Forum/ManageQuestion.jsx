@@ -2,9 +2,62 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
 import NoElementFound from './Elements/NoElement';
+import FormTable from './QuestionTable';
 
 function ManageQuestion() {
+    // TITLE	CATEGORY	AUTHOR	UPVOTES	DOWNVOTES	PUBLISHED	ACTIONS
+    const columns = [
+        {
 
+            Header: 'TITLE',
+            accessor: 'title',
+
+
+        },
+        {
+
+            Header: 'CATEGORY',
+            accessor: 'category',
+
+
+        },
+        {
+
+            Header: 'AUTHOR',
+            accessor: 'author',
+
+
+        },
+        {
+
+            Header: 'UPVOTES',
+            accessor: 'upvotes',
+
+
+        },
+        {
+
+            Header: 'DOWNVOTES',
+            accessor: 'downvotes',
+
+
+        },
+        {
+
+            Header: 'PUBLISHED',
+            accessor: 'reported',
+
+
+        },
+        {
+
+            Header: 'ACTIONS',
+            accessor: '_id',
+
+
+        },
+    ]
+    // 
     const [questions, setQuestions] = useState([]);
     useEffect(() => {
         // console.log('http://localhost:3000/api/questions/')
@@ -16,6 +69,7 @@ function ManageQuestion() {
         }).catch((error) => {
             console.log(error)
         });
+
     }, [])
 
 
@@ -67,14 +121,13 @@ function ManageQuestion() {
                                 <td>{question.downvotes}</td>
                                 <td>
                                     <span
-                                className={`${
-                                    question.reported
-                                    ? 'text-danger font-weight-bold'
-                                    : 'text-success font-weight-bold'
-                                }`}
-                                >
-                                {question.reported ? 'No' : 'Yes'}
-                                </span>
+                                        className={`${question.reported
+                                            ? 'text-danger font-weight-bold'
+                                            : 'text-success font-weight-bold'
+                                            }`}
+                                    >
+                                        {question.reported ? 'No' : 'Yes'}
+                                    </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -117,7 +170,7 @@ function ManageQuestion() {
                 )
             })
         } else {
-            return <NoElementFound/>
+            return <NoElementFound />
         };
     }
 
@@ -126,8 +179,9 @@ function ManageQuestion() {
         <>
             <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
                 <Navigation />
+
                 {/* <!--begin::Content wrapper--> */}
-                <div classNameName="d-flex flex-column flex-column-fluid">
+                <div className="d-flex flex-column flex-column-fluid">
                     {/* <!--begin::Toolbar--> */}
                     <div id="kt_app_toolbar" className="app-toolbar py-3 py-lg-6">
                         {/* <!--begin::Toolbar container--> */}
@@ -176,11 +230,11 @@ function ManageQuestion() {
                                 {/* <!--end::Card header--> */}
                                 {/* <!--begin::Card body--> */}
                                 <div className="card-body py-4">
+                                    <FormTable columns={columns} data={questions} />
                                     {/* <!--begin::Table--> */}
-                                    <table className="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                                        {/* <!--begin::Table head--> */}
+                                    {/* <table className="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                        
                                         <thead>
-                                            {/* <!--begin::Table row--> */}
                                             <tr className="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                                 <th className="w-10px pe-2">
                                                     <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
@@ -190,20 +244,17 @@ function ManageQuestion() {
                                                 <th className="min-w-125px">Title</th>
                                                 <th className="min-w-125px">Category</th>
                                                 <th className="min-w-125px">Author</th>
-                                                {/* <th className="min-w-125px">Created At</th> */}
                                                 <th className="min-w-125px">Upvotes</th>
                                                 <th className="min-w-125px">Downvotes</th>
                                                 <th className="min-w-125px">Published</th>
                                                 <th className="text-end min-w-100px">Actions</th>
                                             </tr>
-                                            {/* <!--end::Table row--> */}
                                         </thead>
-                                        {/* {/* <!--end::Table head--> */}
                                         {populateQuestions()}
 
 
 
-                                    </table>
+                                    </table> */}
                                     {/* <!--end::Table--> */}
                                 </div>
                                 {/* <!--end::Card body--> */}
