@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
 import NoElementFound from './Elements/NoElement';
 import FormTable from './QuestionTable';
+import regeneratorRuntime from "regenerator-runtime"
 
 function ManageQuestion() {
     // TITLE	CATEGORY	AUTHOR	UPVOTES	DOWNVOTES	PUBLISHED	ACTIONS

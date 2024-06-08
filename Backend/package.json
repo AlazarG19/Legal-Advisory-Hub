@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodemon server.js",
     "dev": "nodemon index.js",
-    "start:api": "uvicorn query_data:app --host localhost --port 8000",
+    "start:api": "uvicorn knowledgeBase.query_data:app --host localhost --port 8000",
     "start:node": "node index.js",
     "start": "concurrently \"npm run start:api\" \"npm run start:node\""
   },
