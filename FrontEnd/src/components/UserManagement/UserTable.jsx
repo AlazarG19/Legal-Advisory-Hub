@@ -4,7 +4,7 @@ import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-tabl
 import { GlobalFilter, DefaultFilterForColumn } from './Filter';
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from 'react-router';
-
+import regeneratorRuntime from "regenerator-runtime"
 const UserTable = ({ columns, data }) => {
     const initialState = {
         pageSize: 10,

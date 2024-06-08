@@ -5,11 +5,13 @@ import SuccessModal from "./SuccessModal";
 import ErrorModal from "./ErrorModal";
 import WarningModal from "./WarningModal";
 import Navigation from "../Navigation";
+import { useNavigate } from "react-router";
 const CreateAdmin = ({ }) => {
   const [submitting, setsubmitting] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showConfirmationError, setShowConfirmationError] = useState(false);
   const [showConfirmationWarning, setShowConfirmationWarning] = useState(false);
+  const navigate = useNavigate()
   const handleSuccess = () => {
     setShowConfirmation(true);
   };
@@ -143,6 +145,7 @@ const CreateAdmin = ({ }) => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Successfully Created")
+          navigate("/profile")
         })
         .catch((error) => {
           console.log("error while sending")

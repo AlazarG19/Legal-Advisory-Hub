@@ -3,7 +3,7 @@ import React from 'react'
 import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
 import { GlobalFilter, DefaultFilterForColumn } from './Filter';
 import Dropdown from "react-bootstrap/Dropdown";
-
+import regeneratorRuntime from "regenerator-runtime"
 const FormTable = ({ columns, data }) => {
     const initialState = {
         pageSize: 5,
