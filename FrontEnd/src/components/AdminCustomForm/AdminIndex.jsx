@@ -2,57 +2,45 @@ import React, { useEffect, useState } from 'react'
 import MUIDataTable from "mui-datatables";
 import { Checkbox, Hidden } from '@mui/material';
 import Navigation from '../Navigation';
+import FormTable from './FormTable';
 const AdminIndex = () => {
 
-    const columns = [
+    const columns2 = [
+        {
 
-        {
-            name: "formid",
-            label: "formid",
-            options: {
-                filter: true,
-                sort: false,
-                display: false
-            }
-        },
-        {
-            name: "formname",
-            label: "Name",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "category",
-            label: "Category",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "formdescription",
-            label: "Description",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-    ];
+            Header: 'Name',
+            accessor: 'formname',
 
+
+        },
+        {
+
+            Header: 'Category',
+            accessor: 'category',
+
+
+        },
+        {
+
+            Header: 'Description',
+            accessor: 'formdescription',
+
+
+        },
+        {
+
+            Header: 'Actions',
+            accessor: 'formid',
+
+
+        },
+    ]
     const [selectedcategory, setSelectedCategory] = useState("")
 
     const [data, setData] = useState([])
 
     const [olddata, setOldData] = useState([])
 
-    // const data = [
-    //     { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
-    //     { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
-    //     { name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL" },
-    //     { name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX" },
-    // ];
 
     const onRowClick = (e) => {
         console.log(e[0])
@@ -73,16 +61,7 @@ const AdminIndex = () => {
         console.log(filtereddata)
     }
 
-    const options = {
-        search: true,
-        filterType: 'textField',
-        isRowSelectable: false,
-        print: false,
-        filter: false,
-        selectableRows: "none",
-        onRowClick: onRowClick,
-        viewColumns: false
-    };
+
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/forms`, {
@@ -188,7 +167,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Criminal</a>
@@ -206,7 +184,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Family</a>
@@ -224,7 +201,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Employement</a>
@@ -242,7 +218,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Contract</a>
@@ -260,7 +235,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Intellectual Property</a>
@@ -278,7 +252,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Constitutional</a>
@@ -296,7 +269,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Administrative</a>
@@ -314,7 +286,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Real Estate</a>
@@ -332,7 +303,6 @@ const AdminIndex = () => {
                                                                     {/* <!--begin::Wrapper--> */}
                                                                     <div className="me-3">
                                                                         {/* <!--begin::Icon--> */}
-                                                                        <img src="/assets/media/stock/ecommerce/210.gif" className="w-50px ms-n1 me-1" alt="" />
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Title--> */}
                                                                         <a href="#" className="text-gray-800 text-hover-primary fw-bold">Tort</a>
@@ -368,14 +338,8 @@ const AdminIndex = () => {
                                                     {/* <!--end::Card header--> */}
                                                     {/* <!--begin::Card body--> */}
                                                     <div className="card-body">
-                                                        <MUIDataTable
-                                                            data={data}
-                                                            columns={columns}
-                                                            options={options}
-                                                            isRowSelectable={true}
+                                                        <FormTable columns={columns2} data={data} />
 
-                                                            selectableRowsHideCheckboxes={false}
-                                                        />
                                                     </div>
                                                     {/* <!--end::Card body--> */}
                                                 </div>

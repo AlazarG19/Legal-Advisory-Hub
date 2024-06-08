@@ -70,7 +70,68 @@ const profileStorage = multer.diskStorage({
 });
 
 const uploadProfile = multer({ storage: profileStorage });
+const adminprofileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/profile");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
 
+const adminuploadProfile = multer({ storage: adminprofileStorage });
+
+// create admin profile
+app.post("/createAdminProfile", adminuploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
+
+  try {
+    console.log(req.body)
+
+    const profilePicture = req.files['profilePicture'][0].filename;
+    console.log(profilePicture)
+    const { password, firstname, lastname, usertype, username, email } = req.body;
+
+    const user = new users({
+      profilePicture,
+      password,
+      firstName: firstname,
+      lastName: lastname,
+      userType: usertype,
+      username,
+      email,
+      verified: false,
+      disabled: false
+    });
+    try {
+      const createduser = await user.save();
+      console.log(createduser, "createduser");
+      try {
+        let token = await new Token({
+          userId: createduser._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        })
+        const createdtoken = await token.save()
+        console.log(createdtoken, "createdtoken");
+        const message = `http://localhost:5173/emailverified/${createduser.id}/${token.token}`;
+
+        EmailSender("Legal Advisory Hub", email, "Verify Email", message);
+      } catch (err) {
+        console.log(err, "first error for token")
+        res.status(500).send({ message: err });
+        return;
+      }
+
+    } catch (err) {
+      console.log(err, "first error for token")
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(201).json({ message: "Admin created successfully", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create user" });
+  }
+});
 // create freelancer profile
 app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePicture' }]), async (req, res) => {
   try {
@@ -474,12 +535,64 @@ app.post("/updateProfile", updateuploadProfile.fields([{ name: 'profilePicture' 
   console.log(req.body)
   try {
     const profilePicture = req.files['profilePicture'][0].filename;
-    console.log(profilePicture)
+    console.log("profilePicture", profilePicture)
     await users.findByIdAndUpdate(req.body.userid, { profilePicture: profilePicture });
+
   } catch (error) {
 
   }
-  if (req.body.usertype == "client") {
+
+  if (req.body.usertype == "freelancer") {
+    if (req.body.newpassword == "") {
+
+      try {
+        await FreelancerProfile.findOneAndUpdate({ userid: req.body.userid },
+          {
+            category: req.body.catagory,
+            firm: req.body.firm,
+            contact: req.body.contact,
+            city: req.body.city,
+            language: req.body.language,
+            bio: req.body.bio,
+          })
+        users.findByIdAndUpdate(req.body.userid,
+          {
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            username: req.body.username,
+          }).then(users => res.json({ success: true, users: users }))
+          .catch(err => res.json({ success: false }));
+      } catch (error) {
+        res.json({ success: false, reason: error })
+      }
+
+
+    } else {
+      try {
+        await FreelancerProfile.findOneAndUpdate({ userid: req.body.userid },
+          {
+            category: req.body.catagory,
+            firm: req.body.firm,
+            contact: req.body.contact,
+            city: req.body.city,
+            language: req.body.language,
+            bio: req.body.bio,
+          })
+        users.findByIdAndUpdate(req.body.userid,
+          {
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            username: req.body.username,
+            password: req.body.newpassword
+          }).then(users => res.json({ success: true, users: users }))
+          .catch(err => res.json({ success: false }));
+      } catch (error) {
+        res.json({ success: false, reason: error })
+      }
+
+    }
+
+  } else {
     if (req.body.newpassword == "") {
 
       users.findByIdAndUpdate(req.body.userid,
@@ -488,7 +601,7 @@ app.post("/updateProfile", updateuploadProfile.fields([{ name: 'profilePicture' 
           lastName: req.body.lastname,
           username: req.body.username,
         })
-        .then(users => res.json({ success: true }))
+        .then(users => res.json({ success: true, users: users }))
         .catch(err => res.json({ success: false }));
     } else {
 
@@ -499,12 +612,9 @@ app.post("/updateProfile", updateuploadProfile.fields([{ name: 'profilePicture' 
           username: req.body.username,
           password: req.body.newpassword
         })
-        .then(users => res.json({ success: true }))
-        .catch(err => res.json({ success: false }));
+        .then(users => res.json({ success: true, users: users }))
+        .catch(err => res.json({ success: false, error: err }));
     }
-
-  } else {
-
   }
 })
 

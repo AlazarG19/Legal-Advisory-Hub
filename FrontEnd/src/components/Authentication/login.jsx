@@ -27,7 +27,7 @@ const LoginPage = () => {
           navigate('/legalexperts')
         } else {
           console.log("this is a freelancer")
-          navigate('/freelancerProfile')
+          navigate('/profile')
         }
 
 
@@ -57,7 +57,7 @@ const LoginPage = () => {
       if (userType == 'client') {
         navigate('/legalexperts');
       } else {
-        navigate('/freelancerProfile');
+        navigate('/profile');
       }
     } else {
       navigate('/login')

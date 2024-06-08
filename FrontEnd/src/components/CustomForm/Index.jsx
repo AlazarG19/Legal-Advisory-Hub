@@ -6,42 +6,6 @@ import Navigation from '../Navigation';
 import FormTable from './FormTable';
 const Index = () => {
 
-    const columns = [
-
-        {
-            name: "formid",
-            label: "formid",
-            options: {
-                filter: true,
-                sort: false,
-                display: false
-            }
-        },
-        {
-            name: "formname",
-            label: "Name",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "category",
-            label: "Category",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "formdescription",
-            label: "Description",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-    ];
     const [selectedcategory, setSelectedCategory] = useState("")
     const [data, setData] = useState([])
     const [olddata, setOldData] = useState([])
@@ -81,23 +45,13 @@ const Index = () => {
         let link = "http://localhost:5173/customform/" + e[0]
         window.location.href = link
     }
-    console.log(selectedcategory)
     const onCategoryClicked = (category) => {
         setSelectedCategory(category)
         let filtereddata = olddata.filter(form => form.category === category);
         setData(filtereddata)
         console.log(filtereddata)
     }
-    const options = {
-        search: true,
-        filterType: 'textField',
-        isRowSelectable: false,
-        print: false,
-        filter: false,
-        selectableRows: "none",
-        onRowClick: onRowClick,
-        viewColumns: false
-    };
+
     useEffect(() => {
         fetch(`http://localhost:3000/api/forms`, {
             method: 'GET',
