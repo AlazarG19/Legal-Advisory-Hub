@@ -64,20 +64,24 @@ const SignInForm = () => {
                 username,
                 password,
             });
-
+            console.log(response)
             if (response.status === 200) {
                 console.log('Login successful');
 
                 const result = await axios.get(`http://localhost:3000/getUser/${username}`);
+                console.log(result)
                 const userData = result.data;
 
                 if (userData && userData[0]) {
                     sessionStorage.setItem('user', JSON.stringify(userData));
-                    if (userData[0].userType === 'client') {
-                        navigate('/forum');
-                    } else {
-                        navigate('/profile');
-                    }
+                    alert(userData[0].userType)
+                    // if (userData[0].userType === 'client') {
+                    //     navigate('/forum');
+                    // } else if (userData[0].userType === 'admin') {
+                    //     navigate("/dashboard")
+                    // } else {
+                    //     navigate('/profile');
+                    // }
                 } else {
                     setErrorMessage('User data is not available');
                 }
@@ -106,8 +110,15 @@ const SignInForm = () => {
             console.log(userData)
             if (userData && userData[0]) {
                 sessionStorage.setItem('user', JSON.stringify(userData));
+                // if (userData[0].userType === 'client') {
+                //     navigate('/forum');
+                // } else {
+                //     navigate('/profile');
+                // }
                 if (userData[0].userType === 'client') {
                     navigate('/forum');
+                } else if (userData[0].userType === 'admin') {
+                    navigate("/dashboard")
                 } else {
                     navigate('/profile');
                 }
@@ -120,10 +131,18 @@ const SignInForm = () => {
         const storedJson = sessionStorage.getItem('user');
         if (storedJson) {
             const userData = JSON.parse(storedJson);
+            console
             if (userData && userData[0]) {
                 const userType = userData[0].userType;
+                // if (userType === 'client') {
+                //     navigate('/legalexperts');
+                // } else {
+                //     navigate('/profile');
+                // }
                 if (userType === 'client') {
-                    navigate('/legalexperts');
+                    navigate('/forum');
+                } else if (userType === 'admin') {
+                    navigate("/dashboard")
                 } else {
                     navigate('/profile');
                 }

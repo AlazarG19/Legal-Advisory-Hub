@@ -152,7 +152,7 @@ const Profile = () => {
                 Overview
               </a>
             </li>
-            <li className="nav-item my-1">
+            {usertype == "freelancer" ? <li className="nav-item my-1">
               <a
                 className={`btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 ${activeTab === "projects" ? "active" : ""
                   }`}
@@ -161,7 +161,8 @@ const Profile = () => {
               >
                 Projects
               </a>
-            </li>
+            </li> : ""}
+
             <li className="nav-item my-1">
               <a
                 className={`btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 ${activeTab === "settings" ? "active" : ""

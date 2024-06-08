@@ -33,7 +33,7 @@ const Navigation = () => {
   useEffect(() => {
     setimg("http://localhost:3000/uploads/profile/" + JSON.parse(sessionStorage.getItem('user'))[0]["profilePicture"])
     setusertype(JSON.parse(sessionStorage.getItem('user'))[0]["userType"])
-
+    console.log("usertype", usertype)
   }, [])
 
   return (
@@ -67,16 +67,38 @@ const Navigation = () => {
               {/* <!--begin::Menu--> */}
               <div className="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
                 {/* <!--begin:Menu item--> */}
-                <div onClick={() => { onLinkClick("/forum") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("forum") ? "menu-item here " : "menu-item "}>
-                  {/* <!--begin:Menu link--> */}
-                  <span className="menu-link">
-                    <span className="menu-title">Forum</span>
-                    <span className="menu-arrow d-lg-none"></span>
-                  </span>
-                  {/* <!--end:Menu link--> */}
-                </div>
+                {usertype == "admin" ?
+                  <div onClick={() => { onLinkClick("/dashboard") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("dashboard") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Dashboard</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div> : ""
+                }
+                {usertype == "admin" ?
+                  <div onClick={() => { onLinkClick("/mquestion") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("mquestion") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Forum</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div> :
+
+                  <div onClick={() => { onLinkClick("/forum") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("forum") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Forum</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                }
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
+
                 <div onClick={() => { onLinkClick("/legalexperts") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
@@ -87,35 +109,80 @@ const Navigation = () => {
                 </div>
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div onClick={() => { onLinkClick("/customform") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("customform") ? "menu-item here " : "menu-item "}>
-                  {/* <!--begin:Menu link--> */}
-                  <span className="menu-link">
-                    <span className="menu-title">Custom Form</span>
-                    <span className="menu-arrow d-lg-none"></span>
-                  </span>
-                  {/* <!--end:Menu link--> */}
-                </div>
+                {usertype == "admin" ?
+                  <div onClick={() => { onLinkClick("/customforms") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("customform") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Custom Form</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                  :
+                  <div onClick={() => { onLinkClick("/customform") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("customform") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Custom Form</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>}
+
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-                <div onClick={() => { onLinkClick("/docdb/documents") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("docdb") ? "menu-item here " : "menu-item "}>
-                  {/* <!--begin:Menu link--> */}
-                  <span className="menu-link">
-                    <span className="menu-title">Document Database</span>
-                    <span className="menu-arrow d-lg-none"></span>
-                  </span>
-                  {/* <!--end:Menu link--> */}
-                </div>
+                {usertype == "admin" ?
+                  <div onClick={() => { onLinkClick("/docdb/documents") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("docdb") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Document Database</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                  : <div onClick={() => { onLinkClick("/docdb/card") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("docdb") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Document Database</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>}
                 {/* <!--end:Menu item--> */}
-                {/* <!--begin:Menu item--> */}
-                <div onClick={() => { onLinkClick("/usermanagement") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("usermanagement") ? "menu-item here " : "menu-item "}>
-                  {/* <!--begin:Menu link--> */}
-                  <span className="menu-link">
-                    <span className="menu-title">User Management</span>
-                    <span className="menu-arrow d-lg-none"></span>
-                  </span>
-                  {/* <!--end:Menu link--> */}
-                </div>
-                {/* <!--end:Menu item--> */}
+                {usertype == "admin" ?
+
+                  < div onClick={() => { onLinkClick("/usermanagement") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("usermanagement") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">User Management</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                  :
+                  ""
+
+                }
+                {usertype == "admin" ?
+
+                  < div onClick={() => { onLinkClick("/train") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("train") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Train AI</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                  :
+                  < div onClick={() => { onLinkClick("/chatbot") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("chatbot") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">ChatBot</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+
+                }
               </div>
               {/* <!--end::Menu--> */}
             </div>
@@ -241,7 +308,7 @@ const Navigation = () => {
           {/*end::Header wrapper*/}
         </div>
         {/*end::Header container*/}
-      </div>
+      </div >
     </>
   );
 };
