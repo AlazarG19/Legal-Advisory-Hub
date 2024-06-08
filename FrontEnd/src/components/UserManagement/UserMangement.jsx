@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import UserTable from './UserTable';
 import Navigation from '../Navigation';
-
+import regeneratorRuntime from "regenerator-runtime"
 
 function UserMangement() {
 
@@ -72,24 +72,13 @@ function UserMangement() {
 
         },
     ]
+
     const fetchData = async () => {
         try {
             const response = await axios.get("http://localhost:3000/getUser");
             console.log(response.data)
-            settabledata(response.data)
-            // const data = response.data.data;
-
-            // if (!Array.isArray(data)) {
-            //   console.error("Expected an array of documents but received:", data);
-            //   return;
-            // }
-
-            // const filteredDocuments = data.filter(
-            //   (doc) =>
-            //     doc.category && doc.category.toLowerCase() === category.toLowerCase()
-            // );
-
-            // setDocuments(filteredDocuments);
+            let filtereddata = response.data.filter(user => user.userType != "admin");
+            settabledata(filtereddata)
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -128,7 +117,7 @@ function UserMangement() {
                             </div>
                             {/* <!--end::Card header--> */}
                             {/* <!--begin::Card body--> */}
-                            <div class="card-body py-4">
+                            <div class="card-body py-4" style={{ overflow: "scroll" }}>
                                 {/* <!--begin::Table--> */}
                                 <UserTable columns={columns} data={tabledata} />
 

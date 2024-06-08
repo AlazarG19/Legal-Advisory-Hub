@@ -102,6 +102,7 @@ function TrainAI() {
 
 		return (
 			<div>
+
 				{currentItems.map((savedFile, index) => (
 					<>
 						{/* <!--begin::Item--> */}
@@ -144,97 +145,100 @@ function TrainAI() {
 	};
 	return (
 		<>
+			<div id="kt_app_content_container" className="app-container" style={{ overflow: "hidden" }}>
+				<Navigation />
 
-
-			<div className="row">
-				{/* <!--begin::Media--> */}
-				<div className="col-md-6">
-					<div className="card card-flush py-4">
-						{/* <!--begin::Card header--> */}
-						<div className="card-header">
-							<div className="card-title">
-								<h2>Media</h2>
-							</div>
-						</div>
-						{/* <!--end::Card header--> */}
-						{/* <!--begin::Card body--> */}
-						<div className="card-body pt-0">
-							{/* <!--begin::Input group--> */}
-							<div className="fv-row mb-2">
-								{/* <!--begin::Dropzone--> */}
-								<div className="dropzone" id="kt_ecommerce_add_product_media" onClick={handleDropzoneClick}>
-									{/* <!--begin::Message--> */}
-									<div className="dz-message needsclick">
-										{/* <!--begin::Icon--> */}
-										<i className="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-										{/* <!--end::Icon--> */}
-										{/* <!--begin::Info--> */}
-										<div className="ms-4">
-											<h3 className="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-											<span className="fs-7 fw-semibold text-gray-400">Upload up to 10 files</span>
-											{/* Display selected file names */}
-											{files.length > 0 && (
-												<div className="mt-2">
-													<span className="fw-semibold text-gray-700">Selected files:</span>
-													<ul className="list-unstyled mb-0">
-														{files.map((file, index) => (
-															<li key={index}>{file.name}</li>
-														))}
-													</ul>
-												</div>
-											)}
-										</div>
-										{/* <!--end::Info--> */}
-									</div>
-									{/* <!--end::Message--> */}
-									{/* <!--begin::Input--> */}
-									<input type="file" className="dz-input" multiple ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
-									{/* <!--end::Input--> */}
+				<div className="row">
+					{/* <!--begin::Media--> */}
+					<div className="col-md-6">
+						<div className="card card-flush py-4">
+							{/* <!--begin::Card header--> */}
+							<div className="card-header">
+								<div className="card-title">
+									<h2>Media</h2>
 								</div>
-								{/* <!--end::Dropzone--> */}
 							</div>
-							{/* <!--end::Input group--> */}
-							{/* <!--begin::Description--> */}
-							<div className="text-muted fs-7">Set the product media gallery.</div>
-							{/* <!--end::Description--> */}
-							{/* <!--begin::Actions--> */}
-							<div className="d-flex justify-content-end mt-4">
-								<button className="btn btn-primary me-3" onClick={handleUpload}>
-									Upload
-								</button>
-								<button className="btn btn-primary" onClick={handleTrain}>
-									Train AI
-								</button>
+							{/* <!--end::Card header--> */}
+							{/* <!--begin::Card body--> */}
+							<div className="card-body pt-0">
+								{/* <!--begin::Input group--> */}
+								<div className="fv-row mb-2">
+									{/* <!--begin::Dropzone--> */}
+									<div className="dropzone" id="kt_ecommerce_add_product_media" onClick={handleDropzoneClick}>
+										{/* <!--begin::Message--> */}
+										<div className="dz-message needsclick">
+											{/* <!--begin::Icon--> */}
+											<i className="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+											{/* <!--end::Icon--> */}
+											{/* <!--begin::Info--> */}
+											<div className="ms-4">
+												<h3 className="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+												<span className="fs-7 fw-semibold text-gray-400">Upload up to 10 files</span>
+												{/* Display selected file names */}
+												{files.length > 0 && (
+													<div className="mt-2">
+														<span className="fw-semibold text-gray-700">Selected files:</span>
+														<ul className="list-unstyled mb-0">
+															{files.map((file, index) => (
+																<li key={index}>{file.name}</li>
+															))}
+														</ul>
+													</div>
+												)}
+											</div>
+											{/* <!--end::Info--> */}
+										</div>
+										{/* <!--end::Message--> */}
+										{/* <!--begin::Input--> */}
+										<input type="file" className="dz-input" multiple ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
+										{/* <!--end::Input--> */}
+									</div>
+									{/* <!--end::Dropzone--> */}
+								</div>
+								{/* <!--end::Input group--> */}
+								{/* <!--begin::Description--> */}
+								<div className="text-muted fs-7">Set the product media gallery.</div>
+								{/* <!--end::Description--> */}
+								{/* <!--begin::Actions--> */}
+								<div className="d-flex justify-content-end mt-4">
+									<button className="btn btn-primary me-3" onClick={handleUpload}>
+										Upload
+									</button>
+									<button className="btn btn-primary" onClick={handleTrain}>
+										Train AI
+									</button>
+								</div>
+								{/* <!--end::Actions--> */}
 							</div>
-							{/* <!--end::Actions--> */}
+							{/* <!--end::Card body--> */}
 						</div>
-						{/* <!--end::Card body--> */}
 					</div>
-				</div>
 
-				{/* <!--begin::List widget 20--> */}
-				<div className="col-md-6">
-					<div className="card h-xl-100">
-						{/* <!--begin::Header--> */}
-						<div className="card-header border-0 pt-5">
-							<h3 className="card-title align-items-start flex-column">
-								<span className="card-label fw-bold text-dark">Trained Documents</span>
-								<span className="text-muted mt-1 fw-semibold fs-7">Documents</span>
-							</h3>
+					{/* <!--begin::List widget 20--> */}
+					<div className="col-md-6">
+						<div className="card h-xl-100">
+							{/* <!--begin::Header--> */}
+							<div className="card-header border-0 pt-5">
+								<h3 className="card-title align-items-start flex-column">
+									<span className="card-label fw-bold text-dark">Trained Documents</span>
+									<span className="text-muted mt-1 fw-semibold fs-7">Documents</span>
+								</h3>
+							</div>
+							{/* <!--end::Header--> */}
+							{/* <!--begin::Body--> */}
+							<div className="card-body pt-6">
+								{populateSavedFiles()}
+							</div>
+							{/* <!--end::Body--> */}
 						</div>
-						{/* <!--end::Header--> */}
-						{/* <!--begin::Body--> */}
-						<div className="card-body pt-6">
-							{populateSavedFiles()}
-						</div>
-						{/* <!--end::Body--> */}
 					</div>
 				</div>
+				{/* <!--end::List widget 20--> */}
+				{/* <!--end::Media--> */}
+				{/* Render the loading modal if showLoadingModal is true */}
+				{showLoadingModal && <LoadingModal />}
 			</div>
-			{/* <!--end::List widget 20--> */}
-			{/* <!--end::Media--> */}
-			{/* Render the loading modal if showLoadingModal is true */}
-			{showLoadingModal && <LoadingModal />}
+
 		</>
 	);
 }
