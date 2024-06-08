@@ -24,14 +24,18 @@ function Forum() {
         'Tort',
     ];
 
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+
 
 
     useEffect(() => {
         console.log('http://localhost:3000/api/questions/')
         fetch('http://localhost:3000/api/questions/').then(res => res.json()).then(result => {
-            result = result.filter(item => item.reported != true )
+            result = result.filter(item => item.reported != true)
             console.log(result.length)
-            
+
             setPosts(result)
             setFilteredPosts(result)
             setTotalPages(Math.ceil(result.length / postsPerPage))
@@ -39,12 +43,13 @@ function Forum() {
         }).catch((error) => {
             console.log(error)
         });
-    }, [postsPerPage])
+    }, [postsPerPage,posts])
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     }
     const handleCategory = (category) => {
+        setSelectedCategory(category);
         // e.preventDefault();
         const filteredResults = posts.filter(post => post.category == category);
         setFilteredPosts(filteredResults);
@@ -108,16 +113,15 @@ function Forum() {
                                                         <div key={index}>
                                                             <div className="d-flex flex-stack py-3">
                                                                 <div className="d-flex align-items-center flex-row-fluid flex-wrap">
-                                                                    <div className="flex-grow-1 me-3">
-                                                                        <a className="text-gray-800 text-hover-primary fs-6 fw-bold "  >{item}</a>
-                                                                    </div>
-                                                                    <a
+                                                                    <div
+                                                                        className={`flex-grow-1 me-3 ${selectedCategory === item
+                                                                                ? 'text-primary text-hover-primary fs-6 fw-bold'
+                                                                                : 'text-gray-800 text-hover-primary fs-6 fw-bold'
+                                                                            }`}
                                                                         onClick={() => handleCategory(item)}
-                                                                        href="#"
-                                                                        className="btn btn-sm btn-light fs-8 fw-bold"
                                                                     >
-                                                                        {'-'}
-                                                                    </a>
+                                                                        <a>{item}</a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             {index !== categories.length - 1 && (

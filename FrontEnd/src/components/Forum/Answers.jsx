@@ -42,20 +42,21 @@ function Answers() {
     useEffect(() => {
         // console.log(category)
         console.log(Question, "In quote")
-        fetch(`http://localhost:3000/api/questions/category/${id}`).then(res => res.json()).then(result => {
+        fetch(`http://localhost:3000/api/questions/category/${id}`)
+        .then(res => res.json())
+        .then(result => {
             // console.log(category)
-            result = result.filter(item => item.reported != true )
-            setQuestions(result)
+            result = result.filter(item => item.reported !== true )
+            // Limit the result to 5 items
+            setQuestions(result.slice(0, 5))
             // console.log(category,"Category ")
             console.log("this is related squestion start")
-            console.log(result)
-
+            console.log(result.slice(0, 5))
             console.log("this is related squestion End")
-        }).catch((error) => {
+        })
+        .catch((error) => {
             console.log(error)
         });
-
-
     }, [])
 
     useEffect(() => {
@@ -237,19 +238,6 @@ function Answers() {
 </div>
                                                         {populateAnswers()}
                                                         {/* <!--end::Posts--> */}
-                                                        {/* <!--begin::Show more feeds--> */}
-                                                        <div className="d-flex flex-center">
-                                                            <a href="#" className="btn btn-primary fw-bold px-6" id="kt_social_feeds_more_posts_btn">
-                                                                {/* <!--begin::Indicator label--> */}
-                                                                <span className="indicator-label">Show more</span>
-                                                                {/* <!--end::Indicator label--> */}
-                                                                {/* <!--begin::Indicator progress--> */}
-                                                                <span className="indicator-progress">Please wait...
-                                                                    <span className="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                {/* <!--end::Indicator progress--> */}
-                                                            </a>
-                                                        </div>
-                                                        {/* <!--end::Show more feeds--> */}
                                                     </div>
                                                     {/* <!--end::Content--> */}
 
