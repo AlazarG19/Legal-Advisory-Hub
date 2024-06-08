@@ -4,8 +4,8 @@ import './authentication.css'
 import SuccessModal from "./SuccessModal";
 import ErrorModal from "./ErrorModal";
 import WarningModal from "./WarningModal";
-import Navigation from "../Navigation";
-const CreateAdmin = ({ }) => {
+const Settings = ({ details }) => {
+  console.log(details)
   const [submitting, setsubmitting] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showConfirmationError, setShowConfirmationError] = useState(false);
@@ -37,25 +37,27 @@ const CreateAdmin = ({ }) => {
     }
     console.log(`http://localhost:3000/checkusername/${values.username}`)
     if (!errors.username) {
+      console.log(values.username, details.username)
+      if (values.username != details.username) {
 
-      await fetch(`http://localhost:3000/checkusername/${values.username}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("within data")
-          console.log(data)
-          if (data.length != 0) {
-            errors.username = 'username Exist!';
+        await fetch(`http://localhost:3000/checkusername/${values.username}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
           }
         })
-        .catch((error) => {
-          console.log(error)
-        });
-
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("within data")
+            console.log(data)
+            if (data.length != 0) {
+              errors.username = 'username Exist!';
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      }
     } else {
       console.log("error")
     }
@@ -86,17 +88,15 @@ const CreateAdmin = ({ }) => {
       console.log("error")
     }
     if (!values.password) {
-      errors.password = 'Required';
-    } else if (values.password.length < 2) {
-      errors.password = 'Too Short';
+      errors.password = 'Password Required';
     }
 
     console.log("error", errors)
     setsubmitting(false)
     return errors;
   };
-  const [selectedImage, setSelectedImage] = useState("/assets/img/placeholder.png");
-  const [profilePicture, setProfilePicture] = useState("");
+  const [selectedImage, setSelectedImage] = useState("http://localhost:3000/uploads/profile/" + details.profilePic);
+  const [profilePicture, setProfilePicture] = useState(null);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -111,11 +111,10 @@ const CreateAdmin = ({ }) => {
 
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      username: "",
-      newpassword: "",
-      oldpassword: "",
+      firstname: details.firstname,
+      lastname: details.lastname,
+      username: details.username,
+      password: ""
     },
     validate,
     validateOnChange: false,
@@ -123,39 +122,72 @@ const CreateAdmin = ({ }) => {
 
     onSubmit: async (values, setSubmitting) => {
       setsubmitting(false)
-      // console.log("submitted successfully")
+      console.log("submitted successfully")
       const formData = new FormData();
-      // console.log("profile picture", profilePicture)
-      // console.log("old Form data", formData)
+      console.log("profile picture", profilePicture)
+      console.log("old Form data", formData)
       formData.append("profilePicture", profilePicture);
-      formData.append("usertype", "admin");
+      formData.append("userid", details.id);
+      formData.append("usertype", details.usertype);
       formData.append("firstname", values.firstname);
       formData.append("lastname", values.lastname);
       formData.append("username", values.username);
-      formData.append("email", values.email);
       formData.append("password", values.password);
       formData.append("profilePicture", profilePicture);
-      fetch(`http://localhost:3000/createAdminProfile`, {
-        method: 'POST',
+      console.log("userid", details.id);
+      console.log("firstname", values.firstname);
+      console.log("lastname", values.lastname);
+      console.log("username", values.username);
+      console.log("newpassword", values.newpassword);
+      console.log("newformdata", formData.entries)
 
-        body: formData
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Successfully Created")
-        })
-        .catch((error) => {
-          console.log("error while sending")
-          console.error('Error:', error);
-        });
+      // formData.append("contact", values.contact);
+      // formData.append("city", values.city);
+      // formData.append("language", values.language);
+      // formData.append("bio", values.bio);
+      // fetch(`http://localhost:3000/updateProfile`, {
+      //   method: 'POST',
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      //   body: formData
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("Successfully sent")
+      //   })
+      //   .catch((error) => {
+      //     console.log("error while sending")
+      //     console.error('Error:', error);
+      //   });
+      try {
+        await axios.post("http://localhost:3000/updateProfile", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then(
+          (result) => {
+            console.log(result)
+            console.log(result.data.success == true)
+            if (result.data.success) {
+              handleSuccess()
+            } else {
+              handleError()
+            }
+          }
+        );
 
+      } catch (error) {
+        console.error("Error creating product:", error);
+      }
 
 
     }
   })
   return (
     <div>
-      <Navigation />
+      {"normal submitting" + submitting}
+      {"formik submitting" + formik.isSubmitting}
       {/* {formik.isSubmitting} */}
       <div className="card mb-5 mb-xl-10">
         {/*begin::Card header*/}
@@ -327,32 +359,14 @@ const CreateAdmin = ({ }) => {
                 {/*end::Col*/}
               </div>
               {/*end::Input group*/}
-              {/*begin::Input group*/}
-              <div className="row mb-6">
-                {/*begin::Label*/}
-                <label className="col-lg-4 col-form-label required fw-semibold fs-6">
-                  Email
-                </label>
-                {/*end::Label*/}
-                {/*begin::Col*/}
-                <div className="col-lg-8 fv-row fv-plugins-icon-container">
-                  <input
-                    type="text"
-                    name="email"
-                    className="form-control form-control-lg form-control-solid"
-                    onChange={formik.handleChange}
-                    defaultValue={formik.values.email}
-                  />
-                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.email}</div>
-                </div>
-                {/*end::Col*/}
+              <div className="card-title m-0">
+                <h3 className="fw-bold mb-10">If you want to change the password fill in the old password and add a new password. If not leave it blank</h3>
               </div>
-              {/*end::Input group*/}
               {/*begin::Input group*/}
               <div className="row mb-6">
                 {/*begin::Label*/}
                 <label className="col-lg-4 col-form-label fw-semibold fs-6">
-                  <span className="required">Password</span>
+                  <span className="required">Old Password</span>
 
                 </label>
                 {/*end::Label*/}
@@ -362,15 +376,36 @@ const CreateAdmin = ({ }) => {
                     type="password"
                     className="form-control form-control-lg form-control-solid"
                     onChange={formik.handleChange}
-                    value={formik.values.password}
-                    name='password'
+                    value={formik.values.oldpassword}
+                    name='oldpassword'
                   />
-                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.password}</div>
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.oldpassword}</div>
                 </div>
                 {/*end::Col*/}
               </div>
               {/*end::Input group*/}
+              {/*begin::Input group*/}
+              <div className="row mb-6">
+                {/*begin::Label*/}
+                <label className="col-lg-4 col-form-label fw-semibold fs-6">
+                  <span className="required">New Password</span>
 
+                </label>
+                {/*end::Label*/}
+                {/*begin::Col*/}
+                <div className="col-lg-8 fv-row fv-plugins-icon-container">
+                  <input
+                    type="password"
+                    className="form-control form-control-lg form-control-solid"
+                    onChange={formik.handleChange}
+                    value={formik.values.newpassword}
+                    name='newpassword'
+                  />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.newpassword}</div>
+                </div>
+                {/*end::Col*/}
+              </div>
+              {/*end::Input group*/}
             </div>
             {/*end::Card body*/}
             {/*begin::Actions*/}
@@ -405,12 +440,114 @@ const CreateAdmin = ({ }) => {
         </div>
         {/*end::Content*/}
       </div>
+      <div>
+        <div className="card">
+          {/*begin::Card header*/}
+          <div
+            className="card-header border-0 cursor-pointer"
+            role="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#kt_account_deactivate"
+            aria-expanded="true"
+            aria-controls="kt_account_deactivate"
+          >
+            <div className="card-title m-0">
+              <h3 className="fw-bold m-0">Deactivate Account</h3>
+            </div>
+          </div>
+          {/*end::Card header*/}
+          {/*begin::Content*/}
+          <div id="kt_account_settings_deactivate" className="collapse show">
+            {/*begin::Form*/}
+
+            {/*begin::Card body*/}
+            <div className="card-body border-top p-9">
+              {/*begin::Notice*/}
+              <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                {/*begin::Icon*/}
+                {/*begin::Svg Icon | path: icons/duotune/general/gen044.svg*/}
+                <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      opacity="0.3"
+                      x={2}
+                      y={2}
+                      width={20}
+                      height={20}
+                      rx={10}
+                      fill="currentColor"
+                    />
+                    <rect
+                      x={11}
+                      y={14}
+                      width={7}
+                      height={2}
+                      rx={1}
+                      transform="rotate(-90 11 14)"
+                      fill="currentColor"
+                    />
+                    <rect
+                      x={11}
+                      y={17}
+                      width={2}
+                      height={2}
+                      rx={1}
+                      transform="rotate(-90 11 17)"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                {/*end::Svg Icon*/}
+                {/*end::Icon*/}
+                {/*begin::Wrapper*/}
+                <div className="d-flex flex-stack flex-grow-1">
+                  {/*begin::Content*/}
+                  <div className="fw-semibold">
+                    <h4 className="text-gray-900 fw-bold">
+                      You Are Deactivating Your Account
+                    </h4>
+                    <div className="fs-6 text-gray-700">
+                      Once your account is deactivating you won't be able to recover it.
+                      <br />
+                    </div>
+                  </div>
+                  {/*end::Content*/}
+                </div>
+                {/*end::Wrapper*/}
+              </div>
+              {/*end::Notice*/}
+            </div>
+            {/*end::Card body*/}
+            {/*begin::Card footer*/}
+            <div className="card-footer d-flex justify-content-end py-6 px-9">
+              <button
+                id=""
+                onClick={handleDelete}
+                className="btn btn-danger fw-semibold"
+              >
+                Deactivate Account
+              </button>
+            </div>
+            {/*end::Card footer*/}
+            <input type="hidden" />
+
+            {/*end::Form*/}
+          </div>
+          {/*end::Content*/}
+        </div>
+      </div>
 
       {showConfirmation && <SuccessModal />}
       {showConfirmationError && <ErrorModal />}
-      {showConfirmationWarning && <WarningModal id={"details.id"} close={handleCloseDelete} />}
+      {showConfirmationWarning && <WarningModal id={details.id} close={handleCloseDelete} />}
     </div>
   );
 };
 
-export default CreateAdmin;
+export default Settings;

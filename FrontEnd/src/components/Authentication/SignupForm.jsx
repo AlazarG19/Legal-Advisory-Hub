@@ -136,7 +136,7 @@ const SignupForm = () => {
 
     <div className="d-flex flex-column flex-lg-row flex-column-fluid">
       {/* begin::Aside */}
-      <div className="d-flex flex-lg-row-fluid bgi-size-cover bgi-position-center" style={{ backgroundImage: "url(/assets/media/misc/auth-bg.png)" }}>
+      <div className="d-none d-lg-block  d-flex flex-lg-row-fluid bgi-size-cover bgi-position-center" style={{ backgroundImage: "url(/assets/media/misc/auth-bg.png)" }}>
         <img style={{ width: "100%" }} className="" src="assets/img/front.png" alt="" />
 
       </div>
@@ -218,8 +218,14 @@ const SignupForm = () => {
               </div>
               {/* begin::Input group */}
               {/* begin::Submit button */}
+
               <div className="d-grid mb-10">
-                <button type="submit" id="kt_sign_up_submit" onClick={formik.handleSubmit} className="btn btn-primary">
+                {formik.isSubmitting ? <div className="text-center">
+                  <button disabled className="btn btn-primary" >
+                    <span className="indicator-label">Please wait...
+                      <span className="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                  </button>
+                </div> : <button type="submit" id="kt_sign_up_submit" onClick={formik.handleSubmit} className="btn btn-primary">
                   {/* begin::Indicator label */}
                   <span className="indicator-label">Sign up</span>
                   {/* end::Indicator label */}
@@ -227,7 +233,8 @@ const SignupForm = () => {
                   <span className="indicator-progress">Please wait...
                     <span className="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                   {/* end::Indicator progress */}
-                </button>
+                </button>}
+
               </div>
               {/* end::Submit button */}
               {/* begin::Sign up */}

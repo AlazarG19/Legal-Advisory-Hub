@@ -226,7 +226,8 @@ const FreelancerSignup = () => {
                                             <select type="text" onChange={formik.handleChange}
 
                                                 value={formik.values.category} name='category' class="form-control form-control-lg form-control-solid" >
-                                                <option value="criminal">Select One Option</option>
+                                                <option value="">Select One Option</option>
+                                                <option value="criminal">Criminal</option>
                                                 <option value="civil">Civil</option>
                                                 <option value="family">Family</option>
                                                 <option value="employment">Employment</option>
