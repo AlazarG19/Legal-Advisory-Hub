@@ -429,120 +429,85 @@ const Settings = ({ details }) => {
               {/*end::Input group*/}
             </div>
             {/* freelancer part  */}
-            <div className="card-title m-0">
+            {details.usertype == "freelancer" ? <><div className="card-title m-0">
               <h3 className="fw-bold mb-10">Freelancer Setting</h3>
             </div>
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Catagory</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <select type="text" onChange={formik.handleChange}
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Catagory</label>
 
-                  defaultValue={formik.values.catagory} name='catagory' class="form-control form-control-lg form-control-solid" >
-                  <option value="">Select One Option</option>
-                  <option value="criminal">Criminal</option>
-                  <option value="civil">Civil</option>
-                  <option value="family">Family</option>
-                  <option value="employment">Employment</option>
-                  <option value="contract">Contract</option>
-                  <option value="intellectualproperty">Intellectual Property</option>
-                  <option value="constitutional">Constitutional</option>
-                  <option value="administrative">Administrative</option>
-                  <option value="realestate">Real Estate</option>
-                  <option value="tort">Tort</option>
-                </select>
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.catagory}</div>
+                <div class="col-lg-8 fv-row">
+                  <select type="text" onChange={formik.handleChange}
 
+                    defaultValue={formik.values.catagory} name='catagory' class="form-control form-control-lg form-control-solid" >
+                    <option value="">Select One Option</option>
+                    <option value="criminal">Criminal</option>
+                    <option value="civil">Civil</option>
+                    <option value="family">Family</option>
+                    <option value="employment">Employment</option>
+                    <option value="contract">Contract</option>
+                    <option value="intellectualproperty">Intellectual Property</option>
+                    <option value="constitutional">Constitutional</option>
+                    <option value="administrative">Administrative</option>
+                    <option value="realestate">Real Estate</option>
+                    <option value="tort">Tort</option>
+                  </select>
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.catagory}</div>
+
+                </div>
               </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Firm</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <input
-                  type="text"
-                  class="form-control form-control-lg form-control-solid"
-                  onChange={formik.handleChange}
-                  value={formik.values.firm}
-                  name='firm' placeholder='Firm' />
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.firm}</div>
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Firm</label>
+                <div class="col-lg-8 fv-row">
+                  <input
+                    type="text"
+                    class="form-control form-control-lg form-control-solid"
+                    onChange={formik.handleChange}
+                    value={formik.values.firm}
+                    name='firm' placeholder='Firm' />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.firm}</div>
 
+                </div>
               </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contact Number</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contact Number</label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
 
-                  value={formik.values.contact} name='contact' placeholder='Contact Number' />
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.contact}</div>
+                    value={formik.values.contact} name='contact' placeholder='Contact Number' />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.contact}</div>
 
+                </div>
               </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">City</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">City</label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
 
-                  value={formik.values.city} name='city' placeholder='City' />
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.city}</div>
+                    value={formik.values.city} name='city' placeholder='City' />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.city}</div>
 
+                </div>
               </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Language</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Language</label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
 
-                  value={formik.values.language} name='language' placeholder='Language' />
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.language}</div>
+                    value={formik.values.language} name='language' placeholder='Language' />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.language}</div>
 
+                </div>
               </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
-            {/* <!--begin::Input group--> */}
-            <div class="row mb-6">
-              {/* <!--begin::Label--> */}
-              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bio</label>
-              {/* <!--end::Label--> */}
-              {/* <!--begin::Col--> */}
-              <div class="col-lg-8 fv-row">
-                <textarea type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bio</label>
+                <div class="col-lg-8 fv-row">
+                  <textarea type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
 
-                  value={formik.values.bio} name='bio' placeholder='Bio' />
-                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.bio}</div>
+                    value={formik.values.bio} name='bio' placeholder='Bio' />
+                  <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.bio}</div>
 
-              </div>
-              {/* <!--end::Col--> */}
-            </div>
-            {/* <!--end::Input group--> */}
+                </div>
+              </div></> : ""}
             {/* freelancer part  */}
 
             {/*end::Card body*/}

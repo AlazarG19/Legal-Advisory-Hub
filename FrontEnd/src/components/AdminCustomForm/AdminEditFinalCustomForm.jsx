@@ -7,7 +7,7 @@ import { editadminstatement } from '../../redux/Reducers/adminsectionreducer';
 uuidv4();
 import store from '../../redux/Store';
 import { useParams } from 'react-router-dom';
-import { increment } from '../../redux/Reducers';
+import { increment } from '../../redux/Reducers/index';
 import Navigation from '../Navigation';
 
 import SuccessModal from './SuccessModal';

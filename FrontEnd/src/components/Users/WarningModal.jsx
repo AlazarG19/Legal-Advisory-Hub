@@ -10,10 +10,31 @@ const WarningModal = ({ id, close }) => {
   const navigate = useNavigate();
 
   const handleConfirmSuccess = async () => {
-    console.log("finished")
-
-    window.location.reload()
-
+    // console.log("finished")
+    // window.location.reload()
+    await fetch(`http://localhost:3000/deleteUser/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result)
+        console.log("within data")
+        if (result.success) {
+          sessionStorage.removeItem("user")
+          navigate('/login')
+        } else {
+          console.log("delete unsuccessful")
+        }
+        // if (data.length != 0) {
+        //   errors.username = 'username Exist!';
+        // }
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   };
 
   const handleSuccess = () => {

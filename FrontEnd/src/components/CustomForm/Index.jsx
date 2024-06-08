@@ -347,7 +347,7 @@ const Index = () => {
                                                         {/* <!--begin::Title--> */}
                                                         <h3 className="card-title align-items-start flex-column">
                                                             <span className="card-label fw-bold text-dark">List of Custom Templates</span>
-                                                            <span className="text-gray-400 mt-1 fw-semibold fs-6">Total 2,356 Custom Template Available</span>
+                                                            <span className="text-gray-400 mt-1 fw-semibold fs-6">Total {data.length} Custom Template Available</span>
                                                         </h3>
                                                         {/* <!--end::Title--> */}
                                                     </div>

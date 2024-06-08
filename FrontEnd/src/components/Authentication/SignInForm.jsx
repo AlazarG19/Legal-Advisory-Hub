@@ -37,6 +37,9 @@ const SignInForm = () => {
                     if (userData[0].disabled) {
                         errors.username = "Your Account has been disabled.Contact Admins"
                     }
+                    if (!userData[0].verified) {
+                        errors.username = "Verify your account first"
+                    }
 
                 }
             } catch (error) {
