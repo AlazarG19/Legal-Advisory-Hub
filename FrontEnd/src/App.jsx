@@ -47,6 +47,7 @@ import UserSignup from './components/Authentication/UserSignup'
 import UserMangement from './components/UserManagement/UserMangement'
 import ManageReport from './components/Forum/ManageReport'
 import Profile from './components/Users/Profile'
+import ViewProfileAdmin from './components/UserManagement/ViewProfile/ViewProfileAdmin'
 
 
 function App() {
@@ -92,6 +93,11 @@ function App() {
           <Route path="/customforms/add" element={<AdminFinalCustomForm />}></Route>
           {/* End Admin Custom Form Routes */}
 
+          {/* admin user management routes */}
+
+          <Route path="/viewprofileadmin/:id" element={<ViewProfileAdmin />} />
+          <Route path="/usermanagement" element={<UserMangement />} />
+          {/* admin user management routes */}
 
           {/* document database */}
           <Route path="/docdb/documents" element={<Documents />} />
@@ -114,9 +120,6 @@ function App() {
           <Route path="/train" element={<TrainAI />} />
           {/* end fekedes route */}
 
-          {/* user mangement routes */}
-          <Route path="/usermanagement" element={<UserMangement />} />
-          {/* end user mangement routes */}
         </Routes>
       </BrowserRouter>
     </>

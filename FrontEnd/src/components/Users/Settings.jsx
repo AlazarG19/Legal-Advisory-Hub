@@ -32,6 +32,27 @@ const Settings = ({ details }) => {
     if (!values.lastname) {
       errors.lastname = 'Last Name Required';
     }
+    if (details.usertype == "freelancer") {
+
+      if (!values.catagory) {
+        errors.catagory = 'Catagory Required';
+      }
+      if (!values.firm) {
+        errors.firm = 'Firm Required';
+      }
+      if (!values.contact) {
+        errors.contact = 'Contact Required';
+      }
+      if (!values.city) {
+        errors.city = 'City Required';
+      }
+      if (!values.language) {
+        errors.language = 'Language Required';
+      }
+      if (!values.bio) {
+        errors.bio = 'Bio Required';
+      }
+    }
     if (!values.username) {
       errors.username = 'UserName Required';
     }
@@ -61,34 +82,18 @@ const Settings = ({ details }) => {
     } else {
       console.log("error")
     }
-    if (!values.email) {
-      errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address';
-    }
-    if (!errors.email) {
+    console.log()
+    if (values.oldpassword || values.newpassword) {
+      if (!values.oldpassword) {
+        errors.oldpassword = 'Old Password Required';
 
-      await fetch(`http://localhost:3000/checkEmail/${values.email}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
-          if (data.length != 0) {
-            errors.email = 'Email Exist!';
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-    } else {
-      console.log("error")
-    }
-    if (!values.password) {
-      errors.password = 'Password Required';
+      } else if (values.oldpassword != details.password) {
+        errors.oldpassword = "Password Doesn't Match with all Password"
+      }
+      if (!values.newpassword) {
+        errors.newpassword = 'New Password Required';
+      }
+
     }
 
     console.log("error", errors)
@@ -114,7 +119,13 @@ const Settings = ({ details }) => {
       firstname: details.firstname,
       lastname: details.lastname,
       username: details.username,
-      password: ""
+      newpassword: "",
+      catagory: details.catagory,
+      firm: details.firm,
+      contact: details.contact,
+      city: details.city,
+      language: details.language,
+      bio: details.bio,
     },
     validate,
     validateOnChange: false,
@@ -123,6 +134,7 @@ const Settings = ({ details }) => {
     onSubmit: async (values, setSubmitting) => {
       setsubmitting(false)
       console.log("submitted successfully")
+      console.log(values)
       const formData = new FormData();
       console.log("profile picture", profilePicture)
       console.log("old Form data", formData)
@@ -132,14 +144,16 @@ const Settings = ({ details }) => {
       formData.append("firstname", values.firstname);
       formData.append("lastname", values.lastname);
       formData.append("username", values.username);
-      formData.append("password", values.password);
+      formData.append("newpassword", values.newpassword);
       formData.append("profilePicture", profilePicture);
-      console.log("userid", details.id);
-      console.log("firstname", values.firstname);
-      console.log("lastname", values.lastname);
-      console.log("username", values.username);
-      console.log("newpassword", values.newpassword);
-      console.log("newformdata", formData.entries)
+      if (details.usertype == "freelancer") {
+        formData.append("catagory", values.catagory);
+        formData.append("firm", values.firm);
+        formData.append("contact", values.contact);
+        formData.append("city", values.city);
+        formData.append("language", values.language);
+        formData.append("bio", values.bio);
+      }
 
       // formData.append("contact", values.contact);
       // formData.append("city", values.city);
@@ -170,6 +184,15 @@ const Settings = ({ details }) => {
             console.log(result)
             console.log(result.data.success == true)
             if (result.data.success) {
+              sessionStorage.removeItem('user');
+
+
+
+              sessionStorage.setItem('user', JSON.stringify([result.data.users]));
+
+
+
+              console.log('User profile picture updated successfully');
               handleSuccess()
             } else {
               handleError()
@@ -186,8 +209,6 @@ const Settings = ({ details }) => {
   })
   return (
     <div>
-      {"normal submitting" + submitting}
-      {"formik submitting" + formik.isSubmitting}
       {/* {formik.isSubmitting} */}
       <div className="card mb-5 mb-xl-10">
         {/*begin::Card header*/}
@@ -407,6 +428,123 @@ const Settings = ({ details }) => {
               </div>
               {/*end::Input group*/}
             </div>
+            {/* freelancer part  */}
+            <div className="card-title m-0">
+              <h3 className="fw-bold mb-10">Freelancer Setting</h3>
+            </div>
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Catagory</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <select type="text" onChange={formik.handleChange}
+
+                  defaultValue={formik.values.catagory} name='catagory' class="form-control form-control-lg form-control-solid" >
+                  <option value="">Select One Option</option>
+                  <option value="criminal">Criminal</option>
+                  <option value="civil">Civil</option>
+                  <option value="family">Family</option>
+                  <option value="employment">Employment</option>
+                  <option value="contract">Contract</option>
+                  <option value="intellectualproperty">Intellectual Property</option>
+                  <option value="constitutional">Constitutional</option>
+                  <option value="administrative">Administrative</option>
+                  <option value="realestate">Real Estate</option>
+                  <option value="tort">Tort</option>
+                </select>
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.catagory}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Firm</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <input
+                  type="text"
+                  class="form-control form-control-lg form-control-solid"
+                  onChange={formik.handleChange}
+                  value={formik.values.firm}
+                  name='firm' placeholder='Firm' />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.firm}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contact Number</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+
+                  value={formik.values.contact} name='contact' placeholder='Contact Number' />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.contact}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">City</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+
+                  value={formik.values.city} name='city' placeholder='City' />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.city}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Language</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+
+                  value={formik.values.language} name='language' placeholder='Language' />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.language}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* <!--begin::Input group--> */}
+            <div class="row mb-6">
+              {/* <!--begin::Label--> */}
+              <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bio</label>
+              {/* <!--end::Label--> */}
+              {/* <!--begin::Col--> */}
+              <div class="col-lg-8 fv-row">
+                <textarea type="text" class="form-control form-control-lg form-control-solid" onChange={formik.handleChange}
+
+                  value={formik.values.bio} name='bio' placeholder='Bio' />
+                <div className='input-error-display' style={{ marginLeft: "40px" }} >{formik.errors.bio}</div>
+
+              </div>
+              {/* <!--end::Col--> */}
+            </div>
+            {/* <!--end::Input group--> */}
+            {/* freelancer part  */}
+
             {/*end::Card body*/}
             {/*begin::Actions*/}
             <div className="card-footer d-flex justify-content-end py-6 px-9">

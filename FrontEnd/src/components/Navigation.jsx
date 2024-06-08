@@ -14,13 +14,13 @@ const Navigation = () => {
     navigate('/login')
   }
   const handleViewProfile = () => {
-    if (usertype == "client") {
-      navigate('/user')
+    navigate('/profile')
+    // if (usertype == "client") {
 
-    } else if (usertype == "freelancer") {
+    // } else if (usertype == "freelancer") {
 
-      navigate('/freelancerProfile')
-    }
+    //   navigate('/profile')
+    // }
   }
   let location = useLocation()
   console.log("locaiton", location.pathname)
@@ -101,6 +101,16 @@ const Navigation = () => {
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Document Database</span>
+                    <span className="menu-arrow d-lg-none"></span>
+                  </span>
+                  {/* <!--end:Menu link--> */}
+                </div>
+                {/* <!--end:Menu item--> */}
+                {/* <!--begin:Menu item--> */}
+                <div onClick={() => { onLinkClick("/usermanagement") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("usermanagement") ? "menu-item here " : "menu-item "}>
+                  {/* <!--begin:Menu link--> */}
+                  <span className="menu-link">
+                    <span className="menu-title">User Management</span>
                     <span className="menu-arrow d-lg-none"></span>
                   </span>
                   {/* <!--end:Menu link--> */}

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Navigation from "../Navigation";
+import { useNavigate, useParams } from "react-router-dom";
+import Navigation from "../../Navigation";
 import OverviewComponent from "./OverviewComponent";
 import ProjectsComponent from "./ProjectsComponent";
-import Settings from "./Settings";
+// import Settings from "./Settings";
 import axios from 'axios'
-const Profile = () => {
-  const [id, setId] = useState("");
+const ViewProfileAdmin = () => {
+  const urlid = useParams()
+  console.log(urlid)
+  const [id, setId] = useState(urlid.id);
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -26,11 +28,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const fetchData = async (getUser) => {
-    const session = JSON.parse(getUser);
-    console.log(session)
-    const id2 = session[0]?._id
-    console.log(`http://localhost:3000/getFreelancer/${id2}`)
-    await fetch(`http://localhost:3000/getFreelancer/${id2}`, {
+    console.log(`http://localhost:3000/getFreelancer/${urlid.id}`)
+    await fetch(`http://localhost:3000/getFreelancer/${urlid.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +38,6 @@ const Profile = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
-        setId(id2)
         setEmail(data[0].email)
         setFirstName(data[0].firstName)
         setLastName(data[0].lastName)
@@ -81,8 +79,8 @@ const Profile = () => {
         return <OverviewComponent details={{ email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
       case "projects":
         return <ProjectsComponent id={id} />;
-      case "settings":
-        return <Settings details={{ id, profilePic, password, email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
+      // case "settings":
+      //   return <Settings details={{ id, profilePic, password, email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
       // case "documents":
       //   return <DocumentsComponent />;
       // case "followers":
@@ -104,7 +102,7 @@ const Profile = () => {
           className="card-header rounded-top bgi-size-cover h-200px"
           style={{
             backgroundPosition: "100% 50%",
-            backgroundImage: 'url("assets/media/misc/profile-head-bg.jpg")',
+            backgroundImage: 'url("./assets/media/misc/profile-head-bg.jpg")',
           }}
         />
         {/*end::Hero nav*/}
@@ -125,7 +123,6 @@ const Profile = () => {
               </div>
             </div>
             {/*end::Pic*/}
-            {/*begin::Info*/}
           </div>
           {/*end::Details*/}
         </div>
@@ -158,7 +155,7 @@ const Profile = () => {
                 Overview
               </a>
             </li>
-            <li className="nav-item my-1">
+            {usertype == "client" ? "" : <li className="nav-item my-1">
               <a
                 className={`btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 ${activeTab === "projects" ? "active" : ""
                   }`}
@@ -168,16 +165,8 @@ const Profile = () => {
                 Projects
               </a>
             </li>
-            <li className="nav-item my-1">
-              <a
-                className={`btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 ${activeTab === "settings" ? "active" : ""
-                  }`}
-                href="#"
-                onClick={() => setActiveTab("settings")}
-              >
-                Settings
-              </a>
-            </li>
+            }
+
 
 
 
@@ -199,4 +188,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ViewProfileAdmin;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import UserTable from './UserTable';
+import Navigation from '../Navigation';
 
 
 function UserMangement() {
@@ -99,36 +100,48 @@ function UserMangement() {
     }, [])
 
     return (
-        <div id="kt_app_content" className="app-content flex-column-fluid">
-            {/* <Navigation /> */}
-            <div id="kt_app_content" class="app-content flex-column-fluid">
-                {/* <!--begin::Content container--> */}
-                <div id="kt_app_content_container" class="app-container container-xxl">
-                    {/* <!--begin::Card--> */}
-                    <div class="card">
-                        {/* <!--begin::Card header--> */}
-                        <div class="card-header border-0 pt-6">
-                            {/* <!--begin::Card title--> */}
-                            <div class="card-title">
+        <>
 
+            <Navigation />
+            <div id="kt_app_content" className="app-content flex-column-fluid">
+                <div id="kt_app_content" class="app-content flex-column-fluid">
+                    {/* <!--begin::Content container--> */}
+                    <div id="kt_app_content_container" class="app-container container-xxl">
+                        {/* <!--begin::Card--> */}
+                        <div class="card">
+                            {/* <!--begin::Card header--> */}
+                            <div class="card-header border-0 ">
+
+                                {/* <!--begin::Toolbar--> */}
+                                <div class="d-flex flex-wrap flex-stack mb-6">
+                                    {/* <!--begin::Heading--> */}
+                                    <h3 class="fw-bold my-2 mx-10">Manage Users</h3>
+                                    {/* <!--end::Heading--> */}
+                                    {/* <!--begin::Actions--> */}
+                                    <div class="d-flex flex-wrap my-2">
+
+                                        <a href="http://localhost:5173/createadmin" class="btn btn-primary btn-sm">Create New Admin</a>
+                                    </div>
+                                    {/* <!--end::Actions--> */}
+                                </div>
+                                {/* <!--end::Toolbar--> */}
                             </div>
-                            {/* <!--begin::Card title--> */}
-                        </div>
-                        {/* <!--end::Card header--> */}
-                        {/* <!--begin::Card body--> */}
-                        <div class="card-body py-4">
-                            {/* <!--begin::Table--> */}
-                            <UserTable columns={columns} data={tabledata} />
+                            {/* <!--end::Card header--> */}
+                            {/* <!--begin::Card body--> */}
+                            <div class="card-body py-4">
+                                {/* <!--begin::Table--> */}
+                                <UserTable columns={columns} data={tabledata} />
 
-                            {/* <!--end::Table--> */}
+                                {/* <!--end::Table--> */}
+                            </div>
+                            {/* <!--end::Card body--> */}
                         </div>
-                        {/* <!--end::Card body--> */}
+                        {/* <!--end::Card--> */}
                     </div>
-                    {/* <!--end::Card--> */}
+                    {/* <!--end::Content container--> */}
                 </div>
-                {/* <!--end::Content container--> */}
             </div>
-        </div>
+        </>
     )
 }
 
