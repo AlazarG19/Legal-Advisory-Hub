@@ -6,7 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 const FormTable = ({ columns, data }) => {
     const initialState = {
-        pageSize: 2,
+        pageSize: 5,
         pageIndex: 0
     };
 

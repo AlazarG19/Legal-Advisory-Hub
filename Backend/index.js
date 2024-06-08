@@ -162,9 +162,30 @@ app.post("/createFreelancerProfile", uploadProfile.fields([{ name: 'profilePictu
     await freelancerprofile.save();
     res.status(201).json({ message: "Freelancer Profile Created Successfully" });
   } catch (error) {
-    console.log("error")
-    console.error(error);
-    res.status(500).json({ message: "Failed to create freelancer" });
+    const {
+      userid,
+      category,
+      firm,
+      contact,
+      city,
+      language,
+      bio,
+    } = req.body;
+    const profilePicture = "placeholder.png"
+    console.log("error uploaded placeholder")
+    await users.findByIdAndUpdate(userid, { profilePicture: profilePicture });
+    const freelancerprofile = new FreelancerProfile({
+      userid,
+      category,
+      firm,
+      contact,
+      city,
+      language,
+      bio
+    });
+
+    await freelancerprofile.save();
+    res.status(201).json({ message: "Freelancer profile created with default image" });
   }
 });
 // create user profile
@@ -181,7 +202,9 @@ app.post("/createUserProfile", uploadProfile.fields([{ name: 'profilePicture' }]
   } catch (error) {
     console.log("error")
     console.error(error);
-    res.status(500).json({ message: "Failed to create freelancer" });
+    const profilePicture = "placeholder.png"
+    await users.findByIdAndUpdate(userid, { profilePicture: profilePicture });
+    res.status(201).json({ message: "User Profile Created Successfully" });
   }
 });
 
@@ -521,6 +544,8 @@ app.post("/createUser", async (req, res) => {
     res.status(500).json({ message: "Failed to create user" });
   }
 });
+
+
 const updateprofileStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/profile");
@@ -630,20 +655,52 @@ app.post("/updateUser/:id", async (req, res) => {
 
 
 
-app.delete("/deleteUser/:id", (req, res) => {
+app.delete("/deleteUser/:id", async (req, res) => {
   const id = req.params.id;
-  users.findByIdAndDelete({ _id: id })
-    .then(result => {
+  const user = await users.findById(id);
+  if (user.userType == "freelancer") {
+
+    FreelancerProfile.findOneAndDelete({ userid: id }).then(result => {
       if (result) {
-        res.json({ message: 'User deleted successfully' });
+        console.log("freelancer profile successfully deleted")
+        users.findByIdAndDelete({ _id: id })
+          .then(result => {
+            if (result) {
+              console.log("user successfully deleted")
+
+              res.json({ success: true, message: 'User deleted successfully' });
+            } else {
+              res.status(404).json({ success: false, message: 'User not found' });
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting user:', error);
+            res.status(500).json({ success: false, error: 'Internal server error' });
+          });
       } else {
-        res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ success: false, message: 'User not found' });
       }
     })
-    .catch(error => {
-      console.error('Error deleting user:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    });
+      .catch(error => {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+      });
+
+  } else {
+    users.findByIdAndDelete({ _id: id })
+      .then(result => {
+        if (result) {
+          res.json({ success: true, message: 'User deleted successfully' });
+        } else {
+          res.status(404).json({ success: false, message: 'User not found' });
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+      });
+
+  }
 });
 
 

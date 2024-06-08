@@ -83,12 +83,6 @@ const Profile = () => {
         return <ProjectsComponent id={id} />;
       case "settings":
         return <Settings details={{ id, profilePic, password, email, firstname, lastname, usertype, username, catagory, firm, contact, city, language, bio }} />;
-      // case "documents":
-      //   return <DocumentsComponent />;
-      // case "followers":
-      //   return <FollowersComponent />;
-      // case "activity":
-      //   return <ActivityComponent />;
       default:
         return <>NO COMPONENTS TO RENDER</>;
     }
