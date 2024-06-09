@@ -32,6 +32,7 @@ const Clients = () => {
       if (firstUser && firstUser.username) {
         setUsername(firstUser.username);
         setFreelancerId(firstUser._id);
+        console.log(firstUser._id)
         axios
           .get(`http://localhost:3000/client/${firstUser._id}`)
           .then((response) => {
@@ -50,6 +51,7 @@ const Clients = () => {
           .catch((error) => {
             console.error("Error fetching clients:", error);
           });
+          
         axios
           .get(`http://localhost:3000/getOffers/${firstUser._id}`)
           .then((response) => {
@@ -74,12 +76,14 @@ const Clients = () => {
       console.log("sessionData is empty or does not exist.");
     }
   }, []);
+  console.log(clients)
   const fetchRoomId = async (clientId, userId) => {
     try {
       const response = await axios.post("http://localhost:3000/getRoomId", {
         clientId: clientId,
         userId: userId,
       });
+      console.log("clients rom Id", response.data)
       setRoom(response.data.roomId);
       socket.emit("join_room", room);
       setShowChat(true);
@@ -103,115 +107,11 @@ const Clients = () => {
       setShowChat(true);
     }
   };
-
+console.log("outside room Id ", room)
   return (
     <div className="app-container container-xxl">
       <Navigation />
-
-      <div className="row">
-        <div className="col-lg-6 col-xl-3">
-          {/*begin::Contacts*/}
-          <div className="card card-flush" id="kt_contacts_list">
-            {/*begin::Card header*/}
-            <div className="card-header pt-7" id="kt_contacts_list_header">
-              {/*begin::Form*/}
-              <form
-                className="d-flex align-items-center position-relative w-100 m-0"
-                autoComplete="off"
-              >
-                {/*begin::Icon*/}
-                {/*begin::Svg Icon | path: icons/duotune/general/gen021.svg*/}
-                <span className="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
-                  <svg
-                    width={24}
-                    height={24}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      opacity="0.5"
-                      x="17.0365"
-                      y="15.1223"
-                      width="8.15546"
-                      height={2}
-                      rx={1}
-                      transform="rotate(45 17.0365 15.1223)"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-                {/*end::Svg Icon*/}
-                {/*end::Icon*/}
-                {/*begin::Input*/}
-                <input
-                  type="text"
-                  className="form-control form-control-solid ps-13"
-                  name="search"
-                  defaultValue=""
-                  placeholder="Search contacts"
-                />
-                {/*end::Input*/}
-              </form>
-              {/*end::Form*/}
-            </div>
-            {/*end::Card header*/}
-            {/*begin::Card body*/}
-            <div className="card-body pt-5" id="kt_contacts_list_body">
-              {/*begin::List*/}
-              <div
-                className="scroll-y me-n5 pe-5 h-300px h-xl-auto"
-                data-kt-scroll="true"
-                data-kt-scroll-activate="{default: false, lg: true}"
-                data-kt-scroll-max-height="auto"
-                data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_contacts_list_header"
-                data-kt-scroll-wrappers="#kt_content, #kt_contacts_list_body"
-                data-kt-scroll-stretch="#kt_contacts_list, #kt_contacts_main"
-                data-kt-scroll-offset="5px"
-                style={{ maxHeight: 561 }}
-              >
-                {clients.map((client, index) => (
-                  <button
-                    key={index}
-                    className={`d-flex flex-stack py-4 list-group-item list-group-item-action ${selectedClient === client ? "active" : ""
-                      }`}
-                    onClick={() => handleClientSelect(client)}
-                  >
-                    {/*begin::Details*/}
-                    <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
-                      <div className="symbol symbol-40px symbol-circle">
-                        <img alt="Pic" src="assets/media/avatars/300-6.jpg" />
-                      </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
-                      <div className="ms-4">
-                        <p className="fs-6 fw-bold text-gray-900 text-hover-primary mb-2">
-                          {client.name}
-                        </p>
-                        <div className="fw-semibold fs-7 text-muted">
-                          smith@kpmg.com
-                        </div>
-                      </div>
-                      {/*end::Details*/}
-                    </div>
-                    {/*end::Details*/}
-                  </button>
-                ))}
-                <div className="separator separator-dashed d-none" />
-              </div>
-              {/*end::List*/}
-            </div>
-            {/*end::Card body*/}
-          </div>
-          {/*end::Contacts*/}
-        </div>
-
-        <div className="col-lg-6 col-xl-3">
+      <div className="col-lg-6 col-xl-3">
           {/*begin::Contacts*/}
           <div className="card card-flush" id="kt_contacts_list">
             {/*begin::Card header*/}
@@ -316,12 +216,117 @@ const Clients = () => {
           {/*end::Contacts*/}
         </div>
 
-        <div className="col-9">
+      <div className="row">
+        <div className="col-lg-6 col-xl-3">
+          {/*begin::Contacts*/}
+          <div className="card card-flush" id="kt_contacts_list">
+            {/*begin::Card header*/}
+            <div className="card-header pt-7" id="kt_contacts_list_header">
+              {/*begin::Form*/}
+              <form
+                className="d-flex align-items-center position-relative w-100 m-0"
+                autoComplete="off"
+              >
+                {/*begin::Icon*/}
+                {/*begin::Svg Icon | path: icons/duotune/general/gen021.svg*/}
+                <span className="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+                  <svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      opacity="0.5"
+                      x="17.0365"
+                      y="15.1223"
+                      width="8.15546"
+                      height={2}
+                      rx={1}
+                      transform="rotate(45 17.0365 15.1223)"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                {/*end::Svg Icon*/}
+                {/*end::Icon*/}
+                {/*begin::Input*/}
+                <input
+                  type="text"
+                  className="form-control form-control-solid ps-13"
+                  name="search"
+                  defaultValue=""
+                  placeholder="Search contacts"
+                />
+                {/*end::Input*/}
+              </form>
+              {/*end::Form*/}
+            </div>
+            {/*end::Card header*/}
+            {/*begin::Card body*/}
+            <div className="card-body pt-5" id="kt_contacts_list_body">
+              {/*begin::List*/}
+              <div
+                className="scroll-y me-n5 pe-5 h-300px h-xl-auto"
+                data-kt-scroll="true"
+                data-kt-scroll-activate="{default: false, lg: true}"
+                data-kt-scroll-max-height="auto"
+                data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_contacts_list_header"
+                data-kt-scroll-wrappers="#kt_content, #kt_contacts_list_body"
+                data-kt-scroll-stretch="#kt_contacts_list, #kt_contacts_main"
+                data-kt-scroll-offset="5px"
+                style={{ maxHeight: 561 }}
+              >
+                {clients.map((client, index) => (
+                  <button
+                    key={index}
+                    className={`d-flex flex-stack py-4 list-group-item list-group-item-action ${selectedClient === client ? "active" : ""
+                      }`}
+                    onClick={() => handleClientSelect(client)}
+                  >
+                    {/*begin::Details*/}
+                    <div className="d-flex align-items-center">
+                      {/*begin::Avatar*/}
+                      <div className="symbol symbol-40px symbol-circle">
+                        <img alt="Pic" src="assets/media/avatars/300-6.jpg" />
+                      </div>
+                      {/*end::Avatar*/}
+                      {/*begin::Details*/}
+                      <div className="ms-4">
+                        <p className="fs-6 fw-bold text-gray-900 text-hover-primary mb-2">
+                          {client.firstName} {client.lastName}
+                        </p>
+                        <div className="fw-semibold fs-7 text-muted">
+                          {client.email}
+                        </div>
+                      </div>
+                      {/*end::Details*/}
+                    </div>
+                    {/*end::Details*/}
+                  </button>
+                ))}
+                <div className="separator separator-dashed d-none" />
+              </div>
+              {/*end::List*/}
+            </div>
+            {/*end::Card body*/}
+          </div>
+          {/*end::Contacts*/}
+        </div>
+
+        
+
+        <div className="col-md-8">
           <div className="App">
             {!showChat ? (
               <div
                 id="kt_drawer_chat"
-                className="bg-body drawer drawer-end drawer-on"
+                className="bg-body drawer drawer-end drawer-on col-md-6"
                 data-kt-drawer="true"
                 data-kt-drawer-name="chat"
                 data-kt-drawer-activate="true"
@@ -330,8 +335,9 @@ const Clients = () => {
                 data-kt-drawer-direction="end"
                 data-kt-drawer-toggle="#kt_drawer_chat_toggle"
                 data-kt-drawer-close="#kt_drawer_chat_close"
+                
                 style={{
-                  width: "37vw",
+                  
                   marginTop: "85px",
                   display: "flex",
                   alignItems: "center",
