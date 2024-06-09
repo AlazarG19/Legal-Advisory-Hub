@@ -78,6 +78,20 @@ const Navigation = () => {
                   </div> : ""
                 }
                 {usertype == "admin" ?
+
+                  < div onClick={() => { onLinkClick("/train") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("train") ? "menu-item here " : "menu-item "}>
+                    {/* <!--begin:Menu link--> */}
+                    <span className="menu-link">
+                      <span className="menu-title">Train AI</span>
+                      <span className="menu-arrow d-lg-none"></span>
+                    </span>
+                    {/* <!--end:Menu link--> */}
+                  </div>
+                  :
+                  ""
+
+                }
+                {usertype == "admin" ?
                   <>
 
                     <div onClick={() => { onLinkClick("/mquestion") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("mquestion") ? "menu-item here " : "menu-item "}>
@@ -177,14 +191,7 @@ const Navigation = () => {
                 }
                 {usertype == "admin" ?
 
-                  < div onClick={() => { onLinkClick("/train") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("train") ? "menu-item here " : "menu-item "}>
-                    {/* <!--begin:Menu link--> */}
-                    <span className="menu-link">
-                      <span className="menu-title">Train AI</span>
-                      <span className="menu-arrow d-lg-none"></span>
-                    </span>
-                    {/* <!--end:Menu link--> */}
-                  </div>
+                  ""
                   :
                   < div onClick={() => { onLinkClick("/chatbot") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("chatbot") ? "menu-item here " : "menu-item "}>
                     {/* <!--begin:Menu link--> */}
