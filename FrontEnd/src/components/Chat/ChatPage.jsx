@@ -52,6 +52,7 @@ const ChatPage = () => {
     } else {
       console.log("sessionData is empty or does not exist.");
     }
+
     setRoom(uniqueRoomId);
 
     axios
@@ -73,6 +74,7 @@ const ChatPage = () => {
     axios
       .get(`http://localhost:3000/getRoom/${id}`)
       .then((response) => {
+        console.log("useEffecctroom", response.data)
         if (response.data.length > 0) {
           const { participants, roomId, clientId } = response.data[0];
           setParticipants(participants);

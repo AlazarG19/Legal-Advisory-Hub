@@ -6,6 +6,7 @@ import "../../../public/assets/css/chat.css";
 import ProfileHeader from "./ProfileHeader";
 
 function Chat({ socket, username, room, clients }) {
+  const [offers, setOffers] = useState("");
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [user, setUser] = useState([]);
@@ -19,31 +20,44 @@ function Chat({ socket, username, room, clients }) {
   const [linkAddress, setLinkAddress] = useState(`/createOffer/${id}`);
   const [file, setFile] = useState("");
   const [dateInstance] = useState(new Date());
-
-  useEffect(() => {
-    axios
+  const [loading, setLoading] = useState(true);
+  let setup = async () => {
+    await axios
       .get(`http://localhost:3000/getOffers/${id}`)
       .then((response) => {
-        console.log(response.data[0].status)
-        if (response.data[0].status == "Complete" || response.data[0].status == "Cancel") {
+        setOffers(response.data[0].status);
+        console.log("response", response);
+        console.log("response2", response.data[0].status);
+        console.log("response2 id", id);
+        setLoading(false);
+        if (
+          response.data[0].status == "Complete" ||
+          response.data[0].status == "Cancel"
+        ) {
           setOfferText("Create Offer");
-          setLinkAddress(`/createOffer/${id}`);
+          setLinkAddress(`/createOffer`);
         } else if (response.data[0].status == "InProgress") {
           setOfferText("Complete Offer");
-          setLinkAddress(`/completeOffer/${id}`);
-        } else if (response.data[0].status == "Waiting") {
+          setLinkAddress(`/completeOffer`);
+        } else if (response.data[0].status == "waiting") {
           setOfferText("Cancel Offer");
-          setLinkAddress(`/cancelOffer/${id}`);
-
+          setLinkAddress(`/cancelOffer`);
+        } else {
+          setOfferText("Create Offer");
+          setLinkAddress(`/createOffer`);
         }
       })
       .catch((error) => console.error(error));
-  });
+  };
+  useEffect(() => {
+    setup();
+  }, [offers]);
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
   const sendMessage = async () => {
+    console.log("send msg room", room)
     if (currentMessage.trim() !== "") {
       const messageData = {
         roomId: room,
@@ -51,6 +65,7 @@ function Chat({ socket, username, room, clients }) {
         text: currentMessage,
       };
       try {
+        console.log("send message", JSON.stringify(messageData))
         const response = await fetch("http://localhost:3000/createMessage", {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -64,20 +79,22 @@ function Chat({ socket, username, room, clients }) {
         console.error("Error:", error.message);
       }
 
-      await socket.emit("send_message", messageData);
-      setMessageList((list) => [...list, messageData]);
-      setCurrentMessage("");
+      // await socket.emit("send_message", messageData);
+      // setMessageList((list) => [...list, messageData]);
+      // setCurrentMessage("");
     }
   };
 
   useEffect(() => {
     const fetchMessages = async () => {
+      console.log("room", room)
       try {
         const response = await axios.get(
           `http://localhost:3000/getMessage/${room}`
         );
+        console.log("response", response.data)
         setMessageList(response.data);
-        console.log("this is the message list", response.data);
+        // console.log("this is the message list", response.data);
 
         const userString = sessionStorage.getItem("user");
         if (userString) {
@@ -134,6 +151,7 @@ function Chat({ socket, username, room, clients }) {
         marginRight: userType === "freelancer" ? "12.5vw" : undefined,
       }}
     >
+      loading {loading.toString()}
       {/*begin::Messenger*/}
       <div
         className="card w-100 rounded-0 border-0"
@@ -153,7 +171,7 @@ function Chat({ socket, username, room, clients }) {
             data-kt-scroll-dependencies="#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer"
             data-kt-scroll-wrappers="#kt_drawer_chat_messenger_body"
             data-kt-scroll-offset="0px"
-            style={{ height: 520 }}
+            style={{ height: "58.8vh" }}
           >
             {messageList.map((messageContent, index) =>
               username !== messageContent.author ? (
@@ -253,7 +271,12 @@ function Chat({ socket, username, room, clients }) {
           <div className="d-flex flex-stack">
             {/*begin::Actions*/}
             <div className="d-flex align-items-center me-2">
-              <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+              <input
+                type="file"
+                id="fileInput"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
               <button
                 className="btn btn-sm btn-icon btn-active-light-primary me-1"
                 type="button"
@@ -261,7 +284,7 @@ function Chat({ socket, username, room, clients }) {
                 aria-label="Coming soon"
                 data-bs-original-title="Coming soon"
                 data-kt-initialized={1}
-                onClick={() => document.getElementById('fileInput').click()}
+                onClick={() => document.getElementById("fileInput").click()}
               >
                 <i className="bi bi-upload fs-3" />
               </button>
@@ -280,16 +303,31 @@ function Chat({ socket, username, room, clients }) {
           </div>
           <div className="d-flex flex-stack">
             {/*begin::Send*/}
-            {userType == "freelancer" ? (
-              <Link
-                to={linkAddress}
-                className="btn btn-primary container-fluid mt-5"
-              >
-                {offerText}
-              </Link>
-            ) : (
-              <></>
-            )}
+            {userType === "freelancer" ? (
+              <>
+                {offers === "InProgress" ? (
+                  <Link
+                    to={`/completeOffer/${id}`}
+                    className="btn btn-primary container-fluid mt-5"
+                  >Complete Offer</Link>
+                ) : offers === "Complete" || offers === "Cancel" ? (
+                  <Link
+                    to={`/createOffer/${id}`}
+                    className="btn btn-primary container-fluid mt-5"
+                  >Create Offer</Link>
+                ) : offers === "waiting" ? (
+                  <Link
+                    to={`/cancelOffer/${id}`}
+                    className="btn btn-primary container-fluid mt-5"
+                  >Cancel Offer</Link>
+                ) : (
+                  <Link
+                    to={`/createOffer/${id}`}
+                    className="btn btn-primary container-fluid mt-5"
+                  >Create Offer</Link>
+                )}
+              </>
+            ) : null}
             {/* <Link to={`/createOffer/${id}`} className="btn btn-primary container-fluid mt-5" >Create Offer</Link> */}
             {/*end::Send*/}
           </div>
