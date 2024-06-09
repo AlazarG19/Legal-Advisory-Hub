@@ -36,7 +36,7 @@ const CreateOffer = () => {
       });
       if (step == 3 && response.ok && title != "") {
         handleSucessClick();
-
+       
       } else if (step == 3 && title == "") {
         handleFailClick();
       }

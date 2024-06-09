@@ -535,7 +535,6 @@ app.post("/createCompleteOffer", async (req, res) => {
 
 
 
-
 app.get('/getOffers/:id', (req, res) => {
   const id = req.params.id;
   offers.find({ userid: id })
@@ -592,22 +591,29 @@ app.get('/getRoom/:id', (req, res) => {
 
 
 app.get('/client/:id', async (req, res) => {
+  console.log("req", req.params)
   try {
     const userId = req.params.id;
-    const conversation = await room.findOne({ userId });
+    const conversation = await room.find({ userId });
     console.log(conversation)
 
     if (!conversation) {
       return res.status(404).json({ error: 'Conversation not found' });
     }
-    const user = await users.findById(conversation.clientId);
-    console.log(user)
-    if (!user) {
+    const userIds = conversation.map(conv => conv.clientId);
+    console.log(userIds)
+    console.log(userIds)
+    const uniqueUserIds = Array.from(new Set(userIds));
+    console.log(uniqueUserIds)
+    // const user = await users.findById(conversation.clientId);
+    const user2 = await users.find({_id: {$in: uniqueUserIds}});
+    console.log(user2)
+    if (!user2) {
       return res.status(404).json({ error: 'User not found' });
     }
 
 
-    res.json(user);
+    res.json(user2);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
@@ -645,9 +651,11 @@ app.post('/createRoom', async (req, res) => {
 });
 
 app.post('/getRoomId', async (req, res) => {
+  console.log("new reqqgetRoomId", req.body)
   const { clientId, userId } = req.body;
   try {
     const roomId = await room.findOne({ clientId, userId });
+    console.log("getRoomId room",roomId)
     if (roomId) {
       res.status(200).json({ roomId: roomId.roomId });
     } else {
@@ -663,6 +671,7 @@ app.post('/getRoomId', async (req, res) => {
 
 
 app.post('/createMessage', async (req, res) => {
+  console.log("createMessage",req.body)
   try {
     const { text, roomId, author } = req.body;
 
