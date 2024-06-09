@@ -22,24 +22,32 @@ function Chat({ socket, username, room, clients }) {
   const [dateInstance] = useState(new Date());
   const [loading, setLoading] = useState(true);
   let setup = async () => {
+    const userString = sessionStorage.getItem("user");
+    const user = JSON.parse(userString);
+    const id = user[0]._id
     await axios
       .get(`http://localhost:3000/getOffers/${id}`)
       .then((response) => {
+        console.log("offersdd", offers)
         setOffers(response.data[0].status);
         console.log("response", response);
         console.log("response2", response.data[0].status);
         console.log("response2 id", id);
         setLoading(false);
+        console.log("offersdd2response", response.data[0].status)
         if (
           response.data[0].status == "Complete" ||
           response.data[0].status == "Cancel"
         ) {
+          console.log("dd createoffer",)
           setOfferText("Create Offer");
           setLinkAddress(`/createOffer`);
         } else if (response.data[0].status == "InProgress") {
+          console.log("dd completeoffer",)
           setOfferText("Complete Offer");
           setLinkAddress(`/completeOffer`);
-        } else if (response.data[0].status == "waiting") {
+        } else if (response.data[0].status == "Waiting") {
+          console.log("dd canceloffer",)
           setOfferText("Cancel Offer");
           setLinkAddress(`/cancelOffer`);
         } else {
@@ -85,38 +93,40 @@ function Chat({ socket, username, room, clients }) {
     }
   };
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      console.log("room", room)
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/getMessage/${room}`
-        );
-        console.log("response", response.data)
-        setMessageList(response.data);
-        // console.log("this is the message list", response.data);
+  const fetchMessages = async () => {
+    setup();
+    console.log("room", room)
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/getMessage/${room}`
+      );
+      console.log("response", response.data)
+      setMessageList(response.data);
+      // console.log("this is the message list", response.data);
 
-        const userString = sessionStorage.getItem("user");
-        if (userString) {
-          const user = JSON.parse(userString);
-          setUser(user);
-          if (user.length > 0) {
-            setId(user[0]._id);
-            setUserType(user[0].userType);
-            setUserName(clients[0].username);
-          }
+      const userString = sessionStorage.getItem("user");
+      if (userString) {
+        const user = JSON.parse(userString);
+        setUser(user);
+        if (user.length > 0) {
+          setId(user[0]._id);
+          setUserType(user[0].userType);
+          setUserName(clients[0].username);
         }
-        // Set the clients received as props
-        setClient(clients);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
       }
-    };
+      // Set the clients received as props
+      setClient(clients);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
 
-    const handleReceiveMessage = (data) => {
-      setMessageList((prevMessages) => [...prevMessages, data]);
-    };
+  const handleReceiveMessage = (data) => {
+    setMessageList((prevMessages) => [...prevMessages, data]);
+  };
+  useEffect(() => {
 
+    setup();
     // Initial fetch
     fetchMessages();
 
@@ -151,7 +161,7 @@ function Chat({ socket, username, room, clients }) {
         marginRight: userType === "freelancer" ? "12.5vw" : undefined,
       }}
     >
-      loading {loading.toString()}
+      loading {offerText}
       {/*begin::Messenger*/}
       <div
         className="card w-100 rounded-0 border-0"
@@ -315,7 +325,7 @@ function Chat({ socket, username, room, clients }) {
                     to={`/createOffer/${id}`}
                     className="btn btn-primary container-fluid mt-5"
                   >Create Offer</Link>
-                ) : offers === "waiting" ? (
+                ) : offers === "Waiting" ? (
                   <Link
                     to={`/cancelOffer/${id}`}
                     className="btn btn-primary container-fluid mt-5"
