@@ -6,13 +6,13 @@ import Dropdown from "react-bootstrap/Dropdown";
 import regeneratorRuntime from "regenerator-runtime"
 const FormTable = ({ columns, data }) => {
     const initialState = {
-        pageSize: 2,
+        pageSize: 5,
         pageIndex: 0
     };
 
     const onRowClick = (e) => {
         console.log(e)
-        let link = "http://localhost:5173/customform/" + e
+        let link = "http://localhost:5173/customforms/" + e
         window.location.href = link
     }
     // Use the state and functions returned from useTable to build your UI

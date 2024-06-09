@@ -78,14 +78,27 @@ const Navigation = () => {
                   </div> : ""
                 }
                 {usertype == "admin" ?
-                  <div onClick={() => { onLinkClick("/mquestion") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("mquestion") ? "menu-item here " : "menu-item "}>
-                    {/* <!--begin:Menu link--> */}
-                    <span className="menu-link">
-                      <span className="menu-title">Forum</span>
-                      <span className="menu-arrow d-lg-none"></span>
-                    </span>
-                    {/* <!--end:Menu link--> */}
-                  </div> :
+                  <>
+
+                    <div onClick={() => { onLinkClick("/mquestion") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("mquestion") ? "menu-item here " : "menu-item "}>
+                      {/* <!--begin:Menu link--> */}
+                      <span className="menu-link">
+                        <span className="menu-title">Forum</span>
+                        <span className="menu-arrow d-lg-none"></span>
+                      </span>
+                      {/* <!--end:Menu link--> */}
+                    </div>
+                    <div onClick={() => { onLinkClick("/mreport") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("mreport") ? "menu-item here " : "menu-item "}>
+                      {/* <!--begin:Menu link--> */}
+                      <span className="menu-link">
+                        <span className="menu-title">Report</span>
+                        <span className="menu-arrow d-lg-none"></span>
+                      </span>
+                      {/* <!--end:Menu link--> */}
+                    </div>
+                  </>
+
+                  :
 
                   <div onClick={() => { onLinkClick("/forum") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("forum") ? "menu-item here " : "menu-item "}>
                     {/* <!--begin:Menu link--> */}

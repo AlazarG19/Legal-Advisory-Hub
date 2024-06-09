@@ -79,6 +79,7 @@ function App() {
 
           {/* Custom Form Routes */}
           <Route path="/customform" element={<Index />}></Route>
+          <Route path="/customform/catagory/:catagory" element={<Index />}></Route>
           <Route path="/customform/:id" element={<Details />}></Route>
           <Route path="/customform/edit/:id" element={<CustomForm2 />}></Route>
           {/* End of Custom Form Routes */}
@@ -88,6 +89,8 @@ function App() {
 
           {/* Admin Custom Form Routes */}
           <Route path="/customforms" element={<AdminIndex />}></Route>
+          <Route path="/customforms/catagory/:catagory" element={<AdminIndex />}></Route>
+
           <Route path="/customforms/:id" element={<AdminDetails />}></Route>
           <Route path="/customforms/edit/:id" element={<AdminEditFinalCustomForm />}></Route>
           <Route path="/customforms/add" element={<AdminFinalCustomForm />}></Route>
