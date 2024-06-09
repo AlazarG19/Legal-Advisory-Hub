@@ -4,8 +4,9 @@ import { Checkbox, Hidden } from '@mui/material';
 import Navbar from '../Navbar';
 import Navigation from '../Navigation';
 import FormTable from './FormTable';
+import { useParams } from 'react-router';
 const Index = () => {
-
+    const catagory = useParams()
     const [selectedcategory, setSelectedCategory] = useState("")
     const [data, setData] = useState([])
     const [olddata, setOldData] = useState([])
@@ -51,6 +52,7 @@ const Index = () => {
         setData(filtereddata)
         console.log(filtereddata)
     }
+    const catagoryparams = useParams()
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/forms`, {
@@ -61,10 +63,22 @@ const Index = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log("catagoryparams")
+                console.log(catagoryparams)
                 console.log("dataloaded")
                 console.log(data)
-                setData(data)
                 setOldData(data)
+                if (catagoryparams != "") {
+                    setSelectedCategory(catagoryparams.catagory)
+                    console.log("before filter", data)
+                    console.log("use effect", catagoryparams.catagory)
+                    let filtereddata = data.filter(form => form.category === catagoryparams.catagory);
+                    console.log(filtereddata)
+                    setData(filtereddata)
+                } else {
+                    setData(data)
+
+                }
             })
             .catch((error) => {
                 // console.log("error while sending")
@@ -168,7 +182,7 @@ const Index = () => {
                                                         {/* <!--begin::Scroll--> */}
                                                         <div className="hover-scroll-overlay-y pe-6 me-n6" style={{ height: "415px" }}>
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Criminal") }} className={selectedcategory == "Criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("criminal") }} className={selectedcategory == "criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -186,7 +200,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Family") }} className={selectedcategory == "Family" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("family") }} className={selectedcategory == "family" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -204,7 +218,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Employement") }} className={selectedcategory == "Employement" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("employement") }} className={selectedcategory == "employement" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -222,7 +236,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Contract") }} className={selectedcategory == "Contract" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("contract") }} className={selectedcategory == "contract" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -240,7 +254,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Intellectual") }} className={selectedcategory == "Intellectual" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("intellectual") }} className={selectedcategory == "intellectual" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -258,7 +272,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Constitutional") }} className={selectedcategory == "Constitutional" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("constitutional") }} className={selectedcategory == "constitutional" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -276,7 +290,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Administrative") }} className={selectedcategory == "Administrative" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("administrative") }} className={selectedcategory == "administrative" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -294,7 +308,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Real Estate") }} className={selectedcategory == "Real Estate" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("realestate") }} className={selectedcategory == "realestate" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}
@@ -312,7 +326,7 @@ const Index = () => {
                                                             </div>
                                                             {/* <!--end::Item--> */}
                                                             {/* <!--begin::Item--> */}
-                                                            <div onClick={() => { onCategoryClicked("Tort") }} className={selectedcategory == "Tort" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
+                                                            <div onClick={() => { onCategoryClicked("tort") }} className={selectedcategory == "tort" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                                                 {/* <!--begin::Info--> */}
                                                                 <div className="d-flex flex-stack mb-3">
                                                                     {/* <!--begin::Wrapper--> */}

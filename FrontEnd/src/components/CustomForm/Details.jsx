@@ -164,7 +164,7 @@ const Details = () => {
                                                         {/* <!--end::Card title--> */}
                                                         {/* <!--begin::Card toolbar--> */}
                                                         <div class="card-toolbar">
-                                                            <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
+                                                            <a href={`http://localhost:5173/customform/catagory/${formdetail.category}`} class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
                                                         </div>
                                                         {/* <!--end::Card toolbar--> */}
                                                     </div>
@@ -179,12 +179,12 @@ const Details = () => {
                                                                     return <div class="d-flex align-items-center mb-5">
                                                                         {/* <!--begin::Icon--> */}
                                                                         <div class="symbol symbol-30px me-5">
-                                                                            <img alt="Icon" src="assets/media/svg/files/doc.svg" />
+                                                                            <img alt="Icon" src="/assets/media/svg/files/doc.svg" />
                                                                         </div>
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Details--> */}
                                                                         <div class="fw-semibold">
-                                                                            <a class="fs-6 fw-bold text-dark text-hover-primary" href="#">{element.formname}</a>
+                                                                            <a class="fs-6 fw-bold text-dark text-hover-primary" href={`http://localhost:5173/customform/${element.formid}`}>{element.formname}</a>
 
                                                                         </div>
                                                                         {/* <!--end::Details--> */}

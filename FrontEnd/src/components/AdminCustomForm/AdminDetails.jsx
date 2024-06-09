@@ -16,6 +16,10 @@ const Details = () => {
         navigate(link)
 
     }
+    let onLinkClick2 = (link) => {
+        window.location.href = link
+
+    }
     useEffect(() => {
         fetch(`http://localhost:3000/api/forms/${id}`, {
             method: 'GET',
@@ -176,7 +180,7 @@ const Details = () => {
                                                         {/* <!--end::Card title--> */}
                                                         {/* <!--begin::Card toolbar--> */}
                                                         <div class="card-toolbar">
-                                                            <button onClick={() => { window.location.href = "http://localhost:5173/customforms/edit/" + element.formid; window.location.reload(); }} class="btn btn-bg-light btn-active-color-primary btn-sm">View All</button>
+                                                            <a href={`http://localhost:5173/customform/catagory/${formdetail.category}`} class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
                                                         </div>
                                                         {/* <!--end::Card toolbar--> */}
                                                     </div>
@@ -196,7 +200,7 @@ const Details = () => {
                                                                         {/* <!--end::Icon--> */}
                                                                         {/* <!--begin::Details--> */}
                                                                         <div class="fw-semibold">
-                                                                            <button onClick={() => { onLinkClick("/customforms/" + element.formid) }} class="fs-6 fw-bold text-dark border-0 bg-white text-hover-primary" href="#">{element.formname}</button>
+                                                                            <button onClick={() => { onLinkClick2("http://localhost:5173/customforms/" + element.formid) }} class="fs-6 fw-bold text-dark border-0 bg-white text-hover-primary" href="#">{element.formname}</button>
 
                                                                         </div>
                                                                         {/* <!--end::Details--> */}

@@ -88,7 +88,7 @@ const Settings = ({ details }) => {
         errors.oldpassword = 'Old Password Required';
 
       } else if (values.oldpassword != details.password) {
-        errors.oldpassword = "Password Doesn't Match with all Password"
+        errors.oldpassword = "Password Doesn't Match with Old Password"
       }
       if (!values.newpassword) {
         errors.newpassword = 'New Password Required';
@@ -513,12 +513,6 @@ const Settings = ({ details }) => {
             {/*end::Card body*/}
             {/*begin::Actions*/}
             <div className="card-footer d-flex justify-content-end py-6 px-9">
-              <button
-                type="reset"
-                className="btn btn-light btn-active-light-primary me-2"
-              >
-                Discard
-              </button>
               {formik.isSubmitting ? <div className="text-center">
                 <button disabled className="btn btn-primary" >
                   <span className="indicator-label">Please wait...

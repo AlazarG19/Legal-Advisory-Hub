@@ -77,17 +77,29 @@ const CheckEmail = () => {
                                 <table style={{ width: "100%" }}>
                                     <tr>
                                         <td>
-                                            <div className="text" style={{ padding: "0 2.5em", textAlign: "center" }}>
+                                            {loading ?
+                                                <div className="text" style={{ padding: "0 2.5em", textAlign: "center" }}>
 
-                                                {verified ? <h2 style={{ color: "#6787FE" }} >Email Verified Successfully</h2> :
-                                                    <h2 style={{ color: "#6787FE" }} >Email Verification failed Please Try Again</h2>}
-                                                {verified ? <h3>Please Continue To The Next Page</h3> : verificationerror == "Invalid link" ? <h3>Invalid Link Please Try Again</h3> :
-                                                    <h3>You Must First Verify Your Email For Your Account To Be Activated.</h3>}
-                                                {verified ? <p><a href="/login" className="btn btn-redirect">Continue To Login</a></p> :
-                                                    <p><a href="/login" onClick={resendEmail} className="btn btn-redirect">Resend Email</a></p>}
+                                                    <h2 style={{ color: "#6787FE" }} >Loading....</h2>
 
 
-                                            </div>
+
+                                                </div>
+                                                :
+                                                <div className="text" style={{ padding: "0 2.5em", textAlign: "center" }}>
+
+                                                    {verified ? <h2 style={{ color: "#6787FE" }} >Email Verified Successfully</h2> :
+                                                        <h2 style={{ color: "#6787FE" }} >Email Verification failed Please Try Again</h2>}
+                                                    {verified ? <h3>Please Continue To The Next Page</h3> : verificationerror == "Invalid link" ? <h3>Invalid Link Please Try Again</h3> :
+                                                        <h3>You Must First Verify Your Email For Your Account To Be Activated.</h3>}
+                                                    {verified ? <p><a href="/login" className="btn btn-redirect">Continue To Login</a></p> : ""
+                                                        // <p><a href="/login" onClick={resendEmail} className="btn btn-redirect">Resend Email</a></p>
+                                                    }
+
+
+                                                </div>
+                                            }
+
                                         </td>
                                     </tr>
                                 </table>

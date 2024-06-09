@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../../Header";
 import DocsCard from "./DocsCard";
 import docimg from "../assets/docimg.png";
+import Navigation from "../../Navigation";
 const Home = () => {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ const Home = () => {
 
   return (
     <div className="">
-      <Header />
+      <Navigation />
       <div
         className="bg-image d-flex justify-content-end   align-items-center"
         style={{

@@ -9,6 +9,7 @@ import IndividualAnswer from './IndividualAnswer';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import Navigation from '../Navigation';
 
 
 function Answers() {
@@ -101,6 +102,7 @@ function Answers() {
 
     return (
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
+            <Navigation />
             {/* <!--begin::Page--> */}
             <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
                 {/* <!--begin::Wrapper--> */}
