@@ -351,17 +351,17 @@ const FinalCustomForm = () => {
                                                                         <div style={{ width: "100% !important" }} className="me-4 ">
                                                                             {/* <!--begin::Select--> */}
                                                                             <select style={{ width: "100% !important" }} onChange={(e) => { setCategory(e.target.value) }} name="status" data-control="select2" data-hide-search="true" className="form-select form-select-sm border-grey-500 bg-body border-body">
-                                                                                <option value="Active" selected="selected"> Select a Category</option>
-                                                                                <option value="Criminal" >Criminal</option>
-                                                                                <option value="Civil">Civil</option>
-                                                                                <option value="Family">Family</option>
-                                                                                <option value="Employement">Employement</option>
-                                                                                <option value="Contract">Contract</option>
-                                                                                <option value="Intellectual Property">Intellectual Property</option>
-                                                                                <option value="Constitutional">Constitutional</option>
-                                                                                <option value="Administrative">Administrative</option>
-                                                                                <option value="Real Estate">Real Estate</option>
-                                                                                <option value="Tort">Tort</option>
+                                                                                <option value="" selected="selected"> Select a Category</option>
+                                                                                <option value="criminal" >Criminal</option>
+                                                                                <option value="civil">Civil</option>
+                                                                                <option value="family">Family</option>
+                                                                                <option value="employement">Employement</option>
+                                                                                <option value="contract">Contract</option>
+                                                                                <option value="intellectualproperty">Intellectual Property</option>
+                                                                                <option value="constitutional">Constitutional</option>
+                                                                                <option value="administrative">Administrative</option>
+                                                                                <option value="realestate">Real Estate</option>
+                                                                                <option value="tort">Tort</option>
                                                                             </select>
                                                                             {/* <!--end::Select--> */}
                                                                         </div>
