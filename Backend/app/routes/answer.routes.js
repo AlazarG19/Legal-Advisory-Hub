@@ -7,6 +7,8 @@ module.exports = app => {
     router.get("/all/:id", answer.findAll);
     // Retrieve a single answer with id
     router.get("/:id", answer.findOne);
+    router.post("/upvote/:id", answer.updateOneUpvote);
+    router.post("/downvote/:id", answer.updateOneUpvote);
     // Update a answer with id
     router.put("/:id", answer.update);
     // Delete a answer with with id

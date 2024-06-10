@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
 import { GlobalFilter, DefaultFilterForColumn } from './Filter';
 
-const QuestionTable = ({ columns, data }) => {
+const CommentTable = ({ columns, data }) => {
     const initialState = {
         pageSize: 10,
         pageIndex: 0
@@ -20,14 +20,15 @@ const QuestionTable = ({ columns, data }) => {
     }
 
 
-    const deleteQuestion = async (id) => {
+    const deleteComment = async (id) => {
+        console.log(`http://localhost:3000/api/comments/${id}`)
         try {
-          await fetch(`http://localhost:3000/api/questions/${id}`, {
+          await fetch(`http://localhost:3000/api/comments/${id}`, {
             method: 'DELETE',
           });
           // Remove the deleted question from the local state
         //   setAnswers(answers.filter((question) => question.id !== id));
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
           console.error('Error deleting question:', error);
         }
@@ -101,7 +102,7 @@ const QuestionTable = ({ columns, data }) => {
 
                                                 <button
                                                     className="btn btn-sm btn-danger"
-                                                    onClick={() => deleteQuestion(cell.value)}
+                                                    onClick={() => deleteComment(cell.value)}
                                                 >
                                                     Delete
                                                 </button>
@@ -173,4 +174,4 @@ const QuestionTable = ({ columns, data }) => {
 
 }
 
-export default QuestionTable
+export default CommentTable

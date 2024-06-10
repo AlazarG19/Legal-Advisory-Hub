@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { useTable, useFilters, useGlobalFilter, usePagination } from 'react-table'
 import { GlobalFilter, DefaultFilterForColumn } from './Filter';
 
-const QuestionTable = ({ columns, data }) => {
+const AnswersTable = ({ columns, data }) => {
     const initialState = {
         pageSize: 10,
         pageIndex: 0
@@ -20,9 +20,9 @@ const QuestionTable = ({ columns, data }) => {
     }
 
 
-    const deleteQuestion = async (id) => {
+    const deleteAnswer = async (id) => {
         try {
-          await fetch(`http://localhost:3000/api/questions/${id}`, {
+          await fetch(`http://localhost:3000/api/answers/${id}`, {
             method: 'DELETE',
           });
           // Remove the deleted question from the local state
@@ -101,7 +101,7 @@ const QuestionTable = ({ columns, data }) => {
 
                                                 <button
                                                     className="btn btn-sm btn-danger"
-                                                    onClick={() => deleteQuestion(cell.value)}
+                                                    onClick={() => deleteAnswer(cell.value)}
                                                 >
                                                     Delete
                                                 </button>
@@ -113,9 +113,11 @@ const QuestionTable = ({ columns, data }) => {
                                             {!cell.value ? <div className="badge badge-light-success fw-bold">Yes</div> : <div className="badge badge-light-danger fw-bold">No</div>}
                                         </td>
 
-                                    } else if (cell.column.id == "title"){
+                                    } else if (cell.column.id == "body"){
+                                        console.log(cell.render('Cell'))
                                         return <td {...cell.getCellProps()}>
-                                            <Link to={`/manswers/${cell.row.values._id}`}>{cell.render('Cell')}</Link>.
+                                            <Link to={`/mcomments/${cell.row.values._id}`} className="text-gray-800 text-hover-primary mb-1"><div className="text-gray-800 text-hover-primary mb-1" dangerouslySetInnerHTML={{ __html: cell.row.values.body }} /></Link>
+
                                             </td>
                                     }else {
 
@@ -173,4 +175,4 @@ const QuestionTable = ({ columns, data }) => {
 
 }
 
-export default QuestionTable
+export default AnswersTable

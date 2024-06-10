@@ -2,9 +2,43 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Navigation from '../Navigation';
 import NoElementFound from './Elements/NoElement';
+import FormTable from './CommentTable';
+
+
 
 function ManageComment() {
 
+
+    const columns = [
+        {
+
+            Header: 'COMMENT BODY',
+            accessor: 'body',
+
+
+        },
+        {
+
+            Header: 'AUTHOR',
+            accessor: 'author',
+
+
+        },
+        {
+
+            Header: 'PUBLISHED',
+            accessor: 'reported',
+
+
+        },
+        {
+
+            Header: 'ACTIONS',
+            accessor: '_id',
+
+
+        },
+    ]
 
     const { id } = useParams();
     const [comments, setComments] = useState([]);
@@ -14,6 +48,7 @@ function ManageComment() {
         fetch(`http://localhost:3000/api/comments/all/${id}`).then(res => res.json()).then(result => {
 
             setComments(result)
+            console.log(result[0])
             // Update the component's state
 
             //   console.log("Commentsss", comments)
@@ -64,15 +99,14 @@ function ManageComment() {
 
 
                                 <td>
-                                <span
-                                className={`${
-                                    comment.reported
-                                    ? 'text-danger font-weight-bold'
-                                    : 'text-success font-weight-bold'
-                                }`}
-                                >
-                                {comment.reported ? 'No' : 'Yes'}
-                                </span>
+                                    <span
+                                        className={`${comment.reported
+                                                ? 'text-danger font-weight-bold'
+                                                : 'text-success font-weight-bold'
+                                            }`}
+                                    >
+                                        {comment.reported ? 'No' : 'Yes'}
+                                    </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -123,7 +157,7 @@ function ManageComment() {
                 )
             })
         } else {
-            return <NoElementFound/>
+            return <NoElementFound />
         };
     }
 
@@ -182,6 +216,8 @@ function ManageComment() {
                                 {/* <!--end::Card header--> */}
                                 {/* <!--begin::Card body--> */}
                                 <div className="card-body py-4">
+                                    <FormTable columns={columns} data={comments} />
+
                                     {/* <!--begin::Table--> */}
                                     <table className="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                                         {/* <!--begin::Table head--> */}
