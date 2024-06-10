@@ -9,6 +9,7 @@ import IndividualAnswer from './IndividualAnswer';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
 import Navigation from '../Navigation';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
 function Answers() {
@@ -153,8 +154,7 @@ function Answers() {
                                                                 <div className="d-flex align-items-center flex-row-fluid flex-wrap">
                                                                     {/* <!--begin:Author--> */}
                                                                     <div className="flex-grow-1 me-2">
-                                                                        <a className="text-gray-800 text-hover-primary fs-6 fw-bold">{item.title}</a>
-                                                                    </div>
+                                                                        <Link className="text-gray-800 text-hover-primary fs-6 fw-bold" onClick={() => window.location.reload()} to={`/answers/${item._id}`}>{item.title}</Link></div>
                                                                     {/* <!--end:Author--> */}
                                                                 </div>
                                                                 {/* <!--end::Section--> */}
@@ -207,11 +207,11 @@ function Answers() {
 
                                                         {/* <!--end::Main form--> */}
                                                         {/* <!--begin::Posts--> */}
-                                                        <div className="card mb-3 border-primary">
+                                                        <div className="card mb-3 border-primary shadow-lg">
                                                             <div className="card-body">
                                                                 <div className="d-flex align-items-center mb-3">
                                                                     <div className="bg-primary p-2 rounded-circle me-2">
-                                                                        <BsQuestionCircle className="text-white" />
+                                                                        <BsQuestionCircle className="text-white fs-4" />
                                                                     </div>
                                                                     <h5 className="card-title mb-0 text-primary fw-bold">Question</h5>
                                                                 </div>
@@ -221,23 +221,17 @@ function Answers() {
                                                                 </p>
                                                             </div>
                                                             <div className="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
-                                                                <div>
-                                                                    <a
-                                                                        href="#"
-                                                                        className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}
-                                                                        onClick={handleUpvoteClick}
-                                                                    >
-                                                                        <i className="bi bi-hand-thumbs-up me-1"></i> Upvote
-                                                                    </a>
-                                                                </div>
-                                                                <div>
-                                                                    <span className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}>
-                                                                        {upvoteCount}
-                                                                    </span>
+                                                                <div className="ms-auto">
                                                                     <ReportModal reportType="question" Content={Question} />
                                                                 </div>
                                                             </div>
+                                                            <div className="border-bottom border-primary"></div>
                                                         </div>
+                                                        <div className="mt-5">
+                                                            <h5 className="fw-bold text-primary">The following are answers for the question: -</h5>
+                                                            <hr className="border-primary" />
+                                                        </div>
+
                                                         {populateAnswers()}
                                                         {/* <!--end::Posts--> */}
                                                     </div>

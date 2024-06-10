@@ -33,6 +33,22 @@ const question = new Question({
     // return
 };
 
+exports.updateOne = (req, res) => {
+  const { id } = req.params;
+  const { voteCount } = req.body;
+
+  Question.updateOne({ _id: id }, { $set: { upvotes: voteCount } })
+   .then(result => {
+      res.json({ message: 'Vote count updated successfully' });
+    })
+   .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating vote count' });
+    });
+};
+
+
+
 // Retrieve all question from the database.
 exports.findAll = (req, res) => {
   const title  = req.body.title;
