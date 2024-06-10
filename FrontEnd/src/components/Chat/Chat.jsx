@@ -191,23 +191,15 @@ function Chat({ socket, username, room, clients }) {
                     <div className="d-flex flex-column align-items-start">
                       {/* <!--begin::User--> */}
                       <div className="d-flex align-items-center mb-2">
-                        {/* <!--begin::Avatar--> */}
-                        <div className="symbol symbol-35px symbol-circle">
-                          <img
-                            alt="Pic"
-                            src="assets/media/avatars/300-25.jpg"
-                          />
-                        </div>
-                        {/* <!--end::Avatar--> */}
+
                         {/* <!--begin::Details--> */}
                         <div className="ms-3">
                           <a
                             href="#"
                             className="fs-5 fw-bold text-gray-900 text-hover-primary me-1"
                           >
-                            {userName}
+                            {messageContent.author}
                           </a>
-                          <span className="text-muted fs-7 mb-1">2 mins</span>
                         </div>
                         {/* <!--end::Details--> */}
                       </div>
@@ -240,11 +232,6 @@ function Chat({ socket, username, room, clients }) {
                           </a>
                         </div>
                         {/* <!--end::Details--> */}
-                        {/* <!--begin::Avatar--> */}
-                        <div className="symbol symbol-35px symbol-circle">
-                          <img alt="Pic" src="assets/media/avatars/300-1.jpg" />
-                        </div>
-                        {/* <!--end::Avatar--> */}
                       </div>
                       {/* <!--end::User--> */}
                       {/* <!--begin::Text--> */}

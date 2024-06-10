@@ -5,6 +5,7 @@ import Chat from "./Chat";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
+import Navigation from "../Navigation";
 
 const socket = io.connect("http://localhost:3000");
 
@@ -145,6 +146,7 @@ const ChatPage = () => {
 
   return (
     <div className="chat-container">
+      <Navigation />
       <div className="App">
         {!showChat ? (
           <div
@@ -259,74 +261,74 @@ const ChatPage = () => {
                                 </div>
                               </div>
                             </div>
-                            <Link
+                            {/* <Link
                               to={`/acceptOffer/${id}`}
                               className="btn container btn-primary mt-5"
                               target="_blank"
-                            >
-                              {/*begin::Card header*/}
-                              <div className="card-header border-0 pt-9">
-                                {/*begin::Card Title*/}
-                                <div className="card-title m-0">
-                                  {/*begin::Avatar*/}
-                                  <div className="symbol symbol-50px w-50px bg-light">
-                                    <img
-                                      src="/assets/media/svg/brand-logos/plurk.svg"
-                                      alt="image"
-                                      className="p-3"
-                                    />
-                                  </div>
-                                  {/*end::Avatar*/}
+                            > */}
+                            {/*begin::Card header*/}
+                            <div className="card-header border-0 pt-9">
+                              {/*begin::Card Title*/}
+                              <div className="card-title m-0">
+                                {/*begin::Avatar*/}
+                                <div className="symbol symbol-50px w-50px bg-light">
+                                  <img
+                                    src="/assets/media/svg/brand-logos/plurk.svg"
+                                    alt="image"
+                                    className="p-3"
+                                  />
                                 </div>
-                                {/*end::Car Title*/}
-                                {/*begin::Card toolbar*/}
-                                <div className="card-toolbar">
-                                  <span className="badge badge-light-primary fw-bold me-auto px-4 py-3">
-                                    {status}
-                                  </span>
-                                </div>
-                                {/*end::Card toolbar*/}
+                                {/*end::Avatar*/}
                               </div>
-                              {/*end:: Card header*/}
-                              {/*begin:: Card body*/}
-                              <div className="card-body p-9">
-                                {/*begin::Name*/}
-                                <div className="fs-3 fw-bold text-dark">{title}</div>
-                                {/*end::Name*/}
-                                {/*begin::Description*/}
-                                <p className="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
-                                  {description}
-                                </p>
-                                {/*end::Description*/}
-                                {/*begin::Info*/}
-                                <div className="d-flex flex-wrap mb-5">
-                                  {/*begin::Due*/}
-                                  <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                    <div className="fs-6 text-gray-800 fw-bold">
-                                      Nov 10, 2023
-                                    </div>
-                                    <div className="fw-semibold text-gray-400">
-                                      Due Date
-                                    </div>
+                              {/*end::Car Title*/}
+                              {/*begin::Card toolbar*/}
+                              <div className="card-toolbar">
+                                <span className="badge badge-light-primary fw-bold me-auto px-4 py-3">
+                                  {status}zz
+                                </span>
+                              </div>
+                              {/*end::Card toolbar*/}
+                            </div>
+                            {/*end:: Card header*/}
+                            {/*begin:: Card body*/}
+                            <div className="card-body p-9">
+                              {/*begin::Name*/}
+                              <div className="fs-3 fw-bold text-dark">{title}</div>
+                              {/*end::Name*/}
+                              {/*begin::Description*/}
+                              <p className="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
+                                {description}
+                              </p>
+                              {/*end::Description*/}
+                              {/*begin::Info*/}
+                              <div className="d-flex flex-wrap mb-5">
+                                {/*begin::Due*/}
+                                <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                  <div className="fs-6 text-gray-800 fw-bold">
+                                    Nov 10, 2023
                                   </div>
-                                  <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                    <div className="fs-6 text-gray-800 fw-bold">
-                                      ${price}
-                                    </div>
-                                    <div className="fw-semibold text-gray-400">
-                                      Price
-                                    </div>
+                                  <div className="fw-semibold text-gray-400">
+                                    Due Date
                                   </div>
                                 </div>
-                                <Link
-                                  to={`/acceptOffer/${id}`}
-                                  className="btn container btn-primary mt-5"
-                                  target="_blank"
-                                >
-                                  Accept Offer
-                                </Link>
+                                <div className="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                  <div className="fs-6 text-gray-800 fw-bold">
+                                    ${price}
+                                  </div>
+                                  <div className="fw-semibold text-gray-400">
+                                    Price
+                                  </div>
+                                </div>
                               </div>
-                            </a>
+                              <Link
+                                to={`/acceptOffer/${id}`}
+                                className="btn container btn-primary mt-5"
+                                target="_blank"
+                              >
+                                Accept Offer
+                              </Link>
+                            </div>
+                            {/* </Link> */}
                           </div>
                         </a>
                       </div>
