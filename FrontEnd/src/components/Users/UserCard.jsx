@@ -10,9 +10,9 @@ const UserCard = ({ users }) => {
             :
             users.map((user) => {
                 return (
-                    <div key={user._id} className="col-md-6 col-xxl-4">
-                        <div className="card">
-                            <div className="card-body d-flex flex-center flex-column pt-12 p-9">
+                    <div key={user._id} className="col-md-3 col-xxl-3 row" style={{ margin: "1px", width: "33%" }}>
+                        <div className="card" style={{ boxShadow: "3px 4px 27px #888888", height: "354px" }}>
+                            <div className="card-body d-flex flex-center flex-column">
                                 <div className="symbol symbol-65px symbol-circle mb-5">
                                     <img src={"http://localhost:3000/uploads/profile/" + user.profilePicture} alt="image" />
                                     <div className="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n3 mt-n3"></div>

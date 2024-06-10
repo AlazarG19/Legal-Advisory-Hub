@@ -1,6 +1,6 @@
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import DetailSideBar from "./DetailSideBar";
 import Navbar from "../Navbar";
 import Navigation from "../Navigation";
@@ -21,72 +21,78 @@ const UserDetails = () => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/getFreelancer/${id}`)
-      .then(response => {
-        console.log(response.data)
-        console.log(response.data[0])
-        setName(response.data[0].firstName + " " + response.data[0].lastName)
-        setUserName(response.data[0].username)
-        setProfilePicture(response.data[0].Details[0].profilePicture)
-        setCategory(response.data[0].Details[0].category)
-        setFirm(response.data[0].Details[0].firm)
-        setContact(response.data[0].Details[0].contact)
-        setCity(response.data[0].Details[0].city)
-        setLanguage(response.data[0].Details[0].language)
-        setBio(response.data[0].Details[0].bio)
-        setEmail(response.data[0].email)
-        setUser(response.data[0].city)
+    axios
+      .get(`http://localhost:3000/getFreelancer/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data[0]);
+        setName(response.data[0].firstName + " " + response.data[0].lastName);
+        setUserName(response.data[0].username);
+        setProfilePicture(response.data[0].Details[0].profilePicture);
+        setCategory(response.data[0].Details[0].category);
+        setFirm(response.data[0].Details[0].firm);
+        setContact(response.data[0].Details[0].contact);
+        setCity(response.data[0].Details[0].city);
+        setLanguage(response.data[0].Details[0].language);
+        setBio(response.data[0].Details[0].bio);
+        setEmail(response.data[0].email);
+        setUser(response.data[0].city);
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, [id]);
   return (
     <>
       <Navigation />
       <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
-        <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
-          <div className="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-            <div className="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div
+          className="app-page flex-column flex-column-fluid"
+          id="kt_app_page"
+        >
+          <div
+            className="app-wrapper flex-column flex-row-fluid"
+            id="kt_app_wrapper"
+          >
+            <div
+              className="app-main flex-column flex-row-fluid"
+              id="kt_app_main"
+            >
               <div className="d-flex flex-column flex-column-fluid">
-                <div id="kt_app_content" className="app-content flex-column-fluid">
+                <div
+                  id="kt_app_content"
+                  className="app-content flex-column-fluid"
+                >
                   <div
                     id="kt_app_content_container"
                     className="app-container container-xxl"
                   >
                     <div className="row g-8">
-
-                      <div className="col">
+                      <div className="col-md-4 d-flex justify-content-center mt-10" style={{ height: "40vh", boxShadow: "1px 1px 5px #888888", borderRadius: "16px", marginRight: "20px" }}>
                         <div
                           className="card card-flush h-lg-100"
                           id="kt_contacts_main"
+                          style={{ width: "100%", maxWidth: "400px", alignItems: "center" }}
                         >
-                          <div
-                            className="card-header pt-7"
-                            id="kt_chat_contacts_header"
-                          >
-                            <div className="card-title">
-                              <span className="svg-icon svg-icon-1 me-2">
-                                <svg
-                                  width={24}
-                                  height={24}
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    opacity="0.3"
-                                    d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z"
-                                    fill="currentColor"
-                                  />
-                                </svg>
-                              </span>
-                              <h2>User Profile</h2>
+                          <div className="card-header pt-7">
+                            <div className="card-title text-center ustify-content-center">
+                              <center><h2>User Profile</h2></center>
                             </div>
-                            <div className="card-toolbar gap-3">
-                              <Link to={`/chat/${id}`} className="btn btn-sm btn-light btn-active-light-primary">
+                          </div>
+                          <div className="card-body pt-5 text-center">
+                            <div className="d-flex justify-content-center mb-4">
+                              <div className="symbol symbol-circle symbol-100px overflow-hidden">
+                                <img
+                                  src={
+                                    "http://localhost:3000/uploads/profile/" +
+                                    profilePicture
+                                  }
+                                  alt="profile"
+                                  className="img-fluid"
+                                />
+                              </div>
+                            </div>
+                            <div className="d-flex flex-column gap-2 align-items-center">
+                              <h3 className="mb-0">{name}</h3>
+                              <div className="d-flex align-items-center gap-2">
                                 <span className="svg-icon svg-icon-2">
                                   <svg
                                     width={24}
@@ -97,122 +103,59 @@ const UserDetails = () => {
                                   >
                                     <path
                                       opacity="0.3"
-                                      d="M8 8C8 7.4 8.4 7 9 7H16V3C16 2.4 15.6 2 15 2H3C2.4 2 2 2.4 2 3V13C2 13.6 2.4 14 3 14H5V16.1C5 16.8 5.79999 17.1 6.29999 16.6L8 14.9V8Z"
+                                      d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
                                       fill="currentColor"
                                     />
                                     <path
-                                      d="M22 8V18C22 18.6 21.6 19 21 19H19V21.1C19 21.8 18.2 22.1 17.7 21.6L15 18.9H9C8.4 18.9 8 18.5 8 17.9V7.90002C8 7.30002 8.4 6.90002 9 6.90002H21C21.6 7.00002 22 7.4 22 8ZM19 11C19 10.4 18.6 10 18 10H12C11.4 10 11 10.4 11 11C11 11.6 11.4 12 12 12H18C18.6 12 19 11.6 19 11ZM17 15C17 14.4 16.6 14 16 14H12C11.4 14 11 14.4 11 15C11 15.6 11.4 16 12 16H16C16.6 16 17 15.6 17 15Z"
+                                      d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
                                       fill="currentColor"
                                     />
                                   </svg>
                                 </span>
-                                Message
-                              </Link>
-                              <a
-                                href="#"
-                                className="btn btn-sm btn-icon btn-light btn-active-light-primary"
-                                data-kt-menu-trigger="click"
-                                data-kt-menu-placement="bottom-end"
-                              >
-                                <span className="svg-icon svg-icon-2">
-                                  <svg
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <rect
-                                      x={10}
-                                      y={10}
-                                      width={4}
-                                      height={4}
-                                      rx={2}
-                                      fill="currentColor"
-                                    />
-                                    <rect
-                                      x={17}
-                                      y={10}
-                                      width={4}
-                                      height={4}
-                                      rx={2}
-                                      fill="currentColor"
-                                    />
-                                    <rect
-                                      x={3}
-                                      y={10}
-                                      width={4}
-                                      height={4}
-                                      rx={2}
-                                      fill="currentColor"
-                                    />
-                                  </svg>
-                                </span>
-                              </a>
-                              <div
-                                className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                data-kt-menu="true"
-                              >
-                                <div className="menu-item px-3">
-                                  <a
-                                    href="../../demo1/dist/apps/contacts/edit-contact.html"
-                                    className="menu-link px-3"
-                                  >
-                                    Edit
-                                  </a>
-                                </div>
-                                <div className="menu-item px-3">
-                                  <a
-                                    href="#"
-                                    className="menu-link px-3"
-                                    id="kt_contact_delete"
-                                    data-kt-redirect="../../demo1/dist/apps/contacts/getting-started.html"
-                                  >
-                                    Delete
-                                  </a>
-                                </div>
+                                <a
+                                  href="#"
+                                  className="text-muted text-hover-primary"
+                                >
+                                  {email}
+                                </a>
                               </div>
-                            </div>
-                          </div>
+                            </div >
+                            <Link
+                              to={`/chat/${id}`}
+                              className="btn btn-sm btn-light btn-primary mt-4"
+                            >
+                              <span className="svg-icon svg-icon-2">
+                                <svg
+                                  width={24}
+                                  height={24}
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    opacity="0.3"
+                                    d="M8 8C8 7.4 8.4 7 9 7H16V3C16 2.4 15.6 2 15 2H3C2.4 2 2 2.4 2 3V13C2 13.6 2.4 14 3 14H5V16.1C5 16.8 5.79999 17.1 6.29999 16.6L8 14.9V8Z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M22 8V18C22 18.6 21.6 19 21 19H19V21.1C19 21.8 18.2 22.1 17.7 21.6L15 18.9H9C8.4 18.9 8 18.5 8 17.9V7.90002C8 7.30002 8.4 6.90002 9 6.90002H21C21.6 7.00002 22 7.4 22 8ZM19 11C19 10.4 18.6 10 18 10H12C11.4 10 11 10.4 11 11C11 11.6 11.4 12 12 12H18C18.6 12 19 11.6 19 11ZM17 15C17 14.4 16.6 14 16 14H12C11.4 14 11 14.4 11 15C11 15.6 11.4 16 12 16H16C16.6 16 17 15.6 17 15Z"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                              Message
+                            </Link>
+                          </div >
+                        </div >
+                      </div >
+                      <div className="col-md-7 mt-10" style={{ boxShadow: "1px 1px 20px #888888" }}>
+                        <div
+                          className="card card-flush h-lg-100 "
+                          id="kt_contacts_main"
+                        >
+
                           <div className="card-body pt-5">
-                            <div className="d-flex gap-7 align-items-center">
-                              <div className="symbol symbol-circle symbol-100px">
-                                <img
-                                  src={"http://localhost:3000/uploads/profile/" + profilePicture}
-                                  alt="image"
-                                />
-                              </div>
-                              <div className="d-flex flex-column gap-2">
-                                <h3 className="mb-0">{name}</h3>
-                                <div className="d-flex align-items-center gap-2">
-                                  <span className="svg-icon svg-icon-2">
-                                    <svg
-                                      width={24}
-                                      height={24}
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        opacity="0.3"
-                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
-                                        fill="currentColor"
-                                      />
-                                      <path
-                                        d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
-                                        fill="currentColor"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <a
-                                    href="#"
-                                    className="text-muted text-hover-primary"
-                                  >
-                                    {email}
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
+
                             <ul className="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-semibold mt-6 mb-8">
                               <li className="nav-item">
                                 <a
@@ -277,36 +220,46 @@ const UserDetails = () => {
                                 role="tabpanel"
                               >
                                 <div className="d-flex flex-column gap-5 mt-7">
-                                  <div className="d-flex flex-column gap-1">
+                                  <div className="d-flex flex-column gap-1" style={{ borderBottom: "solid 1px #888888" }}>
                                     <div className="fw-bold text-muted">
                                       Category
                                     </div>
-                                    <div className="fw-bold fs-5">{category}</div>
+                                    <div className="fw-bold fs-5">
+                                      {category}
+                                    </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1">
+                                  <div className="d-flex flex-column gap-1" style={{ borderBottom: "solid 1px #888888" }}>
                                     <div className="fw-bold text-muted">
                                       User Name
                                     </div>
-                                    <div className="fw-bold fs-5">{username}</div>
+                                    <div className="fw-bold fs-5">
+                                      {username}
+                                    </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1">
-                                    <div className="fw-bold text-muted">City</div>
+                                  <div className="d-flex flex-column gap-1" style={{ borderBottom: "solid 1px #888888" }}>
+                                    <div className="fw-bold text-muted">
+                                      City
+                                    </div>
                                     <div className="fw-bold fs-5">{city}</div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1">
-                                    <div className="fw-bold text-muted">Language</div>
-                                    <div className="fw-bold fs-5">{language}</div>
+                                  <div className="d-flex flex-column gap-1" style={{ borderBottom: "solid 1px #888888" }}>
+                                    <div className="fw-bold text-muted">
+                                      Language
+                                    </div>
+                                    <div className="fw-bold fs-5">
+                                      {language}
+                                    </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1">
-                                    <div className="fw-bold text-muted">Bio</div>
+                                  <div className="d-flex flex-column gap-1" style={{ borderBottom: "solid 1px #888888" }}>
+                                    <div className="fw-bold text-muted">
+                                      Bio
+                                    </div>
                                     <p>
                                       <p>{bio}.</p>
-
-
                                     </p>
                                   </div>
                                 </div>
-                              </div>
+                              </div >
                               <div
                                 className="tab-pane fade"
                                 id="kt_contact_view_meetings"
@@ -1297,21 +1250,20 @@ const UserDetails = () => {
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                            </div >
+                          </div >
+                        </div >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
     </>
-
   );
-}
+};
 
 export default UserDetails;

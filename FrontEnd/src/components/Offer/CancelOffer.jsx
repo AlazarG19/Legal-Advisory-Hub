@@ -1,19 +1,21 @@
 import React from "react";
 import axios from 'axios'
-import {useNavigate, useParams} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const CancelOffer = () => {
-    const {id} = useParams();
-    const navigate = useNavigate()
-    console.log(id)
-    const handleCancel = ()=>{
-        axios.post(`http://localhost:3000/cancelOffer/${id}`)
-        .then(()=>{
-            console.log("offer canceled sucessfully")
-            navigate('/clients')
-        })
+  const { id } = useParams();
+  const navigate = useNavigate()
+  console.log("canceled offer", id)
+  console.log(id)
+  const handleCancel = () => {
+    console.log("offer canceled")
+    axios.post(`http://localhost:3000/cancelOffer/${id}`)
+      .then(() => {
+        console.log("offer canceled sucessfully")
+        navigate('/clients')
+      })
 
-    }
+  }
   return (
     <div id="kt_app_content_container" className="app-container container-xxl">
       {/*begin::Card*/}
@@ -27,14 +29,13 @@ const CancelOffer = () => {
             {/*end::Title*/}
             {/*begin::Description*/}
             <p className="text-gray-400 fs-4 fw-semibold mb-10">
-            Are you sure you want to cancel this offer.
+              Are you sure you want to cancel this offer.
               <br />
               Once you cancel an offer you can't restore the offer
             </p>
             {/*end::Description*/}
             {/*begin::Action*/}
             <a
-              href="#"
               className="btn btn-primary"
               onClick={handleCancel}
             >
@@ -56,12 +57,8 @@ const CancelOffer = () => {
         {/*end::Card body*/}
       </div>
       {/*end::Card*/}
-      {/*begin::Modals*/}
-      {/*begin::Modal - Customers - Add*/}
-  
-      {/*end::Modal - Customers - Add*/}
-      {/*end::Modals*/}
-    </div>
+
+    </div >
   );
 };
 

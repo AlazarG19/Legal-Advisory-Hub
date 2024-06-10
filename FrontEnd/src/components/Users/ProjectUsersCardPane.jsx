@@ -41,10 +41,10 @@ const ProjectUsersCardPane = () => {
         <>
             <div id="kt_project_users_card_pane" className="tab-pane fade show active">
                 <Navigation />
-                <div className="row g-6 g-xl-9">
-                    <div className="col-3">
+                <div className="row mt-5 col-md-12">
+                    <div className="col-2">
                         {/* <!--begin::List widget 5--> */}
-                        <div className="card card-flush h-xl-100">
+                        <div className="card card-flush h-xl-100" style={{ position: "fixed", boxShadow: "3px 1px 16px #888888" }}>
                             {/* <!--begin::Header--> */}
                             <div className="card-header pt-7">
                                 {/* <!--begin::Title--> */}
@@ -58,7 +58,7 @@ const ProjectUsersCardPane = () => {
                             {/* <!--begin::Body--> */}
                             <div className="card-body">
                                 {/* <!--begin::Scroll--> */}
-                                <div className="hover-scroll-overlay-y pe-6 me-n6" style={{ height: "415px" }}>
+                                <div className="hover-scroll-overlay-y pe-6 me-n6" style={{ height: "74vh" }}>
                                     {/* <!--begin::Item--> */}
                                     <div onClick={() => { onCategoryClicked("criminal") }} className={selectedcategory == "criminal" ? "border border-dashed border-primary rounded px-7 py-3 mb-6" : "border border-dashed border-gray-300 rounded px-7 py-3 mb-6"}>
                                         {/* <!--begin::Info--> */}
@@ -229,12 +229,12 @@ const ProjectUsersCardPane = () => {
                         </div>
                         {/* <!--end::List widget 5--> */}
                     </div>
-                    <div className='col-9'>
+                    <div className='col-10 row mt-5'>
 
                         <UserCard users={users} />
                     </div>
                 </div>
-                <Pagination />
+                {/* <Pagination /> */}
             </div>
         </>
     );
