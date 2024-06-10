@@ -5,8 +5,10 @@ import {useNavigate, useParams} from 'react-router-dom'
 const CancelOffer = () => {
     const {id} = useParams();
     const navigate = useNavigate()
+    console.log("canceled offer", id)
     console.log(id)
     const handleCancel = ()=>{
+      console.log("offer canceled")
         axios.post(`http://localhost:3000/cancelOffer/${id}`)
         .then(()=>{
             console.log("offer canceled sucessfully")
@@ -34,7 +36,7 @@ const CancelOffer = () => {
             {/*end::Description*/}
             {/*begin::Action*/}
             <a
-              href="#"
+
               className="btn btn-primary"
               onClick={handleCancel}
             >
@@ -56,11 +58,7 @@ const CancelOffer = () => {
         {/*end::Card body*/}
       </div>
       {/*end::Card*/}
-      {/*begin::Modals*/}
-      {/*begin::Modal - Customers - Add*/}
-  
-      {/*end::Modal - Customers - Add*/}
-      {/*end::Modals*/}
+     
     </div>
   );
 };
