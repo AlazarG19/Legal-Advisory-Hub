@@ -125,15 +125,15 @@ const Navigation = () => {
                 }
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
-
-                <div onClick={() => { onLinkClick("/legalexperts") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
+                {usertype == "client" ? <div onClick={() => { onLinkClick("/legalexperts") }} data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" className={location.pathname.includes("legalexperts") ? "menu-item here " : "menu-item "} >
                   {/* <!--begin:Menu link--> */}
                   <span className="menu-link">
                     <span className="menu-title">Legal Experts</span>
                     <span className="menu-arrow d-lg-none"></span>
                   </span>
                   {/* <!--end:Menu link--> */}
-                </div>
+                </div> : ""}
+
                 {/* <!--end:Menu item--> */}
                 {/* <!--begin:Menu item--> */}
                 {usertype == "admin" ?
@@ -210,9 +210,8 @@ const Navigation = () => {
             {/*end::Menu wrapper*/}
             {/*begin::Navbar*/}
             <div className="app-navbar flex-shrink-0">
-
               {/*begin::Chat*/}
-              <div className="app-navbar-item ms-1 ms-lg-3" >
+              {usertype == "freelancer" ? <div className="app-navbar-item ms-1 ms-lg-3" >
                 {/*begin::Menu wrapper*/}
                 <div
                   className="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative"
@@ -257,7 +256,8 @@ const Navigation = () => {
                   <span className="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink" />
                 </div>
                 {/*end::Menu wrapper*/}
-              </div>
+              </div> : ""}
+
               {/*end::Chat*/}
               {/*begin::User menu*/}
               <div
