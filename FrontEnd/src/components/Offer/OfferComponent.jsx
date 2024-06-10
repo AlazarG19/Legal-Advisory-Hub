@@ -26,7 +26,7 @@ const OfferComponent = () => {
   }, [id]);
   return (
     <>
-    <div
+      {/* <div
         id="myModal"
         className="modal"
         tabIndex="-1"
@@ -34,17 +34,13 @@ const OfferComponent = () => {
         style={{ display: "block", backgroundColor: "#0000004a" }}
       >
         <div className="modal-content">
-          {/* Modal header */}
           <div className="modal-header">
-            {/* Modal title */}
             <h2>View Offer</h2>
-            {/* Close button */}
             <div
               className="btn btn-sm btn-icon btn-active-color-primary"
               data-bs-dismiss="modal"
             >
               <span className="svg-icon svg-icon-1">
-                {/* Close button SVG icon */}
                 <svg
                   width={24}
                   height={24}
@@ -75,12 +71,9 @@ const OfferComponent = () => {
               </span>
             </div>
           </div>
-          {/* Modal body */}
           <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-            {/* Offer details container */}
             <div className="card">
               <div className="card-body">
-                {/* Offer title */}
                 <div className="mb-3">
                   <label htmlFor="offerTitle" className="form-label">
                     Offer Title
@@ -94,7 +87,6 @@ const OfferComponent = () => {
                     disabled
                   />
                 </div>
-                {/* Offer description */}
                 <div className="mb-3">
                   <label htmlFor="offerDescription" className="form-label">
                     Offer Description
@@ -122,26 +114,117 @@ const OfferComponent = () => {
                   />
                 </div>
 
-                {/* Additional important details */}
                 <div className="mb-3">
-                  {/* Include any additional important details here */}
                 </div>
               </div>
             </div>
-            {/* Proceed to Payment button */}
             <div className="text-center pt-4">
-            <Link to={`/paymentPage/${id}`} className="btn btn-primary">
-            Procceed to Payment
-          </Link>
-           
-             
+              <Link to={`/paymentPage/${id}`} className="btn btn-primary">
+                Procceed to Payment
+              </Link>
+
+
             </div>
           </div>
-          {/* End Modal body */}
         </div>
-      </div> 
-    
-    
+      </div> */}
+
+      {/* <!--end::Toolbar--> */}
+      {/* <!--begin::Content--> */}
+      <div id="kt_app_content" class="app-content flex-column-fluid">
+        {/* <!--begin::Content container--> */}
+        <div id="kt_app_content_container" class="app-container container-xxl">
+          {/* <!--begin::Card--> */}
+          <div class="card">
+            {/* <!--begin::Card body--> */}
+            <div class="card-body">
+              {/* <!--begin::Stepper--> */}
+              <div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
+                {/* <!--begin::Nav--> */}
+                <div class="stepper-nav mb-5">
+                  {/* <!--begin::Step 3--> */}
+                  <div class="stepper-item" data-kt-stepper-element="nav">
+                    <h3 class="stepper-title">Offer Title</h3>
+                  </div>
+
+                </div>
+                {/* <!--end::Nav--> */}
+                {/* <!--begin::Form--> */}
+                <div class="mx-auto mw-600px w-100 pt-15 pb-10" id="kt_create_account_form">
+
+                  {/* <!--begin::Step 3--> */}
+                  <div class="current" data-kt-stepper-element="content">
+                    {/* <!--begin::Wrapper--> */}
+                    <div class="w-100">
+                      {/* <!--begin::Heading--> */}
+                      <div class="pb-10 pb-lg-12">
+                        {/* <!--begin::Title--> */}
+                        <h2 class="fw-bold text-dark">Business Details</h2>
+                        {/* <!--end::Title--> */}
+                      </div>
+                      {/* <!--end::Heading--> */}
+                      {/* <!--begin::Input group--> */}
+                      <div class="fv-row mb-10">
+                        {/* <!--begin::Label--> */}
+                        <label class="form-label required">Offer Title</label>
+                        {/* <!--end::Label--> */}
+                        {/* <!--begin::Input--> */}
+                        <input name="business_name" class="form-control form-control-lg form-control-solid" value={title} disabled />
+                        {/* <!--end::Input--> */}
+                      </div>
+                      {/* <!--end::Input group--> */}
+                      {/* <!--begin::Input group--> */}
+                      <div class="fv-row mb-10">
+                        {/* <!--begin::Label--> */}
+                        <label class="d-flex align-items-center form-label">
+                          <span class="required">Offer Description</span>
+                        </label>
+                        {/* <!--end::Label--> */}
+                        {/* <!--begin::Input--> */}
+                        <input name="business_descriptor" class="form-control form-control-lg form-control-solid" disabled value={description} />
+                        {/* <!--end::Input--> */}
+                      </div>
+                      {/* <!--end::Input group--> */}
+                      <div class="fv-row mb-10">
+                        {/* <!--begin::Label--> */}
+                        <label class="d-flex align-items-center form-label">
+                          <span class="required">Offer Price</span>
+                        </label>
+                        {/* <!--end::Label--> */}
+                        {/* <!--begin::Input--> */}
+                        <input name="business_descriptor" class="form-control form-control-lg form-control-solid" disabled value={price} />
+                        {/* <!--end::Input--> */}
+                      </div>
+                      {/* <!--end::Input group--> */}
+                    </div>
+                    {/* <!--end::Wrapper--> */}
+                  </div>
+
+                  {/* <!--begin::Actions--> */}
+                  <div class="d-flex flex-stack pt-15">
+                    {/* <!--begin::Wrapper--> */}
+                    <div class="mr-2">
+                      <Link to={`/paymentPage/${id}`} className="btn btn-primary">
+                        Procceed to Payment
+                      </Link>
+                    </div>
+                    {/* <!--end::Wrapper--> */}
+                  </div>
+                  {/* <!--end::Actions--> */}
+                </div>
+                {/* <!--end::Form--> */}
+              </div>
+              {/* <!--end::Stepper--> */}
+            </div>
+            {/* <!--end::Card body--> */}
+          </div>
+          {/* <!--end::Card--> */}
+        </div>
+        {/* <!--end::Content container--> */}
+      </div>
+      {/* <!--end::Content--> */}
+
+
     </>
   );
 };

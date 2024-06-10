@@ -77,6 +77,8 @@ function Chat({ socket, username, room, clients }) {
         console.log("sucess");
         if (!response.ok) {
           throw new Error("HTTP error, status = " + response.status);
+        } else {
+          setCurrentMessage("")
         }
       } catch (error) {
         console.error("Error:", error.message);
@@ -158,7 +160,6 @@ function Chat({ socket, username, room, clients }) {
                 {/* <!--begin::Info--> */}
                 <div className="mb-0 lh-1">
                   <span className="badge badge-success badge-circle w-10px h-10px me-1"></span>
-                  <span className="fs-7 fw-semibold text-muted">Active</span>
                 </div>
                 {/* <!--end::Info--> */}
               </div>

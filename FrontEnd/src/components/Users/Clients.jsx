@@ -51,7 +51,7 @@ const Clients = () => {
           .catch((error) => {
             console.error("Error fetching clients:", error);
           });
-          
+
         axios
           .get(`http://localhost:3000/getOffers/${firstUser._id}`)
           .then((response) => {
@@ -107,20 +107,20 @@ const Clients = () => {
       setShowChat(true);
     }
   };
-console.log("outside room Id ", room)
+  console.log("outside room Id ", room)
+  console.log("outside room Id offer", offer)
   return (
     <div className="app-container container-xxl">
       <Navigation />
       <div className="col-lg-6 col-xl-3">
+
+      </div>
+
+      <div className="row">
+        <div className="col-lg-6 col-xl-3">
           {/*begin::Contacts*/}
           <div className="card card-flush" id="kt_contacts_list">
-            {/*begin::Card header*/}
-            <div className="card-header pt-7" id="kt_contacts_list_header">
-              {/*begin::Form*/}
 
-              {/*end::Form*/}
-            </div>
-            {/*end::Card header*/}
             {/*begin::Card body*/}
             <div className="card-body pt-5" id="kt_contacts_list_body">
               {/*begin::List*/}
@@ -136,6 +136,7 @@ console.log("outside room Id ", room)
                 data-kt-scroll-offset="5px"
                 style={{ maxHeight: 561 }}
               >
+
                 {offer && (
                   <div className="offer mt-3">
                     <div className="col-md-12 col-xl-12">
@@ -214,21 +215,15 @@ console.log("outside room Id ", room)
             {/*end::Card body*/}
           </div>
           {/*end::Contacts*/}
-        </div>
-
-      <div className="row">
-        <div className="col-lg-6 col-xl-3">
           {/*begin::Contacts*/}
           <div className="card card-flush" id="kt_contacts_list">
             {/*begin::Card header*/}
             <div className="card-header pt-7" id="kt_contacts_list_header">
-              {/*begin::Form*/}
-              <form
+
+              {/* <form
                 className="d-flex align-items-center position-relative w-100 m-0"
                 autoComplete="off"
               >
-                {/*begin::Icon*/}
-                {/*begin::Svg Icon | path: icons/duotune/general/gen021.svg*/}
                 <span className="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
                   <svg
                     width={24}
@@ -253,9 +248,6 @@ console.log("outside room Id ", room)
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
-                {/*end::Icon*/}
-                {/*begin::Input*/}
                 <input
                   type="text"
                   className="form-control form-control-solid ps-13"
@@ -263,9 +255,7 @@ console.log("outside room Id ", room)
                   defaultValue=""
                   placeholder="Search contacts"
                 />
-                {/*end::Input*/}
-              </form>
-              {/*end::Form*/}
+              </form> */}
             </div>
             {/*end::Card header*/}
             {/*begin::Card body*/}
@@ -319,7 +309,7 @@ console.log("outside room Id ", room)
           {/*end::Contacts*/}
         </div>
 
-        
+
 
         <div className="col-md-8">
           <div className="App">
@@ -335,9 +325,9 @@ console.log("outside room Id ", room)
                 data-kt-drawer-direction="end"
                 data-kt-drawer-toggle="#kt_drawer_chat_toggle"
                 data-kt-drawer-close="#kt_drawer_chat_close"
-                
+
                 style={{
-                  
+
                   marginTop: "85px",
                   display: "flex",
                   alignItems: "center",

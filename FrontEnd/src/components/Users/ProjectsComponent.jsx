@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 
 const ProjectsComponent = ({ id }) => {
-    const [offers, setOffers] = useState([])
-    useEffect(()=>{
-        axios.get(`http://localhost:3000/getOffers/${id}`)
-    .then((response)=>{
-      setOffers(response.data)
-    })
-    }, [])
-    console.log(offers)
-    
+  const [offers, setOffers] = useState([])
+  useEffect(() => {
+    axios.get(`http://localhost:3000/getOffers/${id}`)
+      .then((response) => {
+        setOffers(response.data)
+      })
+  }, [])
+  console.log(offers)
+
   return (
     <div>
       <div className="card card-xxl-stretch mb-5 mb-xl-10">
@@ -59,7 +59,7 @@ const ProjectsComponent = ({ id }) => {
 
                 {/*end::Col*/}
                 {/*begin::Col*/}
-                <div className="col">
+                {/* <div className="col">
                   <div className="border border-dashed border-gray-300 text-center min-w-125px rounded pt-4 pb-2 my-3">
                     <span className="fs-4 fw-semibold text-danger d-block">
                       Failed Offers
@@ -73,7 +73,7 @@ const ProjectsComponent = ({ id }) => {
                       291
                     </span>
                   </div>
-                </div>
+                </div> */}
                 {/*end::Col*/}
               </div>
               {/*end::Row*/}

@@ -28,7 +28,7 @@ const UserDetails = () => {
         console.log(response.data[0]);
         setName(response.data[0].firstName + " " + response.data[0].lastName);
         setUserName(response.data[0].username);
-        setProfilePicture(response.data[0].Details[0].profilePicture);
+        setProfilePicture(response.data[0].profilePicture);
         setCategory(response.data[0].Details[0].category);
         setFirm(response.data[0].Details[0].firm);
         setContact(response.data[0].Details[0].contact);
