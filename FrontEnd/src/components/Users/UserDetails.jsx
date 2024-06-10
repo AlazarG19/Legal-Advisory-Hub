@@ -66,7 +66,7 @@ const UserDetails = () => {
                     className="app-container container-xxl"
                   >
                     <div className="row g-8">
-                      <div className="col-md-4 d-flex justify-content-center mt-10" style={{height:"40vh", boxShadow: "1px 1px 5px #888888", borderRadius:"16px", marginRight: "20px"}}>
+                      <div className="col-md-4 d-flex justify-content-center mt-10" style={{ height: "fitContent", boxShadow: "1px 1px 5px rgb(136 136 136 / 25%) ", borderRadius: "16px", marginRight: "20px" }}>
                         <div
                           className="card card-flush h-lg-100"
                           id="kt_contacts_main"
@@ -145,10 +145,10 @@ const UserDetails = () => {
                               </span>
                               Message
                             </Link>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-7 mt-10" style={{boxShadow: "1px 1px 20px #888888" }}>
+                          </div >
+                        </div >
+                      </div >
+                      <div className="col-md-7 mt-10" style={{ boxShadow: "1px 1px 20px rgb(136 136 136 / 25%)" }}>
                         <div
                           className="card card-flush h-lg-100 "
                           id="kt_contacts_main"
@@ -220,7 +220,7 @@ const UserDetails = () => {
                                 role="tabpanel"
                               >
                                 <div className="d-flex flex-column gap-5 mt-7">
-                                  <div className="d-flex flex-column gap-1" style={{borderBottom: "solid 1px #888888"}}>
+                                  <div className="d-flex flex-column gap-1" >
                                     <div className="fw-bold text-muted">
                                       Category
                                     </div>
@@ -228,7 +228,7 @@ const UserDetails = () => {
                                       {category}
                                     </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1" style={{borderBottom: "solid 1px #888888"}}>
+                                  <div className="d-flex flex-column gap-1" >
                                     <div className="fw-bold text-muted">
                                       User Name
                                     </div>
@@ -236,13 +236,13 @@ const UserDetails = () => {
                                       {username}
                                     </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1" style={{borderBottom: "solid 1px #888888"}}>
+                                  <div className="d-flex flex-column gap-1" >
                                     <div className="fw-bold text-muted">
                                       City
                                     </div>
                                     <div className="fw-bold fs-5">{city}</div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1" style={{borderBottom: "solid 1px #888888"}}>
+                                  <div className="d-flex flex-column gap-1" >
                                     <div className="fw-bold text-muted">
                                       Language
                                     </div>
@@ -250,7 +250,7 @@ const UserDetails = () => {
                                       {language}
                                     </div>
                                   </div>
-                                  <div className="d-flex flex-column gap-1" style={{borderBottom: "solid 1px #888888"}}>
+                                  <div className="d-flex flex-column gap-1" >
                                     <div className="fw-bold text-muted">
                                       Bio
                                     </div>

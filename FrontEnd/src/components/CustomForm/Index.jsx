@@ -64,12 +64,14 @@ const Index = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("catagoryparams")
-                console.log(catagoryparams)
+                console.log(catagoryparams.category)
                 console.log("dataloaded")
                 console.log(data)
                 setOldData(data)
-                if (catagoryparams != "") {
+                console.log(catagoryparams != {})
+                if (catagoryparams.category) {
                     setSelectedCategory(catagoryparams.catagory)
+                    console.log("inside catagory params", catagoryparams == true)
                     console.log("before filter", data)
                     console.log("use effect", catagoryparams.catagory)
                     let filtereddata = data.filter(form => form.category === catagoryparams.catagory);
