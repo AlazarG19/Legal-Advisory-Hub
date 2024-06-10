@@ -1,0 +1,43 @@
+/* .react-chatbot-kit-chat-input {
+    padding: 0.775rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--bs-gray-700);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: 1px solid var(--bs-gray-300);
+    appearance: none;
+    border-radius: 0.475rem;
+    box-shadow: false;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s
+} */
+.react-chatbot-kit-chat-btn-send {
+    width: 30px;
+}
+
+#printablediv {
+    width: 235mm;
+    min-height: 297mm;
+    box-shadow: 0px 0px 70px -8px rgba(0, 0, 0, 0.37);
+    padding: 30px
+}
+
+@media print {
+    .chatbotdiv {
+        display: none;
+    }
+
+    /* All your print styles go here */
+    #kt_app_header {
+        display: none;
+
+    }
+
+    #printablediv {
+        width: 235mm;
+        height: 297mm;
+        box-shadow: none;
+        padding: 30px
+    }
+}
