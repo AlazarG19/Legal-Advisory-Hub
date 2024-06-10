@@ -29,13 +29,14 @@ function AnswerModal({ Question }) {
     event.preventDefault(); // Prevent the default form submission
 
     const url = 'http://localhost:3000/api/answers/'; // Replace with your API endpoint
-
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+        // console.log(userData)
     const requestData = {
       questionId: Question._id,
       body: Answerbody,
-      author: "System User",
-    };
-
+      author: `${userData[0].firstName} ${userData[0].lastName}`
+    }
+    
     try {
       const response = await fetch(url, {
         method: 'POST',

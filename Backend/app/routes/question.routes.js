@@ -14,5 +14,8 @@ module.exports = app => {
     router.delete("/:id", question.delete);
     // Delete all question
     router.delete("/", question.deleteAll);
+
+    router.post('/upvote/:id', question.updateOne);
+    
     app.use('/api/questions', router);
   };

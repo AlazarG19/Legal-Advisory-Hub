@@ -151,10 +151,6 @@ function IndividualAnswer({ Answer, Feed }) {
                     <div className="flex-grow-1">
                         {/* <!--begin::Name--> */}
                         <a href="#" className="text-gray-800 text-hover-primary fs-4 fw-bold">{Answer.author}</a>
-                        {/* <!--end::Name--> */}
-                        {/* <!--begin::Date--> */}
-                        <span className="text-gray-400 fw-semibold d-block">{Answer.author}</span>
-                        {/* <!--end::Date--> */}
                     </div>
                     {/* <!--end::Info--> */}
                 </div>

@@ -43,7 +43,7 @@ function Forum() {
         }).catch((error) => {
             console.log(error)
         });
-    }, [postsPerPage,posts])
+    }, [postsPerPage])
 
     const handlePageChange = (page) => {
         setCurrentPage(page);

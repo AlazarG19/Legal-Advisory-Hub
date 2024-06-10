@@ -8,15 +8,45 @@ import { Container, Row, Col, Badge, Card, ListGroup, Button } from 'react-boots
 import { Link } from 'react-router-dom';
 
 function IndividualQuestion({ Question }) {
-  const [upvoteCount, setUpvoteCount] = useState(0);
+  const [upvoteCount, setUpvoteCount] = useState(Question.upvotes);
   const [numAns, setNumAns] = useState(0);
   const [hasUpvoted, setHasUpvoted] = useState(false);
 
-  const handleUpvoteClick = () => {
+  const handleUpvoteClick = async () => {
     if (!hasUpvoted) {
-      setUpvoteCount((prevCount) => prevCount + 1);
-      setHasUpvoted(true);
+      try {
+        // Update the vote count on the user interface
+        setUpvoteCount((prevCount) => prevCount + 1);
+        setHasUpvoted(true);
+  
+        // Send a request to the server to update the vote count in the database
+        const response = await fetch(`http://localhost:3000/api/questions/upvote/${Question._id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ voteCount: upvoteCount + 1 })
+        });
+  
+        if (response.ok) {
+          console.log('Upvote successful!');
+        } else {
+          console.error('Failed to upvote.');
+          // Revert the vote count on the user interface
+          setUpvoteCount((prevCount) => prevCount - 1);
+          setHasUpvoted(false);
+        }
+      } catch (error) {
+        console.error('Error upvoting:', error);
+        // Revert the vote count on the user interface
+        setUpvoteCount((prevCount) => prevCount - 1);
+        setHasUpvoted(false);
+      }
+    }else{
+      setUpvoteCount((prevCount) => prevCount - 1);
+      setHasUpvoted(false);
     }
+
   };
 
   const handleReportClick = () => {

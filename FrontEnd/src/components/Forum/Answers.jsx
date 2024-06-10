@@ -8,6 +8,7 @@ import IndividualAnswer from './IndividualAnswer';
 // import RelatedQuestions from './Elements/RelatedQuestions';
 import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
 function Answers() {
@@ -20,14 +21,14 @@ function Answers() {
     const [upvoteCount, setUpvoteCount] = useState(0);
     const [numAns, setNumAns] = useState(0);
     const [hasUpvoted, setHasUpvoted] = useState(false);
-  
+
     const handleUpvoteClick = () => {
-      if (!hasUpvoted) {
-        setUpvoteCount((prevCount) => prevCount + 1);
-        setHasUpvoted(true);
-      }
+        if (!hasUpvoted) {
+            setUpvoteCount((prevCount) => prevCount + 1);
+            setHasUpvoted(true);
+        }
     };
-  
+
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/questions/${id}`).then(res => res.json()).then(result => {
@@ -43,20 +44,20 @@ function Answers() {
         // console.log(category)
         console.log(Question, "In quote")
         fetch(`http://localhost:3000/api/questions/category/${id}`)
-        .then(res => res.json())
-        .then(result => {
-            // console.log(category)
-            result = result.filter(item => item.reported !== true )
-            // Limit the result to 5 items
-            setQuestions(result.slice(0, 5))
-            // console.log(category,"Category ")
-            console.log("this is related squestion start")
-            console.log(result.slice(0, 5))
-            console.log("this is related squestion End")
-        })
-        .catch((error) => {
-            console.log(error)
-        });
+            .then(res => res.json())
+            .then(result => {
+                // console.log(category)
+                result = result.filter(item => item.reported !== true)
+                // Limit the result to 5 items
+                setQuestions(result.slice(0, 5))
+                // console.log(category,"Category ")
+                console.log("this is related squestion start")
+                console.log(result.slice(0, 5))
+                console.log("this is related squestion End")
+            })
+            .catch((error) => {
+                console.log(error)
+            });
     }, [])
 
     useEffect(() => {
@@ -72,7 +73,7 @@ function Answers() {
     useEffect(() => {
         fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
 
-        result = result.filter(item => item.reported != true )
+            result = result.filter(item => item.reported != true)
             setTimeout(() => {
                 setAnswer(result)
                 // Update the component's state
@@ -151,8 +152,7 @@ function Answers() {
                                                                 <div className="d-flex align-items-center flex-row-fluid flex-wrap">
                                                                     {/* <!--begin:Author--> */}
                                                                     <div className="flex-grow-1 me-2">
-                                                                        <a className="text-gray-800 text-hover-primary fs-6 fw-bold">{item.title}</a>
-                                                                    </div>
+                                                                        <Link className="text-gray-800 text-hover-primary fs-6 fw-bold" onClick={() => window.location.reload()} to={`/answers/${item._id}`}>{item.title}</Link></div>
                                                                     {/* <!--end:Author--> */}
                                                                 </div>
                                                                 {/* <!--end::Section--> */}
@@ -205,37 +205,31 @@ function Answers() {
 
                                                         {/* <!--end::Main form--> */}
                                                         {/* <!--begin::Posts--> */}
-                                                        <div className="card mb-3 border-primary">
-  <div className="card-body">
-    <div className="d-flex align-items-center mb-3">
-      <div className="bg-primary p-2 rounded-circle me-2">
-        <BsQuestionCircle className="text-white" />
-      </div>
-      <h5 className="card-title mb-0 text-primary fw-bold">Question</h5>
-    </div>
-    <h6 className="card-title fw-bold p-0 text-dark">{Question.title}</h6>
-    <p className="card-text">
-      <span className="text-primary fw-bold">{Answer.length}</span> Answers · <span className="text-primary fw-bold">{Question.category}</span>
-    </p>
-  </div>
-  <div className="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
-    <div>
-      <a
-        href="#"
-        className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}
-        onClick={handleUpvoteClick}
-      >
-        <i className="bi bi-hand-thumbs-up me-1"></i> Upvote
-      </a>
-    </div>
-    <div>
-      <span className={`btn btn-sm btn-outline-primary fw-bold ${hasUpvoted ? 'active' : ''}`}>
-        {upvoteCount}
-      </span>
-      <ReportModal reportType= "question" Content={Question} />
-    </div>
-  </div>
-</div>
+                                                        <div className="card mb-3 border-primary shadow-lg">
+                                                            <div className="card-body">
+                                                                <div className="d-flex align-items-center mb-3">
+                                                                    <div className="bg-primary p-2 rounded-circle me-2">
+                                                                        <BsQuestionCircle className="text-white fs-4" />
+                                                                    </div>
+                                                                    <h5 className="card-title mb-0 text-primary fw-bold">Question</h5>
+                                                                </div>
+                                                                <h6 className="card-title fw-bold p-0 text-dark">{Question.title}</h6>
+                                                                <p className="card-text">
+                                                                    <span className="text-primary fw-bold">{Answer.length}</span> Answers · <span className="text-primary fw-bold">{Question.category}</span>
+                                                                </p>
+                                                            </div>
+                                                            <div className="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
+                                                                <div className="ms-auto">
+                                                                    <ReportModal reportType="question" Content={Question} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="border-bottom border-primary"></div>
+                                                        </div>
+                                                        <div className="mt-5">
+                                                            <h5 className="fw-bold text-primary">The following are answers for the question: -</h5>
+                                                            <hr className="border-primary" />
+                                                        </div>
+
                                                         {populateAnswers()}
                                                         {/* <!--end::Posts--> */}
                                                     </div>
