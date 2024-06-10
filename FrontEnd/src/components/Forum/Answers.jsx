@@ -10,6 +10,7 @@ import { Container, Row, Col, Badge, Card, ListGroup } from 'react-bootstrap';
 import { BsQuestionCircle, BsPencil, BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Navigation from '../Navigation';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
 function Answers() {
