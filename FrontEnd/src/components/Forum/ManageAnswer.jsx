@@ -3,28 +3,76 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
 import NoElementFound from './Elements/NoElement';
-
+import FormTable from './AnswersTable';
 function ManageAnswer() {
+
+
+    const columns = [
+        {
+
+            Header: 'ANSWER BODY',
+            accessor: 'body',
+
+
+        },
+        {
+
+            Header: 'AUTHOR',
+            accessor: 'author',
+
+
+        },
+        {
+
+            Header: 'UPVOTES',
+            accessor: 'upvotes',
+
+
+        },
+        {
+
+            Header: 'DOWNVOTES',
+            accessor: 'downvotes',
+
+
+        },
+        {
+
+            Header: 'PUBLISHED',
+            accessor: 'reported',
+
+
+        },
+        {
+
+            Header: 'ACTIONS',
+            accessor: '_id',
+
+
+        },
+    ]
+
 
     const { id } = useParams();
     const [answers, setAnswers] = useState([]);
-     // Delete a question from the API
-  const deleteAnswer = async (id) => {
-    try {
-      await fetch(`http://localhost:3000/api/answers/${id}`, {
-        method: 'DELETE',
-      });
-      // Remove the deleted question from the local state
-      setAnswers(answers.filter((question) => question.id !== id));
-    } catch (error) {
-      console.error('Error deleting question:', error);
-    }
-  };
+    // Delete a question from the API
+    const deleteAnswer = async (id) => {
+        try {
+            await fetch(`http://localhost:3000/api/answers/${id}`, {
+                method: 'DELETE',
+            });
+            // Remove the deleted question from the local state
+            setAnswers(answers.filter((question) => question.id !== id));
+        } catch (error) {
+            console.error('Error deleting question:', error);
+        }
+    };
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/answers/all/${id}`).then(res => res.json()).then(result => {
 
             setAnswers(result)
+            console.log(result[0])
 
             // console.log("This is for answer")
             // console.log(JSON.stringify(result))
@@ -75,15 +123,14 @@ function ManageAnswer() {
                                 <td>{answer.downvotes}</td>
 
                                 <td>
-                                <span
-                                className={`${
-                                    answer.reported
-                                    ? 'text-danger font-weight-bold'
-                                    : 'text-success font-weight-bold'
-                                }`}
-                                >
-                                {answer.reported ? 'No' : 'Yes'}
-                                </span>
+                                    <span
+                                        className={`${answer.reported
+                                                ? 'text-danger font-weight-bold'
+                                                : 'text-success font-weight-bold'
+                                            }`}
+                                    >
+                                        {answer.reported ? 'No' : 'Yes'}
+                                    </span>
                                 </td>
                                 {/* <!--begin::Joined-->
                                                 <!--begin::Action=--> */}
@@ -94,7 +141,7 @@ function ManageAnswer() {
 
                                         <button
                                             className="btn btn-sm btn-danger"
-                                        onClick={() => deleteAnswer(answer.id)}
+                                            onClick={() => deleteAnswer(answer.id)}
                                         >
                                             Delete
                                         </button>
@@ -131,7 +178,7 @@ function ManageAnswer() {
                 )
             })
         } else {
-            return <NoElementFound elementName={"Answer"}/>
+            return <NoElementFound elementName={"Answer"} />
         };
     }
 
@@ -171,17 +218,6 @@ function ManageAnswer() {
                                     {/* <!--begin::Card title--> */}
                                     <div className="card-title">
                                         {/* <!--begin::Search--> */}
-                                        <div className="d-flex align-items-center position-relative my-1">
-                                            {/* <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg--> */}
-                                            <span className="svg-icon svg-icon-1 position-absolute ms-6">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                            {/* <!--end::Svg Icon--> */}
-                                            <input type="text" data-kt-user-table-filter="search" className="form-control form-control-solid w-250px ps-14" placeholder="Search Answers" />
-                                        </div>
                                         {/* <!--end::Search--> */}
                                     </div>
                                     {/* <!--begin::Card title--> */}
@@ -191,34 +227,10 @@ function ManageAnswer() {
                                 {/* <!--end::Card header--> */}
                                 {/* <!--begin::Card body--> */}
                                 <div className="card-body py-4">
+                                    <FormTable columns={columns} data={answers} />
+
                                     {/* <!--begin::Table--> */}
-                                    <table className="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                                        {/* <!--begin::Table head--> */}
-                                        <thead>
-                                            {/* <!--begin::Table row--> */}
-                                            <tr className="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                                <th className="w-10px pe-2">
-                                                    <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                        <input className="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
-                                                    </div>
-                                                </th>
-                                                <th className="min-w-125px">Answer Body</th>
-                                                {/* <th className="min-w-125px">Category</th> */}
-                                                <th className="min-w-125px">Author</th>
-                                                {/* <th className="min-w-125px">Created At</th> */}
-                                                <th className="min-w-125px">Upvotes</th>
-                                                <th className="min-w-125px">Downvotes</th>
-                                                <th className="min-w-125px">Published</th>
-                                                <th className="text-end min-w-100px">Actions</th>
-                                            </tr>
-                                            {/* <!--end::Table row--> */}
-                                        </thead>
-                                        {/* {/* <!--end::Table head--> */}
-                                        {populateAnswers()}
-
-
-
-                                    </table>
+                                
                                     {/* <!--end::Table--> */}
                                 </div>
                                 {/* <!--end::Card body--> */}

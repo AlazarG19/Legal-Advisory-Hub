@@ -34,6 +34,40 @@ exports.create = (req, res) => {
     });
 };
 
+
+exports.updateOneUpvote = (req, res) => {
+  const { id } = req.params;
+  const { voteCount } = req.body;
+
+  Answer.updateOne({ _id: id }, { $set: { upvotes: voteCount } })
+   .then(result => {
+      res.json({ message: 'Vote count updated successfully' });
+    })
+   .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating vote count' });
+    });
+};
+
+
+exports.updateOneDownvote = (req, res) => {
+  const { id } = req.params;
+  const { voteCount } = req.body;
+
+  Answer.updateOne({ _id: id }, { $set: { downvotes: voteCount } })
+   .then(result => {
+      res.json({ message: 'Downvote updated successfully' });
+    })
+   .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating vote count' });
+    });
+};
+
+
+
+
+
 // Retrieve all answers from the database.
 exports.findAll = (req, res) => {
   const questionId = req.params.id;
